@@ -7,3 +7,5 @@
 | app.json  | 页面配置与插件引入，详见`plugins`配置项 |
 
 参考：[使用插件](https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/using.html)
+
+村上春树
