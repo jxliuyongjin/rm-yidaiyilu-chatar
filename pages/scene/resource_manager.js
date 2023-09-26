@@ -18,7 +18,7 @@ class resource_manager {
     }
     this.fristLoadSource();
   } 
-  
+
   getConfigData()
   {
     this.resource_config = get_config();  
@@ -100,9 +100,13 @@ class resource_manager {
     }
   } 
 
-  async set_current_glb(index)
-  { 
+  async selected_model_change(index)
+  {  
     if(index<0||index>=this.resource_config.length) { return; } 
+    if(this.index == index || !this.slam) {
+      return;
+    } 
+
     this.index = index; 
 
     if(this.current_model)
@@ -121,7 +125,7 @@ class resource_manager {
     var modelsize = this.config?this.config.size:0.5; 
     console.log("set_current_glb modelsize:"+modelsize);
     
-    slam.add(this.current_model, modelsize); 
+    this.slam.add(this.current_model, modelsize); 
      
     this.hideLoading();
 

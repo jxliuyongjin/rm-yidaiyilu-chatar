@@ -27,7 +27,7 @@ Page({
       icon_arrs:icon_arrstemp,
       isonIniting:true 
     });
-    console.log(JSON.stringify(this.data.icon_arrs));
+    //console.log(JSON.stringify(this.data.icon_arrs));
 
     this.resource.loadAssets();   
     
@@ -62,7 +62,12 @@ Page({
   }, 
   
   changebtn_clicked(event) { 
-    console.log(event.currentTarget.id);
+    var selectedId = event.currentTarget.id;
+    console.log("changebtn_clicked currentTarget.id:"+selectedId);
+    if(this.resource == null) {
+      return;
+    }
+    this.resource.selected_model_change(selectedId);
   },
   error({ detail }) {
     this.resource.error({ detail }); 
