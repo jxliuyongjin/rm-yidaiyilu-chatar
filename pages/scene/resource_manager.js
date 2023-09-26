@@ -86,6 +86,8 @@ class resource_manager {
       var modelsize = this.config? this.config.size:0.5; 
       console.log("modelsize:"+modelsize);
       slam.add(current_model, modelsize);
+      // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
+      slam.setGesture(current_model);
 
       this.current_model = current_model;  
       this.reticleModel = reticleModel;  
@@ -126,7 +128,9 @@ class resource_manager {
     console.log("set_current_glb modelsize:"+modelsize);
     
     this.slam.add(this.current_model, modelsize); 
-     
+     // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
+    this.slam.setGesture(this.current_model);
+
     this.hideLoading();
 
     this.tap(this.current_model_Pos)
