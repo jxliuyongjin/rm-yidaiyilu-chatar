@@ -6,4 +6,4 @@
   bind:tap="tap"
 />
 
-<view wx:if="{{showGuide}}" class="guide">请点击屏幕，放置模型</view>
+<view wx:if="{{step === 'showPoint'}}" class="guide">请点击屏幕，放置模型</view>

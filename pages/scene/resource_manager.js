@@ -1,4 +1,5 @@
-import { errorHandler,requestFile,showAuthModal} from "../../utils/utils"; 
+import { errorHandler,requestFile,showAuthModal} from "../../utils/utils";
+import { get_reticle,get_config}  from "../../utils/glbconfig"
 
 class resource_manager {
   constructor() {} 
@@ -7,19 +8,35 @@ class resource_manager {
    * @return Promise
    * @memberof Food
    */
-  loadAssets() {  
+  loadAssets(index) {
     if (this.downloadAssets) {
       return this.downloadAssets;
     }  
-    wx.showLoading({ title: "初始化中...", mask: true });
-    this.downloadAssets = Promise.all([
-      requestFile("https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/reticle.glb"), 
-      requestFile("https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/rabbit.glb")
-    ]).then((res) => {
-      return res;
-    }); 
+    this.resource_config = get_config();  
+    this.fristLoadSource();
+  } 
+  fristLoadSource(index=0)
+  {
+    if (this.downloadAssets) {
+      return this.downloadAssets;
+    }  
+    wx.showLoading({ title: "初始化中...", mask: true }); 
+    this.modelIndex = index;
+    this.config = this.resource_config[index];
+    var reticleurl = get_reticle();
+    
+    if(this.config&&reticleurl)
+    {
+      this.downloadAssets = Promise.all([
+        requestFile(reticleurl), 
+        requestFile(this.config.glburl)
+      ]).then((res) => {
+        return res;
+      });  
+    }
     return this.downloadAssets;
   }
+
 
   /**
    * 初始化场景和模型，但此时还没有将模型加入到场景内。
@@ -27,27 +44,29 @@ class resource_manager {
    * @param {*} slam 传入的slam对象
    * @memberof Food
    */
-  async initScene({ detail: slam }) {   
+  async initScene({ detail: slam }) {    
     try {
       this.slam = slam;
       const [
         reticleArrayBuffer, 
-        rabbitArrayBuffer,
+        glbArrayBuffer,
       ] = await this.downloadAssets; 
 
-      const [reticleModel, rabbitModel] = await Promise.all([
+      const [reticleModel, current_model] = await Promise.all([
         slam.createGltfModel(reticleArrayBuffer),
-        slam.createGltfModel(rabbitArrayBuffer), 
+        slam.createGltfModel(glbArrayBuffer), 
       ]); 
       
       slam.enableShadow(); // 开启阴影功能
-      rabbitModel.visible = false;
-      slam.add(rabbitModel, 0.5);
 
-      this.reticleModel = reticleModel;
-      this.rabbitModel = rabbitModel;   
+      current_model.visible = false;  
+      var modelsize = this.config? this.config.size:0.5; 
+      console.log("modelsize:"+modelsize);
+      slam.add(current_model, modelsize);
 
-      this.findPlane();
+      this.current_model = current_model;  
+      this.reticleModel = reticleModel;  
+ 
       await slam.start();  
       wx.hideLoading();
       return true;
@@ -56,6 +75,34 @@ class resource_manager {
       errorHandler(e);
       return false;
     }
+  } 
+
+  async set_current_glb(index)
+  { 
+    if(index<0||index>=this.resource_config.length) { return; } 
+    this.index = index; 
+
+    if(this.current_model)
+    {
+      this.slam.remove(this.current_model);
+      // 销毁创建的3D对象(回收内存)
+      this.slam.destroyObject(this.current_model); 
+    }
+    
+    wx.showLoading({ title: "初始化中...", mask: true }); 
+
+    this.config = this.resource_config[index]; 
+    const glbArrayBuffer = await requestFile(this.config.glburl);
+    this.current_model  = await this.slam.createGltfModel(glbArrayBuffer)
+    
+    var modelsize = this.config?this.config.size:0.5; 
+    console.log("set_current_glb modelsize:"+modelsize);
+    
+    slam.add(this.current_model, modelsize); 
+    
+    wx.hideLoading();
+
+    this.tap(this.current_model_Pos)
   }
 
   /**
@@ -91,17 +138,17 @@ class resource_manager {
       const { pageX, pageY } = touches[0];
       // 注意：需要传入在kivicube-slam组件上的坐标点，而不是页面上的坐标点。
       const success = this.slam.standOnThePlane(
-        this.rabbitModel,
+        this.current_model,
         pageX - offsetLeft,
         pageY - offsetTop,
         true
       );
 
       if (success) {
-        this.rabbitModel.visible = true;
-        this.rabbitModel.playAnimation({ loop: true }); 
-        this.slam.removePlaneIndicator(); 
-        
+        this.current_model_Pos =  { touches, target };
+        this.current_model.visible = true;
+        this.current_model.playAnimation({ loop: true }); 
+        //this.slam.removePlaneIndicator();  
         return true;
       } else { 
         wx.showToast({ title: "放置模型失败，请对准平面", icon: "none" }); 
@@ -120,6 +167,14 @@ class resource_manager {
     } else {
       errorHandler(detail);
     }
+  }
+
+  onShareAppMessage() {
+    return {
+      title: "一带一路",
+      path: "pages/scene/scene",
+      imageUrl: resUrl("images/share.jpg"),
+    };
   }
 
   // 清理
