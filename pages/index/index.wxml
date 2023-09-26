@@ -1,18 +1,10 @@
 <!--index.wxml-->
 <view class="wrapper">
-  <view class="button-wrap">
+  <view class="button-wrap"> 
     <view class="btn-start">
       <image class="home-btn" mode="widthFix" src="../../assets/images/home-btn.png"></image>
-      <text bindtap="handleAr">开始AR-不带参数</text>
-    </view>
-    <view class="btn-start">
-      <image class="home-btn" mode="widthFix" src="../../assets/images/home-btn.png"></image>
-      <text bindtap="handleArWithParams">开始AR-带参数</text>
-    </view>
-    <view class="btn-start">
-      <image class="home-btn" mode="widthFix" src="../../assets/images/home-btn.png"></image>
-      <text bindtap="handleUseComponent">使用插件组件</text>
+      <text bindtap="handleUseComponent">开始AR</text>
     </view>
   </view>
-  <image class="home-bg" mode="widthFix" src="../../assets/images/home-bg.jpg"></image>
-</view>
+  <image class="home-bg" mode="widthFix" src="../../assets/images/home-bg.jpg"></image> 
+</view> 

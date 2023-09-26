@@ -1,4 +1,4 @@
-export function errorHandler(errInfo) {
+export function errorHandler(errInfo) { 
   let message = errInfo;
   if (typeof errInfo === "object") {
     if (errInfo instanceof Error) {

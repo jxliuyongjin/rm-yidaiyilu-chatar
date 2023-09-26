@@ -3,6 +3,12 @@
         "pages/index/index",
         "pages/scene/scene"
     ],
+    "plugins": {
+        "kivicube-slam": {
+            "version": "1.5.2",
+            "provider": "wx12ad8a61f049ea02"
+        }
+    },
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
@@ -12,11 +18,5 @@
     },
     "style": "v2",
     "sitemapLocation": "sitemap.json",
-    "lazyCodeLoading": "requiredComponents",
-    "plugins": {
-        "kivicube-slam": {
-            "version": "1.5.2",
-            "provider": "wx12ad8a61f049ea02"
-        }
-    }
+    "lazyCodeLoading": "requiredComponents"
 }

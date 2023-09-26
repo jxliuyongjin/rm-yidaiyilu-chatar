@@ -20,7 +20,7 @@ Page({
   },
 
   // 进入插件组件页面
-  handleUseComponent() {
+  handleUseComponent() { 
     wx.navigateTo({ url: "/pages/scene/scene" });
   },
 

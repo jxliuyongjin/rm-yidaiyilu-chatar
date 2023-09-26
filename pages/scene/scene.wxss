@@ -14,3 +14,25 @@
   color: white;
   pointer-events: none;
 }
+
+
+.scan-box {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+}
+
+.scan-box .scan-img {
+  width: 46.93vw;
+  height: 18.67vw;
+}
+
+.scan-box .scan-txt {
+  margin-top: 2.93vw;
+  line-height: 6.4vw;
+  font-size: 4.53vw;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
