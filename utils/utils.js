@@ -72,7 +72,7 @@ export function downloadFile(url) {
 
 export function getSlamV2Support() {
   // 注意：目前只有iOS设备，微信版本>=8.0.17且基础库>=2.22.0才支持v2版本。 插件版本>=1.3.0支持
-  console.warn(wx.getSystemInfoSync())
+  //console.warn(wx.getSystemInfoSync())
   const {system, SDKVersion, version} = wx.getSystemInfoSync();
   const isIos = system.toLowerCase().includes("ios");
   if(isIos && compareVersion(version, "8.0.17") >= 0 && compareVersion(SDKVersion, "2.22.0") >= 0) {

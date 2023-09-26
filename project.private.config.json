@@ -9,6 +9,20 @@
             "list": [
                 {
                     "name": "",
+                    "pathName": "pages/uitest/uitest",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/uicomp/uicomp",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
                     "pathName": "pages/index/index",
                     "query": "",
                     "launchMode": "default",

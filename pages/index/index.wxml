@@ -5,6 +5,6 @@
       <image class="home-btn" mode="widthFix" src="../../assets/images/home-btn.png"></image>
       <text bindtap="handleUseComponent">开始AR</text>
     </view>
-  </view>
-  <image class="home-bg" mode="widthFix" src="../../assets/images/home-bg.jpg"></image> 
+  </view> 
+  <image class="home-bg" mode="scaleToFill" src="../../assets/images/home-bg.jpg"></image> 
 </view> 

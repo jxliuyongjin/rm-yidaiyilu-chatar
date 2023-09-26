@@ -4,8 +4,41 @@
 export function get_config() {
   return [
     {
-      glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/一带一路/沙漠骆驼9.25.glb",
+      model_idnex:0,
+      glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/一带一路/沙漠骆驼9.25.glb", 
+      iconurl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/一带一路/images/1.png",
       size:5.01580
-    },  
+    }, 
+    { 
+      model_idnex:1,
+      glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/一带一路/沙漠骆驼9.25.glb", 
+      iconurl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/一带一路/images/2.png",
+      size:5.01580
+    }, 
+    { 
+      model_idnex:2,
+      glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/一带一路/沙漠骆驼9.25.glb", 
+      iconurl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/一带一路/images/2.png",
+      size:5.01580
+    }, 
+    { 
+      model_idnex:3,
+      glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/一带一路/沙漠骆驼9.25.glb", 
+      iconurl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/一带一路/images/2.png",
+      size:5.01580
+    }, 
+    { 
+      model_idnex:4,
+      glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/一带一路/沙漠骆驼9.25.glb", 
+      iconurl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/一带一路/images/2.png",
+      size:5.01580
+    }, 
+    { 
+      model_idnex:5,
+      glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/一带一路/沙漠骆驼9.25.glb", 
+      iconurl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/一带一路/images/2.png",
+      size:5.01580
+    }, 
   ]
-}   
+} 
+  

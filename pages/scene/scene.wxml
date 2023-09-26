@@ -1,9 +1,18 @@
-<kivicube-slam
+ <kivicube-slam
   class="slam"
   license="{{license}}"
   bindready="ready"
   binderror="error"
   bind:tap="tap"
 />
+ 
+
+<image wx:if="{{!isonIniting}}" class="photo_btn" src="/assets/images/photo.jpg"> 拍照</image>  
+<view  wx:if="{{!isonIniting}}" class="change_btn_content">  
+  <view class="change_btns" wx:for="{{icon_arrs}}" wx:key="model_idnex" id="{{item.model_idnex}}" bind:tap="changebtn_clicked">
+      <image class="change_btn" src="{{item.iconurl}}"  lazy-load="true"></image> 
+    </view>
+</view>
 
 <view wx:if="{{step === 'showPoint'}}" class="guide">请点击屏幕，放置模型</view>
+ 

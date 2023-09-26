@@ -1,4 +1,4 @@
-import { errorHandler,requestFile,showAuthModal} from "../../utils/utils";
+import { errorHandler,requestFile,showAuthModal} from "../../utils/utils"
 import { get_reticle,get_config}  from "../../utils/glbconfig"
 
 class resource_manager {
@@ -11,16 +11,39 @@ class resource_manager {
   loadAssets(index) {
     if (this.downloadAssets) {
       return this.downloadAssets;
-    }  
-    this.resource_config = get_config();  
+    }
+    if(!this.resource_config)
+    {
+        this.getConfigData();
+    }
     this.fristLoadSource();
   } 
+  
+  getConfigData()
+  {
+    this.resource_config = get_config();  
+    return this.resource_config;
+  }
+  
+  show_loading(message)
+  {
+    wx.showLoading({ title: message, mask: true }); 
+    this.isShowLoading = true; 
+  }
+
+  hideLoading(){
+    wx.hideLoading();
+    this.isShowLoading = false;
+  }
+
   fristLoadSource(index=0)
   {
     if (this.downloadAssets) {
       return this.downloadAssets;
-    }  
-    wx.showLoading({ title: "初始化中...", mask: true }); 
+    }   
+
+    this.show_loading("初始化中...");
+
     this.modelIndex = index;
     this.config = this.resource_config[index];
     var reticleurl = get_reticle();
@@ -67,11 +90,11 @@ class resource_manager {
       this.current_model = current_model;  
       this.reticleModel = reticleModel;  
  
-      await slam.start();  
-      wx.hideLoading();
+      await slam.start();   
+      this.hideLoading();
       return true;
     } catch (e) { 
-      wx.hideLoading();
+      this.hideLoading();
       errorHandler(e);
       return false;
     }
@@ -88,8 +111,8 @@ class resource_manager {
       // 销毁创建的3D对象(回收内存)
       this.slam.destroyObject(this.current_model); 
     }
-    
-    wx.showLoading({ title: "初始化中...", mask: true }); 
+     
+    this.show_loading("场景加载中...");
 
     this.config = this.resource_config[index]; 
     const glbArrayBuffer = await requestFile(this.config.glburl);
@@ -99,8 +122,8 @@ class resource_manager {
     console.log("set_current_glb modelsize:"+modelsize);
     
     slam.add(this.current_model, modelsize); 
-    
-    wx.hideLoading();
+     
+    this.hideLoading();
 
     this.tap(this.current_model_Pos)
   }
@@ -159,8 +182,8 @@ class resource_manager {
   }
   
   error({ detail })
-  {
-    wx.hideLoading();
+  {  
+    this.hideLoading();
     // 判定是否camera权限问题，是则向用户申请权限。
     if (detail?.isCameraAuthDenied) {
       showAuthModal(this);

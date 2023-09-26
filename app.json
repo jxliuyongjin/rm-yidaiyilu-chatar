@@ -1,7 +1,8 @@
 {
     "pages": [
         "pages/index/index",
-        "pages/scene/scene"
+        "pages/scene/scene",
+        "pages/uicomp/uicomp"
     ],
     "plugins": {
         "kivicube-slam": {
@@ -12,7 +13,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "SLAM插件快速接入示例",
+        "navigationBarTitleText": "我的全球之旅",
         "navigationBarTextStyle": "black",
         "navigationStyle": "custom"
     },
