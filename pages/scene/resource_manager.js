@@ -87,7 +87,7 @@ class resource_manager {
       console.log("modelsize:"+modelsize);
       slam.add(current_model, modelsize);
       // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
-      slam.setGesture(current_model);
+      slam.setGesture(current_model);  
 
       this.current_model = current_model;  
       this.reticleModel = reticleModel;  
@@ -101,6 +101,14 @@ class resource_manager {
       return false;
     }
   } 
+  
+  setVisibleReticleMode(bool)
+  {
+    if(this.reticleModel)
+    {
+      this.reticleModel.visible = bool; 
+    }
+  }
 
   async selected_model_change(index)
   {  

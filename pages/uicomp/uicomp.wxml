@@ -1,8 +1,14 @@
 <view class="change_content">  
-  <image class="photo_btn" src="/assets/images/photo.jpg"> 拍照  </image>
+  <image class="photo_btn" src="/assets/images/photo.jpg" bind:tap="take_photo"> 拍照  </image>
   <view class="change_btn_content"> 
     <view class="change_btns" wx:for="{{icon_arrs}}" wx:key="model_idnex" id="{{item.model_idnex}}" bind:tap="changebtn_clicked">
       <image class="change_btn" src="{{item.iconurl}}"  lazy-load="true"></image> 
     </view>
+  </view>
+
+  <view class="haibaomake">
+    <image class="haibao_photo" src ="/assets/images/home-bg.jpg"></image>
+    <view class="haibao_exitbtn" bind:tap="exitBtnClicked">再来一张</view>
+    <view class="haibao_savebtn" bind:tap="saveBtnClicked">保存</view>
   </view>
 </view> 

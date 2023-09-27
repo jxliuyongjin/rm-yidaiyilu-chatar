@@ -7,6 +7,7 @@ Page({
      */
     data: {
       icon_arrs:[{}],
+      photoPath:""
     },
 
     /**
@@ -48,20 +49,7 @@ Page({
     onUnload() {
 
     },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom() {
-
-    },
+  
 
     /**
      * 用户点击右上角分享
@@ -71,5 +59,42 @@ Page({
     },  
     changebtn_clicked: function(event) { 
       console.log(event.currentTarget.id);
-    } 
+    },
+
+    async take_photo() {
+      wx.showLoading({ title: "拍照中...", mask: true });
+      try {
+        /**
+         * 拍照接口
+         * @param {Number} [figureWidth=renderWidth] - 指定照片的宽度。高度会依照渲染区域宽高比自动计算出来。默认为渲染宽度。
+         * @param {String} [fileType=jpg] - 文件格式，只支持jpg/png。默认为jpg
+         * @param {Number} [quality=0.9] - 照片质量，jpg时有效。默认为0.9
+         * @returns {Promise<photoPath>} - 照片文件临时地址
+         */
+        const photoPath = await this.slam.takePhoto();
+        this.setData({
+          photoPath,
+        })
+      } catch (e) {
+        wx.hideLoading();
+        console.error(e);
+        errorHandler(`拍照失败 - ${e.message}`);
+      }
+    },
+
+  save_photo()
+  { 
+    wx.saveImageToPhotosAlbum({
+      filePath: imagePath,
+      success() {
+        wx.hideLoading();
+        wx.showToast({ title: "保存照片成功", icon: "success" });
+      },
+      fail(e) {
+        wx.hideLoading();
+        console.error(e);
+        wx.showToast({ title: "保存照片失败", icon: "error" });
+      }
+    })
+  }
 })

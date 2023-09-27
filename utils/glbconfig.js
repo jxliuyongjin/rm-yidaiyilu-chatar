@@ -22,7 +22,7 @@ export function get_config() {
       size:5.01580
     }, 
     { 
-      model_idnex:1,
+      model_idnex:3,
       glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/rabbit.glb", 
       iconurl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/一带一路/images/4.png",
       size:0.5
@@ -34,7 +34,7 @@ export function get_config() {
       size:5.01580
     }, 
     { 
-      model_idnex:1,
+      model_idnex:5,
       glburl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/rabbit.glb", 
       iconurl:"https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/一带一路/images/6.png",
       size:0.5

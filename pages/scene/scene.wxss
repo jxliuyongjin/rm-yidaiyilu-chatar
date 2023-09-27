@@ -75,4 +75,49 @@
   width: 20vw; 
   height:20vw;
   margin:2vw;
+} 
+
+.haibaomake{ 
+  position:absolute;
+  width: 96vw;
+  height:96vh;
+  top:3vh;
+  left:3vw;
+  z-index: 2; 
+}
+
+.haibao_photo
+{ 
+  position:absolute;
+  top:0;
+  left:0;
+  width: 93vw;
+  height:93vh;
+}
+
+
+.haibao_exitbtn
+{
+  position:absolute;
+  display:inline-block;
+  width: 15vw; 
+  top:80vh;
+  left: 25vw; 
+  background-color: green;
+  text-align: center; 
+  line-height:15vw;
+  font-size: 3vw;
+}
+
+.haibao_savebtn
+{ 
+  position:absolute;
+  display:inline-block;
+  width: 15vw; 
+  top:80vh;
+  left: 55vw; 
+  background-color: green;
+  text-align: center; 
+  font-size: 3vw;
+  line-height:15vw;
 }
