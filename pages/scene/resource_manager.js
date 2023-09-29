@@ -1,4 +1,4 @@
-import { errorHandler,requestFile,showAuthModal} from "../../utils/utils"
+import { errorHandler,requestFile,showAuthModal,log} from "../../utils/utils"
 import { get_reticle,get_config}  from "../../utils/glbconfig"
 
 class resource_manager {
@@ -8,52 +8,41 @@ class resource_manager {
    * @return Promise
    * @memberof Food
    */
-  loadAssets(index) {
+  loadAssets(index=0) { 
     if (this.downloadAssets) {
       return this.downloadAssets;
     }
     if(!this.resource_config)
-    {
+    { 
         this.getConfigData();
     }
+
     this.fristLoadSource();
   } 
 
   getConfigData()
   {
-    this.resource_config = get_config();  
+    this.resource_config = get_config();   
+    log("getConfigData 3333："+this.resource_config);
     return this.resource_config;
-  }
-  
-  show_loading(message)
-  {
-    wx.showLoading({ title: message, mask: true }); 
-    this.isShowLoading = true; 
-  }
-
-  hideLoading(){
-    wx.hideLoading();
-    this.isShowLoading = false;
-  }
+  } 
 
   fristLoadSource(index=0)
   {
+    log("fristLoadSource 1111");
     if (this.downloadAssets) {
       return this.downloadAssets;
     }   
 
-    this.show_loading("初始化中...");
-
     this.modelIndex = index;
     this.config = this.resource_config[index];
-    var reticleurl = get_reticle();
-    
+    var reticleurl = get_reticle(); 
     if(this.config&&reticleurl)
-    {
+    {  
       this.downloadAssets = Promise.all([
         requestFile(reticleurl), 
         requestFile(this.config.glburl)
-      ]).then((res) => {
+      ]).then((res) => { 
         return res;
       });  
     }
@@ -68,35 +57,38 @@ class resource_manager {
    * @memberof Food
    */
   async initScene({ detail: slam }) {    
-    try {
+    try { 
       this.slam = slam;
       const [
         reticleArrayBuffer, 
         glbArrayBuffer,
       ] = await this.downloadAssets; 
-
+      
+      log("initScene enner"); 
       const [reticleModel, current_model] = await Promise.all([
         slam.createGltfModel(reticleArrayBuffer),
         slam.createGltfModel(glbArrayBuffer), 
-      ]); 
-      
+      ]);  
+ 
+      slam.defaultAmbientLight.intensity = "0.82";
+      slam.defaultDirectionalLight.intensity = "2.5"; 
       slam.enableShadow(); // 开启阴影功能
 
+      log("initScene current_model geted"); 
       current_model.visible = false;  
       var modelsize = this.config? this.config.size:0.5; 
       console.log("modelsize:"+modelsize);
-      slam.add(current_model, modelsize);
+      slam.add(current_model, modelsize,0);
       // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
       slam.setGesture(current_model);  
 
+      log("initScene set end"); 
       this.current_model = current_model;  
       this.reticleModel = reticleModel;  
  
-      await slam.start();   
-      this.hideLoading();
+      await slam.start();  
       return true;
-    } catch (e) { 
-      this.hideLoading();
+    } catch (e) {
       errorHandler(e);
       return false;
     }
@@ -111,22 +103,19 @@ class resource_manager {
   }
 
   async selected_model_change(index)
-  {  
-    if(index<0||index>=this.resource_config.length) { return; } 
+  {   
+    if(index<0||index>=this.resource_config.length) { return false; } 
     if(this.index == index || !this.slam) {
-      return;
-    } 
+      return false;
+    }  
 
-    this.index = index; 
-
+    this.index = index;  
     if(this.current_model)
     {
       this.slam.remove(this.current_model);
       // 销毁创建的3D对象(回收内存)
       this.slam.destroyObject(this.current_model); 
-    }
-     
-    this.show_loading("场景加载中...");
+    } 
 
     this.config = this.resource_config[index]; 
     const glbArrayBuffer = await requestFile(this.config.glburl);
@@ -134,14 +123,14 @@ class resource_manager {
     
     var modelsize = this.config?this.config.size:0.5; 
     console.log("set_current_glb modelsize:"+modelsize);
-    
-    this.slam.add(this.current_model, modelsize); 
+     
+    this.slam.add(this.current_model, modelsize,0); 
      // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
-    this.slam.setGesture(this.current_model);
-
-    this.hideLoading();
-
-    this.tap(this.current_model_Pos)
+    this.slam.setGesture(this.current_model); 
+    if(this.current_model_Pos)
+    { 
+      this.tap(this.current_model_Pos)
+    }
   }
 
   /**
@@ -198,8 +187,7 @@ class resource_manager {
   }
   
   error({ detail })
-  {  
-    this.hideLoading();
+  {   
     // 判定是否camera权限问题，是则向用户申请权限。
     if (detail?.isCameraAuthDenied) {
       showAuthModal(this);

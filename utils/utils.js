@@ -1,4 +1,7 @@
 export function errorHandler(errInfo) { 
+  if(errInfo==null) {
+    return;
+  }
   let message = errInfo;
   if (typeof errInfo === "object") {
     if (errInfo instanceof Error) {
@@ -15,6 +18,10 @@ export function errorHandler(errInfo) {
     title: message,
     icon: "none",
   });
+}
+
+export function log(message) {
+  console.log(message);
 }
 
 export function showAuthModal(page) {
@@ -105,4 +112,7 @@ export function compareVersion(v1, v2) {
     }
   }
   return 0
+}
+export function tryFun(promise){ 
+  return promise.then(res=>[res,null]).catch(err=>[null,err]); 
 }

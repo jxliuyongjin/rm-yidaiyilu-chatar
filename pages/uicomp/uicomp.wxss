@@ -49,6 +49,14 @@
   position:absolute;
   width: 93vw;
   height:93vh;
+  background-color: greenyellow;
+} 
+
+.drawcanvas{ 
+  position:absolute;
+  width: 93vw;
+  height:93vh;
+  background-color: greenyellow;
 }
 
 .haibao_exitbtn
@@ -75,4 +83,4 @@
   text-align: center; 
   font-size: 3vw;
   line-height:15vw;
-}
+} 

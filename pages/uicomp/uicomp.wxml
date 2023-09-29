@@ -6,9 +6,22 @@
     </view>
   </view>
 
+
+  <view class="haibaomake">
+    <canvas
+      disable-scroll 
+      class="haibao_photo"
+      type="2d"
+      id="myCanvas" 
+    ></canvas>
+    <!-- <image class="haibao_photo" src ="{{haibaoPhotoPath}}"></image>  -->
+    <view class="haibao_exitbtn" bind:tap="onContentTap">再来一张</view>
+    <view class="haibao_savebtn" bind:tap="onContentTap">保存</view>
+  </view>
+<!-- 
   <view class="haibaomake">
     <image class="haibao_photo" src ="/assets/images/home-bg.jpg"></image>
     <view class="haibao_exitbtn" bind:tap="exitBtnClicked">再来一张</view>
     <view class="haibao_savebtn" bind:tap="saveBtnClicked">保存</view>
-  </view>
+  </view> -->
 </view> 

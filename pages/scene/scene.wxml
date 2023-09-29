@@ -15,9 +15,16 @@
 
 <view wx:if="{{step === 'showPoint'}}" class="guide">请点击屏幕，放置模型</view> 
 
-<view wx:if="{{step === 'showHaibao'}}" class="haibaomake">
-    <image class="haibao_photo" src ="{{photoPath}}"></image>
-    
+<view  hidden="{{step != 'showHaibao'}}" class="haibaomake">  
+      <canvas
+      disable-scroll 
+      class="haibao_canvas" 
+      type="2d"
+      id="showhaibao_canvas" 
+    > </canvas>  
+<!-- 
+   <image class="haibao_photo" src ="{{haibaoPhotoPath}}"></image> -->
+
     <view class="haibao_exitbtn" bind:tap="exitBtnClicked">再来一张</view>
-    <view class="haibao_savebtn" bind:tap="saveBtnClicked">保存</view>
+    <view class="haibao_savebtn" bind:tap="onSaveImageClicked">保存</view>
 </view>
