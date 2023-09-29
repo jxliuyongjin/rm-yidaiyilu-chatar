@@ -4,6 +4,7 @@
   bindready="ready"
   binderror="error"
   bind:tap="tap"
+  bind:addAnchors="addAnchors"
 />
 
 <image wx:if="{{step != 'initing'}}" class="photo_btn" src="/assets/images/photo.jpg"  bind:tap="take_photo"> 拍照</image>  
@@ -21,9 +22,7 @@
       class="haibao_canvas" 
       type="2d"
       id="showhaibao_canvas" 
-    > </canvas>  
-<!-- 
-   <image class="haibao_photo" src ="{{haibaoPhotoPath}}"></image> -->
+    > </canvas>   
 
     <view class="haibao_exitbtn" bind:tap="exitBtnClicked">再来一张</view>
     <view class="haibao_savebtn" bind:tap="onSaveImageClicked">保存</view>

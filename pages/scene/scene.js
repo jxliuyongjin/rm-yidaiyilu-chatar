@@ -63,13 +63,14 @@ Page({
     this.resource.findPlane();
   },
 
-  tap({touches, target}) {  
+  tap({touches, target}) { 
     if(this.data.step != steps[1] && this.data.step != steps[2] )
     {
       wx.showToast({
         title: '当前状态不能放置场景',
       })
       this.error("当前状态不能放置场景");
+      return;
     }
 
     var success = this.resource.tap({touches, target});
@@ -81,11 +82,9 @@ Page({
   
   async changebtn_clicked(event) { 
     if(this.data.step != steps[1] && this.data.step != steps[2] )
-    {
-      wx.showToast({
-        title: '当前状态不能切换场景',
-      })
-      this.error("当前状态不能切换场景");
+    {  
+      log("当前状态不能切换场景:"+this.data.step ); 
+      return;
     }
 
     var selectedId = event.currentTarget.id;
@@ -93,10 +92,11 @@ Page({
     if(this.resource == null) {
       return;
     }
-    var currentstep = this.data.step;
+    var currentstep = steps.indexOf(this.data.step);
     this.showLoading("场景加载中...",3);
     await this.resource.selected_model_change(selectedId);
-    log("reset to befor step:"+currentstep) 
+
+    log("reset to befor step:"+currentstep)  
     this.hideLoading(currentstep);
   }, 
 
@@ -104,7 +104,7 @@ Page({
     if(this.data.step!= steps[2])
     {
       wx.showToast({
-        title: '请放置场景再拍照...',
+        title: '请放置场景再拍照...'+this.data.step,
       })
       return;
     } 
@@ -146,7 +146,7 @@ Page({
 
   exitBtnClicked()
   {  
-    this.setData({ step: steps[3]}); 
+    this.setData({ step: steps[2]}); 
   }, 
   
   //绘制海报
@@ -205,7 +205,7 @@ Page({
       this.hideLoading(-1);  
     }
   },
-  
+
   getTempImage(canvas)
   {
     var that = this;
