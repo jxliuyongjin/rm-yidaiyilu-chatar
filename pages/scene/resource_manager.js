@@ -1,54 +1,24 @@
 import { errorHandler,requestFile,showAuthModal,log} from "../../utils/utils"
-import { get_reticle,get_config}  from "../../utils/glbconfig"
+//import { get_reticle,get_config}  from "../../utils/glbconfig"
 
 class resource_manager {
   constructor() {} 
-  /**
-   * 下载场景必要素材
-   * @return Promise
-   * @memberof Food
-   */
-  loadAssets(index=0) { 
-    if (this.downloadAssets) {
-      return this.downloadAssets;
-    }
-    if(!this.resource_config)
-    { 
-        this.getConfigData();
-    }
-
-    this.fristLoadSource();
-  } 
-
+  
   getConfigData()
-  {
-    this.resource_config = get_config();   
-    log("getConfigData 3333："+this.resource_config);
-    return this.resource_config;
-  } 
-
-  fristLoadSource(index=0)
-  {
-    log("fristLoadSource 1111");
-    if (this.downloadAssets) {
-      return this.downloadAssets;
-    }   
-
-    this.modelIndex = index;
-    this.config = this.resource_config[index];
-    var reticleurl = get_reticle(); 
-    if(this.config&&reticleurl)
-    {  
-      this.downloadAssets = Promise.all([
-        requestFile(reticleurl), 
-        requestFile(this.config.glburl)
-      ]).then((res) => { 
-        return res;
-      });  
-    }
-    return this.downloadAssets;
-  }
-
+  { 
+    var reticleurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/glbconfig.json";  
+    this.configPromise =  requestFile(reticleurl,"text"); 
+    var that = this;
+    this.configPromise
+    // .then(res =>{ 
+    //   setTimeout(() => {
+    //     return this.configPromise;
+    //   }, 5);
+    // })
+    .then(res =>{ 
+      that.resource_config = res;  
+    });  
+  }  
 
   /**
    * 初始化场景和模型，但此时还没有将模型加入到场景内。
@@ -56,13 +26,19 @@ class resource_manager {
    * @param {*} slam 传入的slam对象
    * @memberof Food
    */
-  async initScene({ detail: slam }) {    
+  async initScene(slam , index=0) {  
+    console.log("this.resource_config:"+this.resource_config);
+    if(!this.resource_config)
+    {
+      this.resource_config = await this.configPromise;   
+    }  
+ 
     try { 
       this.slam = slam;
       const [
         reticleArrayBuffer, 
         glbArrayBuffer,
-      ] = await this.downloadAssets; 
+      ] = await this.fristLoadSource(index); 
       
       log("initScene enner"); 
       const [reticleModel, current_model] = await Promise.all([
@@ -93,6 +69,28 @@ class resource_manager {
       return false;
     }
   } 
+  
+  fristLoadSource(index=0)
+  {
+    log("fristLoadSource 1111："+ this.resource_config);  
+    this.modelIndex = index; 
+    var reticleurl = this.resource_config.reticle; 
+    this.config = this.resource_config.modelsInfo[index]; 
+    console.log("reticleurl:"+reticleurl);
+    console.log("config:"+this.config);
+    if(this.config&&reticleurl)
+    {  
+      var downloadAssets = Promise.all([
+        requestFile(reticleurl), 
+        requestFile(this.config.glburl)
+      ]).then((res) => { 
+        return res;
+      });  
+      return downloadAssets;
+    }
+    return downloadAssets;
+  }
+
   
   setVisibleReticleMode(bool)
   {

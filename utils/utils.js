@@ -43,12 +43,12 @@ export function showAuthModal(page) {
   });
 }
 
-export function requestFile(url) {
+export function requestFile(url,responseType="arraybuffer") {
   return new Promise((resolve, reject) => {
     wx.request({
       url,
       dataType: "",
-      responseType: "arraybuffer",
+      responseType: responseType,
       success({ statusCode, data }) {
         if (statusCode === 200) {
           resolve(data);

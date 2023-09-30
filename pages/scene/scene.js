@@ -29,23 +29,21 @@ Page({
     }
  
     this.resource = new  resource_manager();
-    ////加载配置
-    var icon_arrstemp = this.resource.getConfigData();
-    this.setData({
-      icon_arrs:icon_arrstemp, 
-    }); 
-
-    this.resource.loadAssets();   
     // 设置屏幕常亮
     wx.setKeepScreenOn({
       keepScreenOn: true,
     });
+    
+    ////加载配置
+    this.resource.getConfigData();  
   },
 
   async ready({ detail: slam }) {
     this.slam = slam;
-    log("ready 11111");
-    var boo = await this.resource.initScene({ detail: slam });   
+    log("ready 11111"); 
+    var startModelIndex = 0
+    var boo = await this.resource.initScene(slam ,startModelIndex);
+    console.log("ready resource initscene end");
     if(boo) {
       this.addAnchors(); 
     }else{

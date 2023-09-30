@@ -23,11 +23,7 @@ Page({
      */
     onReady() {
       this.resource = new  resource_manager();
-      ////加载配置
-      var icon_arrstemp = this.resource.getConfigData();
-      this.setData({
-        icon_arrs:icon_arrstemp, 
-      }); 
+       
     },
 
     /**
