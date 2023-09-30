@@ -42,10 +42,14 @@ Page({
     this.slam = slam;
     log("ready 11111"); 
     var startModelIndex = 0
-    var boo = await this.resource.initScene(slam ,startModelIndex);
+    var boo = await this.resource.initScene(slam ,startModelIndex); 
     console.log("ready resource initscene end");
     if(boo) {
       this.addAnchors(); 
+      var modelsInfo =  this.resource.getmodelsInfo();
+      this.setData({
+        icon_arrs:modelsInfo
+      }) 
     }else{
       wx.hideLoading()
       wx.showToast({

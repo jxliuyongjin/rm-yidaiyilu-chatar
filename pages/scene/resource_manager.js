@@ -19,7 +19,10 @@ class resource_manager {
       that.resource_config = res;  
     });  
   }  
-
+  getmodelsInfo()
+  {
+    return this.resource_config.modelsInfo
+  }
   /**
    * 初始化场景和模型，但此时还没有将模型加入到场景内。
    * 只能在slam组件ready后使用
@@ -45,14 +48,16 @@ class resource_manager {
         slam.createGltfModel(reticleArrayBuffer),
         slam.createGltfModel(glbArrayBuffer), 
       ]);  
- 
-      slam.defaultAmbientLight.intensity = "0.82";
-      slam.defaultDirectionalLight.intensity = "2.5"; 
+      
+      var defaultAmbientLight = this.resource_config.light.defaultAmbientLight; 
+      var defaultDirectionalLight =  this.resource_config.light.defaultDirectionalLight; 
+      slam.defaultAmbientLight.intensity = defaultAmbientLight;
+      slam.defaultDirectionalLight.intensity = defaultDirectionalLight;
       slam.enableShadow(); // 开启阴影功能
 
       log("initScene current_model geted"); 
       current_model.visible = false;  
-      var modelsize = this.config? this.config.size:0.5; 
+      var modelsize = this.currentModelInfo? this.currentModelInfo.size:0.5; 
       console.log("modelsize:"+modelsize);
       slam.add(current_model, modelsize,0);
       // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
@@ -75,14 +80,14 @@ class resource_manager {
     log("fristLoadSource 1111："+ this.resource_config);  
     this.modelIndex = index; 
     var reticleurl = this.resource_config.reticle; 
-    this.config = this.resource_config.modelsInfo[index]; 
-    console.log("reticleurl:"+reticleurl);
-    console.log("config:"+this.config);
-    if(this.config&&reticleurl)
+    this.currentModelInfo = this.resource_config.modelsInfo[index]; 
+    log("reticleurl:"+reticleurl);
+    log("config:"+this.currentModelInfo);
+    if(this.currentModelInfo&&reticleurl)
     {  
       var downloadAssets = Promise.all([
         requestFile(reticleurl), 
-        requestFile(this.config.glburl)
+        requestFile(this.currentModelInfo.glburl)
       ]).then((res) => { 
         return res;
       });  
@@ -115,11 +120,12 @@ class resource_manager {
       this.slam.destroyObject(this.current_model); 
     } 
 
-    this.config = this.resource_config[index]; 
-    const glbArrayBuffer = await requestFile(this.config.glburl);
+    this.currentModelInfo = this.resource_config.modelsInfo[index]; 
+
+    const glbArrayBuffer = await requestFile(this.currentModelInfo.glburl);
     this.current_model  = await this.slam.createGltfModel(glbArrayBuffer)
     
-    var modelsize = this.config?this.config.size:0.5; 
+    var modelsize = this.currentModelInfo?this.currentModelInfo.size:0.5; 
     console.log("set_current_glb modelsize:"+modelsize);
      
     this.slam.add(this.current_model, modelsize,0); 

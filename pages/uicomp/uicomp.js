@@ -1,4 +1,5 @@
 import resource_manager from "./../scene/resource_manager"
+import {getInfoJson} from "./../../utils/configsetd"
 
 Page({
 
@@ -23,7 +24,7 @@ Page({
      */
     onReady() {
       this.resource = new  resource_manager();
-       
+      getInfoJson();
     },
 
     /**
