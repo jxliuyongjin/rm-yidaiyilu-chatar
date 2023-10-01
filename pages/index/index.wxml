@@ -1,10 +1,20 @@
 <!--index.wxml-->
-<view class="wrapper">
-  <view class="button-wrap"> 
-    <view class="btn-start">
-      <image class="home-btn" mode="widthFix" src="../../assets/images/home-btn.png"></image>
-      <text bindtap="handleUseComponent">开始AR</text>
-    </view>
-  </view> 
-  <image class="home-bg" mode="scaleToFill" src="../../assets/images/home-bg.jpg"></image> 
+<view class="wrapper"> 
+  <image class="home-bg" mode="scaleToFill" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/bg.png"></image> 
+  <image class="button1cls" id="0" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn1.png"></image>  
+  <image class="button2cls" id="1" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn2.png"></image>  
+      <image class="decoration1" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec1.png"></image>
+      <image class="decoration2" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec2.png"></image>
+  <image class="button3cls" id="2" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn3.png"></image>  
+  <image class="button4cls" id="3" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn4.png"></image>  
+    <image class="decoration3" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec3.png"></image>
+    <image class="decoration4" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec4.png"></image>
+  <image class="button5cls" id="4" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn5.png"></image>  
+  <image class="button6cls" id="5" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn6.png"></image>   
+    <image class="decoration5" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec5.png"></image>
+    <image class="decoration6" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec6.png"></image>
 </view> 
+
+<view class="loading" wx:if="{{onloading}}">
+  <image class="loading" src="/assets/images/loading.jpg" ></image>
+</view>

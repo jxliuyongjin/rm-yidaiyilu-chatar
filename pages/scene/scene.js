@@ -13,14 +13,24 @@ Page({
   data: {
     license: "", // 小程序授权证书，可用来去除水印，联系我们获取，需提供小程序appid
     version: "v1",
-    step: "initing", 
-    icon_arrs:[],  
+    step: "initing",  
+    icon_arrs:[],
     photoPath:"",
-    haibaoPhotoPath:""
+    haibaoPhotoPath:"",
+    moduleindex:0
   },
 
-  onLoad() { 
-    this.showLoading("初始化中...",0)  
+  onLoad(options) { 
+    this.showLoading("初始化中...",0)
+    var moduleindex = options.moduleindex;
+    console.log("onload moduleindex:"+moduleindex);
+    if(moduleindex<0||moduleindex>6)
+    {
+      return;
+    }
+    this.setData({
+      moduleindex
+    });
     const isSupportV2 = getSlamV2Support(); 
     if(isSupportV2) {
       this.setData({
@@ -41,14 +51,18 @@ Page({
   async ready({ detail: slam }) {
     this.slam = slam;
     log("ready 11111"); 
-    var startModelIndex = 0
-    var boo = await this.resource.initScene(slam ,startModelIndex); 
+    var moduleindex = this.data.moduleindex;
+    var boo = await this.resource.initScene(slam ,moduleindex); 
     console.log("ready resource initscene end");
     if(boo) {
       this.addAnchors(); 
-      var modelsInfo =  this.resource.getmodelsInfo();
-      this.setData({
-        icon_arrs:modelsInfo
+      
+      var modelsInfo =  this.resource.getResourceConfig(); 
+      modelsInfo.modelsInfo.forEach(function(value){
+        value.iconurl =  modelsInfo.baseurl + value.iconurl;
+      }); 
+      this.setData({ 
+        icon_arrs:modelsInfo.modelsInfo
       }) 
     }else{
       wx.hideLoading()
@@ -89,15 +103,21 @@ Page({
       return;
     }
 
-    var selectedId = event.currentTarget.id;
+    var selectedId = event.currentTarget.id; 
     console.log("changebtn_clicked currentTarget.id:"+selectedId);
     if(this.resource == null) {
       return;
     }
     var currentstep = steps.indexOf(this.data.step);
     this.showLoading("场景加载中...",3);
-    await this.resource.selected_model_change(selectedId);
-
+    var success = await this.resource.selected_model_change(selectedId);
+    if(success)
+    { 
+      this.setData({
+        moduleindex:selectedId
+      });
+    }
+    
     log("reset to befor step:"+currentstep)  
     this.hideLoading(currentstep);
   }, 

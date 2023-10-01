@@ -6,8 +6,8 @@ class resource_manager {
   
   getConfigData()
   { 
-    var reticleurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/glbconfig.json";  
-    this.configPromise =  requestFile(reticleurl,"text"); 
+    var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/glbconfig.json";  
+    this.configPromise =  requestFile(configurl,"text"); 
     var that = this;
     this.configPromise
     // .then(res =>{ 
@@ -18,10 +18,11 @@ class resource_manager {
     .then(res =>{ 
       that.resource_config = res;  
     });  
-  }  
-  getmodelsInfo()
+  }
+
+  getResourceConfig()
   {
-    return this.resource_config.modelsInfo
+    return this.resource_config;//this.resource_config.modelsInfo,
   }
   /**
    * 初始化场景和模型，但此时还没有将模型加入到场景内。
@@ -79,15 +80,18 @@ class resource_manager {
   {
     log("fristLoadSource 1111："+ this.resource_config);  
     this.modelIndex = index; 
-    var reticleurl = this.resource_config.reticle; 
+
     this.currentModelInfo = this.resource_config.modelsInfo[index]; 
+    var reticleurl = this.geturl(this.resource_config.reticle); 
+    var glburl = this.geturl(this.currentModelInfo.glburl)
     log("reticleurl:"+reticleurl);
-    log("config:"+this.currentModelInfo);
+    log("config:"+glburl);
+
     if(this.currentModelInfo&&reticleurl)
     {  
       var downloadAssets = Promise.all([
         requestFile(reticleurl), 
-        requestFile(this.currentModelInfo.glburl)
+        requestFile(glburl)
       ]).then((res) => { 
         return res;
       });  
@@ -120,9 +124,10 @@ class resource_manager {
       this.slam.destroyObject(this.current_model); 
     } 
 
-    this.currentModelInfo = this.resource_config.modelsInfo[index]; 
+    this.currentModelInfo = this.resource_config.modelsInfo[index];  
+    var glburl = this.geturl(this.currentModelInfo.glburl);
 
-    const glbArrayBuffer = await requestFile(this.currentModelInfo.glburl);
+    const glbArrayBuffer = await requestFile(glburl);
     this.current_model  = await this.slam.createGltfModel(glbArrayBuffer)
     
     var modelsize = this.currentModelInfo?this.currentModelInfo.size:0.5; 
@@ -208,12 +213,19 @@ class resource_manager {
     };
   }
 
+  geturl(url)
+  { 
+    return this.resource_config.baseurl+url
+  }
   // 清理
   clear() {
     this.slam = null;
     this.model = null;
     this.downloadAssets = null;
   }
+
+
 }
+
 
 export default resource_manager;

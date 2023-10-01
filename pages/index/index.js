@@ -4,25 +4,19 @@ Page({
   data: {
     sceneId: '0b67f1deac521f34379f0cf4faef99e1',
     params: "&shadow=0.15&ambient=0.3&directional=2.5&horizontal=0&vertical=0&envMap=default&size=30&rotation=0&animation=&animationLoop=true&shareImage=&gyroscope=false", 
-    shareimages:"$shareImage=https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/erwei.jpg"
+    shareimages:"$shareImage=https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/erwei.jpg",
+    onloading:true,
+    imageLoadednum:0,
   },
  
-  // 不带参数
-  handleAr(){
-    // wx.uma.trackEvent("home_entry_slamScene", {sceneId: this.data.sceneId});
-    wx.navigateTo({ url: `plugin://kivicube-slam/scene?id=${this.data.sceneId}` });
-  },
-
-  // 带参数
-  handleArWithParams() {
-    // wx.uma.trackEvent("home_entry_slamScene", {sceneId: this.data.sceneId});
-    wx.navigateTo({ url: `plugin://kivicube-slam/scene?id=${this.data.sceneId}${this.data.params}` });
-  },
-
-  // 进入插件组件页面
-  handleUseComponent() { 
-    wx.navigateTo({ url: "/pages/scene/scene" });
-  },
+  onLoad() {  
+    this.setData({
+    imageLoadednum:0
+  }) 
+    this.setData({
+      onloading:true
+    })  
+  },  
 
   onShareAppMessage() {
     return {
@@ -32,5 +26,28 @@ Page({
     };
   },
 
-
+  imageLoaded(e)
+  {
+    var imageLoadednum = this.data.imageLoadednum+1; 
+    this.setData({
+      imageLoadednum
+    }) 
+    if(imageLoadednum>=13)
+    {
+      this.setData({
+        onloading:false
+      })  
+    }
+    console.log("this.data.imageLoadednum:"+this.data.imageLoadednum)
+  },
+ 
+  gotoModel(e){
+    console.log(e.target.id==1);
+    var moduleindex = e.target.id
+    if(moduleindex<0||moduleindex>6)
+    {
+      return;
+    }
+    wx.navigateTo({ url: `/pages/scene/scene?moduleindex=${moduleindex}`});
+  }
 });

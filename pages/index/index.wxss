@@ -9,48 +9,120 @@
   text-align: center;
 }
 
-.button-wrap {
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 44vh;
-}
-
-.btn-start {
-  flex-shrink: 0;
-  position: relative; 
-  width: 302rpx;
-  height: 164rpx;
-  line-height: 164rpx;
-  margin: 200rpx auto 0;
-  color: #fff;
-  letter-spacing: 1rpx;
-}
-
-.btn-start text {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 24rpx;
-  line-height: 1;
-  white-space: nowrap;
-  padding: 20rpx;
-}
-
-.home-btn {
-  width: 105%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .home-bg {
   position: absolute;
   z-index: -1;
   width: 100%; 
   height: 100%;
+}
+
+.loading{ 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+
+.button1cls{
+  position: absolute;
+  top:16.49vh;
+  left:10.67vw;
+  width:44.533vw;
+  height:25.637vh; 
+  /* background-color: green; */
+  z-index: 0;
+}
+
+.button2cls{
+  position: absolute;
+  top:22.5vh;
+  left:61vw;
+  width: 37.2vw;
+  height: 22.113vh; 
+}
+
+.button3cls{
+  position: absolute;
+  top:44vh;
+  left:0.2vw;
+  width: 49.733vw;
+  height: 26.16vh; 
+  /* background-color: red; */
+}
+
+.button4cls{
+  position: absolute;
+  top:47.6vh;
+  left:59vw;
+  width: 38.533vw;
+  height: 22.938vh; 
+  /* background-color: gold; */
+}
+
+.button5cls{
+  position: absolute;
+  top:70.5vh;
+  left:2.8vw;
+  width: 48.533vw;
+  height: 22vh; 
+  /* background-color: rgb(40, 34, 128); */
+}
+
+.button6cls{
+  position: absolute;
+  top:70.91vh;
+  left:64vw;
+  width: 35.733vw;
+  height: 21.664vh; 
+  /* background-color: rgb(40, 34, 128); */
+}
+
+.decoration1{
+  position: absolute;
+  left:0.1333vw;
+  top:29.3853vh;
+  width:50.933vw;
+  height:23.613vh; 
+}
+
+.decoration2{
+  position: absolute;
+  left:47vw;
+  top:37.856vh;
+  width:34vw;
+  height:14.03vh; 
+}
+
+.decoration3{
+  position: absolute;
+  left:0vw;
+  top:57.121vh;
+  width:54vw;
+  height:18.44vh; 
+} 
+
+.decoration4{
+  position: absolute;
+  left:55.867vw;
+  top:62.069vh;
+  width:29.07vw;
+  height:13.19vh; 
+}
+
+.decoration5{
+  position: absolute;
+  left:6.27vw;
+  top:83.81vh;
+  width:28vw;
+  height:14.692vh; 
+}
+
+.decoration6{
+  position: absolute;
+  left:55.2vw;
+  top:84.858vh;
+  width:37.333vw;
+  height:14.993vh; 
 }

@@ -5,11 +5,11 @@ const {
   setShareInfo,
 } = requirePlugin("kivicube-slam");
 App({
-  onLaunch() {
-    let shareImg = "https://kivicube-resource.kivisense.com/slam-ar/share.jpeg"
+  onLaunch() { 
+    let shareImg = "https://kivicube-resource.kivisense.com/slam-ar/share.jpeg";
     this.globalData = {
       shareImg,
-      appName: "SLAM插件快速接入示例",
+      appName: "送你一次环球之旅",
     }
     const isTabbarPage = false;
     setBackPagePath("/pages/index/index", isTabbarPage);
@@ -30,8 +30,7 @@ App({
       title: "分享",
       path: "/pages/scene/scene",
       imageUrl: "", // 设置时，会覆盖页面参数指定的缩略图地址
-      promise: new Promise((resolve) => { 
-         
+      promise: new Promise((resolve) => {  
       }),
     });
       
