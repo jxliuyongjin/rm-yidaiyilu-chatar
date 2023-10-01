@@ -37,8 +37,7 @@ Page({
       this.setData({
         onloading:false
       })  
-    }
-    console.log("this.data.imageLoadednum:"+this.data.imageLoadednum)
+    } 
   },
  
   gotoModel(e){

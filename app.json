@@ -6,7 +6,7 @@
     ],
     "plugins": {
         "kivicube-slam": {
-            "version": "1.5.2",
+            "version": "1.5.3",
             "provider": "wx12ad8a61f049ea02"
         }
     },

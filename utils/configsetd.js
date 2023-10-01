@@ -1,10 +1,10 @@
 var config = {
   baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/",
-  reticle:"reticle.glb",
   light:{
       defaultAmbientLight:"0.82",    
       defaultDirectionalLight:"2.5",
-  },
+  }, 
+  reticle:"reticle.glb", 
   modelsInfo:[
       {
       model_idnex:0,

@@ -20,9 +20,9 @@ class resource_manager {
     });  
   }
 
-  getResourceConfig()
+  getModelsInfo()
   {
-    return this.resource_config;//this.resource_config.modelsInfo,
+    return this.resource_config.modelsInfo;
   }
   /**
    * 初始化场景和模型，但此时还没有将模型加入到场景内。
@@ -30,8 +30,7 @@ class resource_manager {
    * @param {*} slam 传入的slam对象
    * @memberof Food
    */
-  async initScene(slam , index=0) {  
-    console.log("this.resource_config:"+this.resource_config);
+  async initScene(slam , index=0) {   
     if(!this.resource_config)
     {
       this.resource_config = await this.configPromise;   
@@ -83,9 +82,7 @@ class resource_manager {
 
     this.currentModelInfo = this.resource_config.modelsInfo[index]; 
     var reticleurl = this.geturl(this.resource_config.reticle); 
-    var glburl = this.geturl(this.currentModelInfo.glburl)
-    log("reticleurl:"+reticleurl);
-    log("config:"+glburl);
+    var glburl = this.geturl(this.currentModelInfo.glburl);
 
     if(this.currentModelInfo&&reticleurl)
     {  
@@ -136,7 +133,7 @@ class resource_manager {
     this.slam.add(this.current_model, modelsize,0); 
      // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
     this.slam.setGesture(this.current_model); 
-    if(this.current_model_Pos)
+    if(this.current_model_Pos !== undefined)
     { 
       this.tap(this.current_model_Pos)
     }
@@ -214,7 +211,7 @@ class resource_manager {
   }
 
   geturl(url)
-  { 
+  {   
     return this.resource_config.baseurl+url
   }
   // 清理

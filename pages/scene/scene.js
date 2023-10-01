@@ -14,9 +14,11 @@ Page({
     license: "", // 小程序授权证书，可用来去除水印，联系我们获取，需提供小程序appid
     version: "v1",
     step: "initing",  
-    icon_arrs:[],
-    photoPath:"",
+    uiIconsPath:{},
+    modelIcons:[],
+    photoPath:"", 
     haibaoPhotoPath:"",
+    haibaoPhotoPathErweima:"",
     moduleindex:0
   },
 
@@ -44,8 +46,29 @@ Page({
       keepScreenOn: true,
     });
     
+    this.resetTempIcon();
     ////加载配置
     this.resource.getConfigData();  
+  },
+
+  setUIPath()
+  { 
+    var takephotoBtnIcon = this.resource.geturl("ui/content/photoBtn.png");
+    var photoBgIcon = this.resource.geturl("ui/drawphoto/bg.png");
+    var anotherIcon = this.resource.geturl("ui/drawphoto/another.png");
+    var erweimaIcon = this.resource.geturl("ui/drawphoto/erweima.png");
+    var kuangIcon = this.resource.geturl("ui/drawphoto/kuang.png");
+    var savebtnIcon = this.resource.geturl("ui/drawphoto/savebtn.png");
+    var textfIcon = this.resource.geturl("ui/drawphoto/textf.png");
+    return {
+      takephotoBtnIcon,
+      photoBgIcon,
+      anotherIcon,
+      erweimaIcon,
+      kuangIcon,
+      savebtnIcon,
+      textfIcon,
+    }
   },
 
   async ready({ detail: slam }) {
@@ -57,13 +80,18 @@ Page({
     if(boo) {
       this.addAnchors(); 
       
-      var modelsInfo =  this.resource.getResourceConfig(); 
-      modelsInfo.modelsInfo.forEach(function(value){
-        value.iconurl =  modelsInfo.baseurl + value.iconurl;
+      var getModelsInfo =  this.resource.getModelsInfo();   
+      var that = this;
+      getModelsInfo.forEach(value=>{ 
+        value.iconurl = that.resource.geturl(value.iconurl);  
       }); 
+
+      var uiIconsPath = this.setUIPath();
       this.setData({ 
-        icon_arrs:modelsInfo.modelsInfo
+        modelIcons:getModelsInfo,
+        uiIconsPath
       }) 
+
     }else{
       wx.hideLoading()
       wx.showToast({
@@ -80,6 +108,7 @@ Page({
   },
 
   tap({touches, target}) { 
+    console.log("tap touches:"+touches)
     if(this.data.step != steps[1] && this.data.step != steps[2] )
     {
       wx.showToast({
@@ -119,10 +148,11 @@ Page({
     }
     
     log("reset to befor step:"+currentstep)  
-    this.hideLoading(currentstep);
+    this.hideLoading(currentstep); 
   }, 
 
-  async take_photo() {
+  async take_photo(e) { 
+
     if(this.data.step!= steps[2])
     {
       wx.showToast({
@@ -130,6 +160,8 @@ Page({
       })
       return;
     } 
+
+    this.resetTempIcon();
 
     this.resource.setVisibleReticleMode(false);
     var currentTep = this.data.step;
@@ -167,17 +199,25 @@ Page({
   },
 
   exitBtnClicked()
-  {  
+  {   
+    this.resetTempIcon();
     this.setData({ step: steps[2]}); 
   }, 
-  
-  //绘制海报
-  async drawHaiBao(res)
+
+  resetTempIcon()
   {
-    log("drawHaiBao inner") 
+    this.setData({
+      haibaoPhotoPath:"",
+      haibaoPhotoPathErweima:""
+    }) 
+  },
+  
+    //绘制海报
+  async drawHaiBao(res)
+  { 
     var canvas = res.node
     if(!canvas) { 
-      console.log("canvas is null");
+      log("canvas is null");
       return;
     }
     this.canvas = canvas;
@@ -196,8 +236,30 @@ Page({
       canvas.width = res.width * dpr;
       canvas.height = res.height * dpr;
       canvasContext.scale(dpr,dpr); 
-      canvasContext.fillRect(0,0,canvas_width,canvas_height); 
+      canvasContext.fillRect(0,0,canvas_width,canvas_height);  
+      canvasContext.clearRect(0, 0, canvas_width, canvas_height);   
+    
+      //绘制背景
+      const bgImage = canvas.createImage() 
+      await new Promise(resolve => {
+        bgImage.onload = resolve
+        bgImage.src = this.data.uiIconsPath.photoBgIcon // 要加载的图片 url
+      }) 
+      canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);  
       
+      const rateHW = canvas_height/canvas_width; 
+      
+      const imageWidth = canvas_width*0.5667;
+      const imageHeight = rateHW*imageWidth; 
+
+      const kuangwidth = canvas_width*0.59467;
+      const kuangHeight = imageHeight+canvas_width*0.0266;
+      const kuangLeft = (canvas_width-kuangwidth)*0.5;
+      const kuangTop= (canvas_height-kuangHeight)*0.3;
+
+      const imageLeft = kuangLeft +  canvas_width*0.00667;
+      const imageTop= kuangTop +  canvas_width*0.00933;  
+
       // 创建一个图片
       const image = canvas.createImage() 
       // 把图片画到 canvas 上 
@@ -205,57 +267,97 @@ Page({
       await new Promise(resolve => {
         image.onload = resolve
         image.src =  this.data.photoPath;// 要加载的图片 url
-      })  
-  
-      // 再创建一个图片
-      // const erweiImage = canvas.createImage() 
-      // await new Promise(resolve => {
-      //   erweiImage.onload = resolve
-      //   erweiImage.src = "https://mp-c34bf075-2376-4524-984d-4801256468f3.cdn.bspapp.com/glb/erwei.jpg" // 要加载的图片 url
-      // }) 
+      }) 
+      canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight);  
+        //绘制框
+      const kuangImage = canvas.createImage() 
+      await new Promise(resolve => {
+        kuangImage.onload = resolve
+        kuangImage.src = this.data.uiIconsPath.kuangIcon // 要加载的图片 url
+      }) 
+      canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
       
-      const offwidth = canvas_width*0.04;
-      const offheight = canvas_height*0.04;
-      //context.drawImage(erweiImage, 0, 0, canvas_width, canvas_height);  
-      canvasContext.clearRect(0, 0, canvas_width, canvas_height);   
-      canvasContext.drawImage(image,offwidth, offheight, canvas_width-offwidth*2, canvas_height-offheight*2); 
-      this.getTempImage(canvas)
-      this.hideLoading(-1);  
+      var tht = this;
+      //生成一张没有二维码的,展示用
+      await this.getTempImage(canvas).then(res=>{ 
+          log("res.tempFilePatp 111:"+res.tempFilePath);  
+          tht.setData({
+            haibaoPhotoPath:res.tempFilePath
+          })  
+          log("this.data.haibaoPhotoPath"+tht.data.haibaoPhotoPath); 
+      })
+      .catch(err=>{ 
+          wx.hideLoading();
+          wx.showToast({ title: "生成照片失败"}); 
+          log(err)
+          return
+      })  
+
+      const erweitop = canvas_height*0.7916;
+      const erweiLeft = imageLeft;
+      const erweiWidth = canvas_width*0.214;
+      const erweiHeight = erweiWidth;
+      //绘制二维码
+      const erweimaImage = canvas.createImage() 
+      await new Promise(resolve => {
+        erweimaImage.onload = resolve
+        erweimaImage.src =this.data.uiIconsPath.erweimaIcon// 要加载的图片 url
+      }) 
+      canvasContext.drawImage(erweimaImage, erweiLeft, erweitop, erweiWidth, erweiHeight);  
+       
+      const textWidth = canvas_width*0.20472;
+      const textLeft = imageLeft+imageWidth-textWidth;
+      const texttop = erweitop+canvas_width*0.121333;
+      const textHeight =  textWidth*0.45206;
+      //绘制文本
+      const textmaImage = canvas.createImage() 
+      await new Promise(resolve => {
+        textmaImage.onload = resolve
+        textmaImage.src = this.data.uiIconsPath.textfIcon// 要加载的图片 url
+      }) 
+      canvasContext.drawImage(textmaImage, textLeft, texttop, textWidth, textHeight);  
+
+      this.getTempImage(canvas).then(res=>{  
+          tht.setData({
+            haibaoPhotoPathErweima:res.tempFilePath
+          })  
+          log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPathErweima);  
+          wx.hideLoading();
+      })
+      .catch(err=>{ 
+          wx.hideLoading();
+          wx.showToast({ title: "生成照片失败"}); 
+          log(err)
+      }) 
     }
     catch(err) {
-      this.error(error);
-      this.hideLoading(-1);  
+      console.log(err); 
     }
-  },
+  }, 
 
   getTempImage(canvas)
-  {
-    var that = this;
-    wx.canvasToTempFilePath({
-      x: 0,
-      y: 0,
-      fileType: 'jpg',
-      quality: 1,
-      canvas: canvas, 
-      success:res=>{  
-        wx.hideLoading();
-        that.setData({
-          haibaoPhotoPath:res.tempFilePath
-        })  
-        console.log("this.data.haibaoPhotoPath"+that.data.haibaoPhotoPath);
-      },
-      fail:err=>{ 
-        wx.hideLoading();
-        console.log(err)
-        wx.showToast({ title: "生成照片失败"}); 
-      } 
-    })   
+  { 
+    return new Promise((resolve,reject)=>{ 
+        wx.canvasToTempFilePath({
+          x: 0,
+          y: 0,
+          fileType: 'jpg',
+          quality: 1,
+          canvas: canvas, 
+          success:res=>{  
+            resolve(res);
+          },
+          fail:err=>{ 
+            reject(err)
+          } 
+        })   
+    })
   },
 
   async onSaveImageClicked()
-  {   
-    var tempFilePath = this.data.haibaoPhotoPath;
-    if(this.data.step!=steps[4]||!tempFilePath)
+  {
+    var tempFilePath = this.data.haibaoPhotoPathErweima;
+    if(this.data.step!=steps[4]||tempFilePath.length===0)
     {
       log("没有照片呢...")
       return;

@@ -1,5 +1,6 @@
 import resource_manager from "./../scene/resource_manager"
 import {getInfoJson} from "./../../utils/configsetd"
+import {log} from "./../../utils/utils"
 
 Page({
 
@@ -23,9 +24,10 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
-      this.resource = new  resource_manager();
-      getInfoJson();
+      // this.resource = new  resource_manager();
+      // getInfoJson();
     },
+    
 
     /**
      * 生命周期函数--监听页面显示
@@ -60,121 +62,135 @@ Page({
       console.log(event.currentTarget.id);
     },
 
-    async take_photo() {
-      wx.showLoading({ title: "拍照中...", mask: true });
-      try {
-        /**
-         * 拍照接口
-         * @param {Number} [figureWidth=renderWidth] - 指定照片的宽度。高度会依照渲染区域宽高比自动计算出来。默认为渲染宽度。
-         * @param {String} [fileType=jpg] - 文件格式，只支持jpg/png。默认为jpg
-         * @param {Number} [quality=0.9] - 照片质量，jpg时有效。默认为0.9
-         * @returns {Promise<photoPath>} - 照片文件临时地址
-         */
-        const photoPath = await this.slam.takePhoto();
-        this.setData({
-          photoPath,
-        })
+    take_photo(){
+      const query = wx.createSelectorQuery()
+      query.select('#showhaibao_canvas')
+      .fields({ node: true, size: true })
+      .exec((res) => {  
+        this.drawHaiBao(res[0])    
+      })
+    },
+    //绘制海报
+    async drawHaiBao(res)
+    { 
+      var canvas = res.node
+      if(!canvas) { 
+        console.log("canvas is null");
+        return;
+      }
+      this.canvas = canvas;
+      console.log("canvas geted:"+canvas); 
+      try{ 
+        // 创建离屏 2D canvas 实例 
+        // 获取 context。注意这里必须要与创建时的 type 一致
+        const canvasContext = canvas.getContext('2d')
+    
+        const canvas_width = res.width;
+        const canvas_height = res.height;
+    
+        log("drawHaiBao enner 22222");
+        //解决绘图不清晰
+        const dpr = wx.getSystemInfoSync().pixelRatio;
+        canvas.width = res.width * dpr;
+        canvas.height = res.height * dpr;
+        canvasContext.scale(dpr,dpr); 
+        canvasContext.fillRect(0,0,canvas_width,canvas_height);  
+        canvasContext.clearRect(0, 0, canvas_width, canvas_height);   
+       
+        //绘制背景
+        const bgImage = canvas.createImage() 
+        await new Promise(resolve => {
+          bgImage.onload = resolve
+          bgImage.src = "/assets/images/drawphoto/bg.png" // 要加载的图片 url
+        }) 
+        canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);  
         
-      } catch (e) {
-        wx.hideLoading();
-        console.error(e);
-        errorHandler(`拍照失败 - ${e.message}`);
+        const rateHW = canvas_height/canvas_width; 
+
+        const imageWidth = canvas_width*0.5667;
+        const imageHeight = rateHW*imageWidth; 
+
+        const kuangwidth = canvas_width*0.59467;
+        const kuangHeight = imageHeight+canvas_width*0.0266;
+        const kuangLeft = (canvas_width-kuangwidth)*0.5;
+        const kuangTop= (canvas_height-kuangHeight)*0.3;
+
+
+        const imageLeft = kuangLeft +  canvas_width*0.00667;
+        const imageTop= kuangTop +  canvas_width*0.00933;  
+
+        // 创建一个图片
+        const image = canvas.createImage() 
+        // 把图片画到 canvas 上 
+        // 等待图片加载
+        await new Promise(resolve => {
+          image.onload = resolve
+          image.src =  "/assets/images/drawphoto/share.jpeg";// 要加载的图片 url
+        }) 
+        canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight); 
+
+         //绘制框
+        const kuangImage = canvas.createImage() 
+        await new Promise(resolve => {
+          kuangImage.onload = resolve
+          kuangImage.src = "/assets/images/drawphoto/kuang.png" // 要加载的图片 url
+        }) 
+        canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
+        
+        const erweitop = canvas_height*0.7916;
+        const erweiLeft = imageLeft;
+        const erweiWidth = canvas_width*0.214;
+        const erweiHeight = erweiWidth;
+        //绘制框
+        const erweimaImage = canvas.createImage() 
+        await new Promise(resolve => {
+          erweimaImage.onload = resolve
+          erweimaImage.src = "/assets/images/drawphoto/erweima.png" // 要加载的图片 url
+        }) 
+        canvasContext.drawImage(erweimaImage, erweiLeft, erweitop, erweiWidth, erweiHeight);  
+        
+        const textWidth = canvas_width*0.20472;
+        const textLeft = imageLeft+imageWidth-textWidth;
+        const texttop = erweitop+canvas_width*0.121333;
+        const textHeight =  textWidth*0.45206;
+        //绘制框
+        const textmaImage = canvas.createImage() 
+        await new Promise(resolve => {
+          textmaImage.onload = resolve
+          textmaImage.src = "/assets/images/drawphoto/textf.png" // 要加载的图片 url
+        }) 
+        canvasContext.drawImage(textmaImage, textLeft, texttop, textWidth, textHeight);  
+
+        // canvasContext.drawImage(image,offwidth, offheight, canvas_width-offwidth*2, canvas_height-offheight*2); 
+        //this.getTempImage(canvas)
+        //this.hideLoading(-1);  
+      }
+      catch(err) {
+        console.log(err); 
       }
     },
 
-  save_photo()
-  { 
-    wx.saveImageToPhotosAlbum({
-      filePath: imagePath,
-      success() {
-        wx.hideLoading();
-        wx.showToast({ title: "保存照片成功", icon: "success" });
-      },
-      fail(e) {
-        wx.hideLoading();
-        console.error(e);
-        wx.showToast({ title: "保存照片失败", icon: "error" });
-      }
-    })
-  },
-
-  onContentTap() {
-    console.log("onContentTap"); 
-    const query = this.createSelectorQuery()
-    query.select('#myCanvas')
-      .fields({ node: true, size: true })
-      .exec((res) => {
-        var res = res[0];  
-        const canvas = res.node 
-        console.log(canvas);
-        this.getcontext(canvas);
-      })
-  },
-  
-  async getcontext(canvas){
-    // 创建离屏 2D canvas 实例 
-    // 获取 context。注意这里必须要与创建时的 type 一致
-    const context = canvas.getContext('2d')  
-    // 创建一个图片
-    const image = canvas.createImage() 
-    // 把图片画到 canvas 上
-    const canvas_width = canvas.width;
-    const canvas_height = canvas.height;
-    context.clearRect(0, 0, canvas_width, canvas_height); 
-    // 等待图片加载 
-    // 等待图片加载
-     await new Promise(resolve => {
-      image.onload = resolve
-      image.src = "https://mp-e8796ec3-aff9-43f7-aadd-cab8776c6fd0.cdn.bspapp.com/changebtn/1.png" // 要加载的图片 url
-    })  
-
-    // 再创建一个图片
-    const erweiImage = canvas.createImage() 
-    await new Promise(resolve => {
-      erweiImage.onload = resolve
-      erweiImage.src = "https://mp-e8796ec3-aff9-43f7-aadd-cab8776c6fd0.cdn.bspapp.com/changebtn/2.png" // 要加载的图片 url
-    }) 
-    
-    const offwidth = canvas_width*0.04;
-    const offheight = canvas_height*0.04;
-    context.drawImage(erweiImage, 0, 0, canvas_width, canvas_height);
-    context.drawImage(image,offwidth, offheight, canvas_width-offwidth*2, canvas_height-offheight*2); 
-    //this.size1todo(canvas); 
-    this.getTempImage(canvas)
-  }, 
-
-  //创建canvas绘制的零时图片
-  getTempImage(canvas)
-  {
-    var that = this;
-    wx.canvasToTempFilePath({
-      x: 0,
-      y: 0,
-      fileType: 'jpg',
-      quality: 1,
-      canvas: canvas, 
-      success:res=>{ 
-        //this.resource.setVisibleReticleMode(true);
-        wx.hideLoading();
-        that.setData({
-          haibaoPhotoPath:res.tempFilePath
-        })  
-        console.log(this.data.haibaoPhotoPath);
-      },
-      fail:err=>{
-        //this.resource.setVisibleReticleMode(true);
-        wx.hideLoading();
-        console.log(err)
-        wx.showToast({ title: "生成照片失败"}); 
-      } 
-    })   
-  },
-  async size1todo(canvas){  
-    //把canvas转成bas64 
-    let imagebase = canvas.toDataURL(); 
-    let imageurl = await base64src(imagebase); 
-    this.setData({
-      imageurl
-    })  
-  },
-})
+    getTempImage(canvas)
+    {
+      var that = this;
+      wx.canvasToTempFilePath({
+        x: 0,
+        y: 0,
+        fileType: 'jpg',
+        quality: 1,
+        canvas: canvas, 
+        success:res=>{  
+          wx.hideLoading();
+          that.setData({
+            haibaoPhotoPath:res.tempFilePath
+          })  
+          console.log("this.data.haibaoPhotoPath"+that.data.haibaoPhotoPath);
+        },
+        fail:err=>{ 
+          wx.hideLoading();
+          console.log(err)
+          wx.showToast({ title: "生成照片失败"}); 
+        } 
+      })   
+    },
+  })
