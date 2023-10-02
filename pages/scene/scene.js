@@ -102,8 +102,7 @@ Page({
       var getModelsInfo =  this.resource.getModelsInfo();   
       var that = this;
       getModelsInfo.forEach(value=>{ 
-        value.iconurl = that.resource.geturl(value.iconurl);
-        console.log("value.iconurl:"+value.iconurl)
+        value.iconurl = that.resource.geturl(value.iconurl); 
       }); 
 
       var uiIconsPath = this.setUIPath();

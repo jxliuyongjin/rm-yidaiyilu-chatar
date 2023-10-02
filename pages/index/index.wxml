@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <view class="wrapper"> 
   <image class="home-bg" mode="scaleToFill" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/bg.png"></image> 
+  
   <image class="button1cls" id="0" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn1.png"></image>  
   <image class="button2cls" id="1" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn2.png"></image>  
       <image class="decoration1" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec1.png"></image>
@@ -15,6 +16,7 @@
     <image class="decoration6" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec6.png"></image>
 </view> 
 
-<view class="loading" wx:if="{{onloading}}">
-  <image class="loading" src="/assets/images/loading.jpg" ></image>
+<view class="loading_content" wx:if="{{onloading}}">
+  <image class="loadin_bg" src="/assets/images/loading.jpg" ></image>
+  <image class="luotuo" style ="left:{{currentLuoTuoPosX}}vw;top:{{currentLuoTuoPosY}}vh;transform: rotateY({{luotuoFangxiang}}deg);" src="/assets/images/loadingactor.png"> </image>
 </view>

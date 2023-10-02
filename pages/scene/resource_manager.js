@@ -64,7 +64,7 @@ class resource_manager {
       console.log("modelsize:"+modelsize);
       slam.add(current_model, modelsize,0);
       // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
-      slam.setGesture(current_model);  
+      slam.setGesture(current_model);   
 
       log("initScene set end"); 
       this.current_model = current_model;  
@@ -134,6 +134,7 @@ class resource_manager {
     console.log("set_current_glb modelsize:"+modelsize);
      
     this.slam.add(this.current_model, modelsize,0); 
+    
      // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
     this.slam.setGesture(this.current_model); 
     if(this.current_model_Pos !== undefined)
@@ -170,8 +171,9 @@ class resource_manager {
    * 开始场景，将设定好的模型加入到场景内
    * @memberof Food
    */
-  tap({ touches, target }) { 
+  tap({ touches, target }) {   
     if (Array.isArray(touches) && touches.length > 0) {
+      
       const { offsetLeft, offsetTop } = target;
       const { pageX, pageY } = touches[0];
       // 注意：需要传入在kivicube-slam组件上的坐标点，而不是页面上的坐标点。
