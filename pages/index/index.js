@@ -20,7 +20,7 @@ Page({
       currentLuoTuoPosY:point.y,
     })  
      
-    //this.getdeltaDta(100);
+    //this.getdeltaDta(100*9/13);
   },
   
   onReady(){ 
@@ -63,12 +63,13 @@ Page({
 
  
   ///////////////////////////loading动画///////////////////////////////
-  
+ 
   anmationFinished(res)
   {
-    // this.setData({ 
-    //   onloading:false, 
-    // })  
+    this.resetAnimationState();
+    this.setData({ 
+      onloading:false, 
+    })  
     console.log("!!!!!!!!!!!! anmationFinished !!!!!!!!!!!!!!!!!!!!!!")
   },
 
@@ -95,10 +96,20 @@ Page({
     this.points =[point0,point1,point2,point3,point4,point5,point6,point7]  
     this.animationstate={
       intervlId:0,
-      isOnPlaying:false, 
-      nextStep:0,
-      cacheDes:[], 
+      isOnPlaying:false,
+      cacheDes:[],
     }
+    this.hasLasted=[0,0,0,0,0,0,0,0]; 
+    this.stepsDes=[null,null,null,null,null,null,null,null]; 
+    this.destNum = [20,40,58,68,78,90,100]; 
+  },
+  resetAnimationState(){
+    this.animationstate={
+      intervlId:0,
+      isOnPlaying:false,
+      cacheDes:[],
+    }
+    this.hasLasted=[0,0,0,0,0,0,0,0]; 
     this.stepsDes=[null,null,null,null,null,null,null,null]; 
     this.destNum = [20,40,58,68,78,90,100]; 
   },
@@ -143,11 +154,12 @@ Page({
     console.log("tempx："+tempx+"tempy: "+tempy);
     const deltax = (des.x - tempx)*rateTime;
     const deltay = (des.y - tempy)*rateTime;  
-    if(deltax<0){
+    if(deltax<0){ 
       this.setData({
         luotuoFangxiang:180
       })
-    }else{
+    }else if(deltax>0)
+    { 
       this.setData({
         luotuoFangxiang:0
       })
@@ -226,8 +238,11 @@ Page({
           this.gobash(i);
           des.x = (rate-this.destNum[i-1])*des.delatx+this.points[i].x;
           des.y = (rate-this.destNum[i-1])*des.delaty+this.points[i].y; 
-        } 
-        
+        }
+        //是否到达过关键节点
+        if(rate==this.destNum[i]){ 
+          this.hasLasted[i] = 1;
+        }
         console.log("getdeltaDta rate:"+JSON.stringify(des))
         this.playAnimation(des);
         break;
@@ -241,8 +256,10 @@ Page({
     for(var i=0;i<goStep;i++)
     {
       var tempDes = this.stepsDes[i]; 
-      if(tempDes == null) { 
+      //是否含有关键节点
+      if((this.hasLasted[i]==0)||(tempDes == null)) { 
         this.stepsDes[i] = {stepindex:i,   x:this.points[i+1].x, y:this.points[i+1].y}
+        this.hasLasted[i] = 1
         tempDes = this.stepsDes[i];
         this.playAnimation(tempDes);
       } 
