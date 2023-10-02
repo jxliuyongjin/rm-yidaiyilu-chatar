@@ -12,7 +12,7 @@ Page({
 
   onLoad() {   
     this.initanimation();  
-    var point = this.getPoint(7); 
+    var point = this.getPoint(0); 
     this.setData({
       imageLoadednum:0,
       onloading:true,
@@ -143,12 +143,23 @@ Page({
     console.log("tempx："+tempx+"tempy: "+tempy);
     const deltax = (des.x - tempx)*rateTime;
     const deltay = (des.y - tempy)*rateTime;  
+    if(deltax<0){
+      this.setData({
+        luotuoFangxiang:180
+      })
+    }else{
+      this.setData({
+        luotuoFangxiang:0
+      })
+    }
 
     var tempTime = 0;
     var that= this;
     this.intervlId = setInterval(function(){
       tempx = tempx + deltax;
       tempy = tempy + deltay;
+      if((deltax>0 && tempx>des.x)||(deltax<0 && tempx<des.x)){ tempx = des.x } 
+      if((deltay>0 && tempy>des.y)||(deltay<0 && tempy<des.y)){ tempy = des.y } 
       that.setData({
         currentLuoTuoPosX:tempx,
         currentLuoTuoPosY:tempy,
