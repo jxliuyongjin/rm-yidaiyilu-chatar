@@ -1,11 +1,5 @@
-<view class="change_content">  
-  <image class="photo_btn" src="{{}}" bind:tap="take_photo"> 拍照  </image>
-  <view class="change_btn_content"> 
-    <view class="change_btns" wx:for="{{icon_arrs}}" wx:key="model_idnex" id="{{item.model_idnex}}" bind:tap="changebtn_clicked">
-      <image class="change_btn" src="{{item.iconurl}}"  lazy-load="true"></image> 
-    </view>
-  </view>  
-</view> 
+ 
+ <image class="change_btn_mask" hidden="{{maskvisible[moduleindex]==0}}" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/content/1.png"  lazy-load="true"></image>
 
 <view class="haibaomake">
     <!-- <image class="haibao_exitbtn" bind:tap="take_photo" src="/assets/images/drawphoto/another.png">再来一张</image>

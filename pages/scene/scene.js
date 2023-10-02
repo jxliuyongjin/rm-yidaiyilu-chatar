@@ -19,20 +19,37 @@ Page({
     photoPath:"", 
     haibaoPhotoPath:"",
     haibaoPhotoPathErweima:"",
-    moduleindex:0
+    currentModuleindex:0,
+    maskvisible:[0,1,1,1,1,1]
+  },
+  setmaskvisible(tempMmodelIndex){
+    var tempArr =  this.data.maskvisible;  
+    for(var index = 0;index<tempArr.length;index++)
+    {  
+      if(index == tempMmodelIndex) {
+        tempArr[index] = 0; 
+      } else{ 
+        tempArr[index] =1; 
+      }
+    } 
+    this.setData({
+      maskvisible:tempArr
+    }) 
   },
 
   onLoad(options) { 
     this.showLoading("初始化中...",0)
     var moduleindex = options.moduleindex;
     console.log("onload moduleindex:"+moduleindex);
-    if(moduleindex<0||moduleindex>6)
+    if(moduleindex<0||moduleindex>=6)
     {
       return;
     }
     this.setData({
-      moduleindex
+      currentModuleindex: moduleindex
     });
+    this.setmaskvisible(moduleindex);
+
     const isSupportV2 = getSlamV2Support(); 
     if(isSupportV2) {
       this.setData({
@@ -60,6 +77,7 @@ Page({
     var kuangIcon = this.resource.geturl("ui/drawphoto/kuang.png");
     var savebtnIcon = this.resource.geturl("ui/drawphoto/savebtn.png");
     var textfIcon = this.resource.geturl("ui/drawphoto/textf.png");
+    var changeBtnMark = this.resource.geturl("ui/content/mask.png");
     return {
       takephotoBtnIcon,
       photoBgIcon,
@@ -68,13 +86,14 @@ Page({
       kuangIcon,
       savebtnIcon,
       textfIcon,
+      changeBtnMark
     }
   },
 
   async ready({ detail: slam }) {
     this.slam = slam;
     log("ready 11111"); 
-    var moduleindex = this.data.moduleindex;
+    var moduleindex = this.data.currentModuleindex;
     var boo = await this.resource.initScene(slam ,moduleindex); 
     console.log("ready resource initscene end");
     if(boo) {
@@ -83,7 +102,8 @@ Page({
       var getModelsInfo =  this.resource.getModelsInfo();   
       var that = this;
       getModelsInfo.forEach(value=>{ 
-        value.iconurl = that.resource.geturl(value.iconurl);  
+        value.iconurl = that.resource.geturl(value.iconurl);
+        console.log("value.iconurl:"+value.iconurl)
       }); 
 
       var uiIconsPath = this.setUIPath();
@@ -134,6 +154,7 @@ Page({
 
     var selectedId = event.currentTarget.id; 
     console.log("changebtn_clicked currentTarget.id:"+selectedId);
+    this.setmaskvisible(selectedId);
     if(this.resource == null) {
       return;
     }
@@ -143,11 +164,13 @@ Page({
     if(success)
     { 
       this.setData({
-        moduleindex:selectedId
-      });
+        currentModuleindex:selectedId
+      }); 
+    }else{
+      this.setmaskvisible(this.data.currentModuleindex)
     }
     
-    log("reset to befor step:"+currentstep)  
+    log("this.data.moduleindex:"+this.data.currentModuleindex);  
     this.hideLoading(currentstep); 
   }, 
 

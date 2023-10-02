@@ -19,7 +19,10 @@ class resource_manager {
       that.resource_config = res;  
     });  
   }
-
+  getConfigPromise()
+  {
+    return this.configPromise;
+  }
   getModelsInfo()
   {
     return this.resource_config.modelsInfo;
@@ -137,6 +140,7 @@ class resource_manager {
     { 
       this.tap(this.current_model_Pos)
     }
+    return true;
   }
 
   /**

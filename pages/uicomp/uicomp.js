@@ -10,7 +10,9 @@ Page({
     data: {
       icon_arrs:[{}],
       photoPath:"",
-      haibaoPhotoPath:""
+      haibaoPhotoPath:"",
+      moduleindex:1,
+      maskvisible:[0,1,1,1,1,1]
     },
 
     /**
@@ -20,12 +22,35 @@ Page({
 
     },
 
+    setmaskvisible(){
+      for(var index =0;index<this.data.maskvisible.length;index++)
+      {
+        if(index===this.data.moduleindex)
+        {
+          this.data.maskvisible[index] =0;
+        }
+        else{
+          this.data.maskvisible[index] =1;
+        }
+      }
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
       // this.resource = new  resource_manager();
       // getInfoJson();
+    //   var that = this;
+    //   setInterval(function(){ 
+    //     var index = that.data.moduleindex+1;
+    //     if(index>5)  {
+    //       index = 0;
+    //     }
+    //     that.setData({
+    //       moduleindex:index
+    //     });
+    //     that.setmaskvisible();
+    //   },2000)
     },
     
 

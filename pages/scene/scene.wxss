@@ -68,14 +68,27 @@
 }
  
 .change_btns{
-  display:inline-block
-}
-
-.change_btn{  
+  display:inline-block;
+  position: relative;
   width: 20vw; 
   height:20vw;
   margin:2vw;
-} 
+}
+
+.change_btn{ 
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; 
+}
+.change_btn_mask{ 
+  position:absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%; 
+}
 
 .haibaomake{ 
   position:absolute;

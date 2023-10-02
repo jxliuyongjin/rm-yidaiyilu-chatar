@@ -81,6 +81,14 @@
   z-index: 99; 
 }
 
+.change_btn_mask{  
+  display:inline-block;
+  position: relative;
+  width: 20vw; 
+  height:20vw;
+  margin:2vw;
+}
+
 .haibao_savebtn
 { 
   position:absolute;

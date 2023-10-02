@@ -43,7 +43,7 @@ Page({
   gotoModel(e){
     console.log(e.target.id==1);
     var moduleindex = e.target.id
-    if(moduleindex<0||moduleindex>6)
+    if(moduleindex<0||moduleindex>=6)
     {
       return;
     }
