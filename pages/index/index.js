@@ -131,7 +131,7 @@ Page({
         }
       } 
       if(!hasdata)  { 
-        console.log("11111111111111nextDes:"+JSON.stringify(des))
+        //console.log("11111111111111nextDes:"+JSON.stringify(des))
         this.animationstate.cacheDes.push(des)
       } 
       return ;
@@ -151,7 +151,7 @@ Page({
 
     var tempx =  this.data.currentLuoTuoPosX;
     var tempy =  this.data.currentLuoTuoPosY;
-    console.log("tempx："+tempx+"tempy: "+tempy);
+    //console.log("tempx："+tempx+"tempy: "+tempy);
     const deltax = (des.x - tempx)*rateTime;
     const deltay = (des.y - tempy)*rateTime;  
     if(deltax<0){ 
@@ -212,13 +212,12 @@ Page({
 
   getdeltaDta(rate)
   {  
-    console.log("getdeltaDta rate:"+rate)
+    //console.log("getdeltaDta rate:"+rate)
     var des =null;
     for(var i=0;i<this.destNum.length;i++)
     { 
       if(rate<=this.destNum[i])
-      { 
-        console.log("rate i:"+i)
+      {  
         des = this.stepsDes[i];
         if(des===null){
           //初始化递增值
@@ -243,7 +242,7 @@ Page({
         if(rate==this.destNum[i]){ 
           this.hasLasted[i] = 1;
         }
-        console.log("getdeltaDta rate:"+JSON.stringify(des))
+        //console.log("getdeltaDta rate:"+JSON.stringify(des))
         this.playAnimation(des);
         break;
       }
