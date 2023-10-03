@@ -173,8 +173,7 @@ Page({
     this.hideLoading(currentstep); 
   }, 
 
-  async take_photo(e) { 
-
+  async take_photo(e) {  
     if(this.data.step!= steps[2])
     {
       wx.showToast({
@@ -271,16 +270,16 @@ Page({
       
       const rateHW = canvas_height/canvas_width; 
       
-      const imageWidth = canvas_width*0.5667;
-      const imageHeight = rateHW*imageWidth; 
+      var imageHW = 1.8
+      const imageWidth = canvas_width*0.73;
+      const imageHeight = imageHW*imageWidth; 
+      const imageLeft = (canvas_width -  imageWidth)*0.5;
+      const imageTop = canvas_height*0.105;
 
-      const kuangwidth = canvas_width*0.59467;
-      const kuangHeight = imageHeight+canvas_width*0.0266;
-      const kuangLeft = (canvas_width-kuangwidth)*0.5;
-      const kuangTop= (canvas_height-kuangHeight)*0.3;
-
-      const imageLeft = kuangLeft +  canvas_width*0.00667;
-      const imageTop= kuangTop +  canvas_width*0.00933;  
+      const kuangwidth = imageWidth + canvas_width*0.06;
+      const kuangHeight = imageHeight + canvas_width*0.04;
+      const kuangLeft = imageLeft - canvas_width*0.0133;
+      const kuangTop= imageTop-canvas_width*0.008; 
 
       // 创建一个图片
       const image = canvas.createImage() 
@@ -300,23 +299,24 @@ Page({
       canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
       
       var tht = this;
+      
       //生成一张没有二维码的,展示用
-      await this.getTempImage(canvas).then(res=>{ 
-          log("res.tempFilePatp 111:"+res.tempFilePath);  
-          tht.setData({
-            haibaoPhotoPath:res.tempFilePath
-          })  
-          log("this.data.haibaoPhotoPath"+tht.data.haibaoPhotoPath); 
-      })
-      .catch(err=>{ 
-          wx.hideLoading();
-          wx.showToast({ title: "生成照片失败"}); 
-          log(err)
-          return
-      })  
+      // await this.getTempImage(canvas).then(res=>{ 
+      //     log("res.tempFilePatp 111:"+res.tempFilePath);  
+      //     tht.setData({
+      //       haibaoPhotoPath:res.tempFilePath
+      //     })  
+      //     log("this.data.haibaoPhotoPath"+tht.data.haibaoPhotoPath); 
+      // })
+      // .catch(err=>{ 
+      //     wx.hideLoading();
+      //     wx.showToast({ title: "生成照片失败"}); 
+      //     log(err)
+      //     return
+      // })  
 
       const erweitop = canvas_height*0.7916;
-      const erweiLeft = imageLeft;
+      const erweiLeft = canvas_width*0.2002;
       const erweiWidth = canvas_width*0.214;
       const erweiHeight = erweiWidth;
       //绘制二维码
@@ -328,7 +328,7 @@ Page({
       canvasContext.drawImage(erweimaImage, erweiLeft, erweitop, erweiWidth, erweiHeight);  
        
       const textWidth = canvas_width*0.20472;
-      const textLeft = imageLeft+imageWidth-textWidth;
+      const textLeft =  canvas_width*0.61;
       const texttop = erweitop+canvas_width*0.121333;
       const textHeight =  textWidth*0.45206;
       //绘制文本
@@ -341,9 +341,10 @@ Page({
 
       this.getTempImage(canvas).then(res=>{  
           tht.setData({
-            haibaoPhotoPathErweima:res.tempFilePath
+            //haibaoPhotoPathErweima:res.tempFilePath
+            haibaoPhotoPath:res.tempFilePath
           })  
-          log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPathErweima);  
+          log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPath);  
           wx.hideLoading();
       })
       .catch(err=>{ 
@@ -378,7 +379,7 @@ Page({
 
   async onSaveImageClicked()
   {
-    var tempFilePath = this.data.haibaoPhotoPathErweima;
+    var tempFilePath = this.data.haibaoPhotoPath;
     if(this.data.step!=steps[4]||tempFilePath.length===0)
     {
       log("没有照片呢...")
