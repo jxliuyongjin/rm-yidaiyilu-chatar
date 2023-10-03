@@ -96,29 +96,35 @@ Page({
   },
   setAnimtionPositions()
   {
-    var point0 = {x:8.5,y:29}
-    var point1 = {x:37.5,y:30}
-    var point2 = {x:50,y:32}
-    var point3 = {x:83,y:37.5}
-    var point4 = {x:85,y:41}
-    var point5 = {x:69,y:47}
-    var point6 = {x:42,y:47.5}
-    var point7 = {x:18,y:50}
-    var point8 = {x:22,y:54.2}
-    var point9 = {x:48,y:56}
-    var point10 = {x:75,y:60.2}
-    var point11 = {x:70,y:66}
-    var point12 = {x:79,y:70.5}
+    var point0 = {x:8.5,y:29,rateNum:0}
+    var point1 = {x:37.5,y:30,rateNum:17}
+    var point2 = {x:50,y:32,rateNum:20}
+    var point3 = {x:83,y:37.5,rateNum:35}
+    var point4 = {x:85,y:41,rateNum:40}
+    var point5 = {x:69,y:47,rateNum:50}
+    var point6 = {x:51.5,y:46,rateNum:58}
+    var point7 = {x:35,y:48,rateNum:62}
+    var point8 = {x:24,y:47.5,rateNum:70}
+    var point9 = {x:18,y:50,rateNum:72}
+    var point10 = {x:22,y:54.2,rateNum:78}
+    var point11 = {x:48,y:56,rateNum:85}
+    var point12 = {x:75,y:60.2,rateNum:90}
+    var point13 = {x:70,y:66,rateNum:95}
+    var point14 = {x:79,y:70.5,rateNum:100}
     
-    this.points =[point0,point1,point2,point3,point4,point5,point6,point7,point8,point9,point10,point11,point12]  
+    this.points =[point0,point1,point2,point3,point4,point5,point6,point7,point8,point9,point10,point11,point12,point13,point14];
     this.animationstate={
       intervlId:0,
       isOnPlaying:false,
       cacheDes:[],
     }
-    this.hasLasted=[0,0,0,0,0,0,0,0,0,0,0]; 
-    this.stepsDes=[null,null,null,null,null,null,null,null,null,null,null,null]; 
-    this.destNum = [17,20,37,40,58,62,68,72,78,90,95,100]; 
+    this.hasLasted = [];
+    this.stepsDes = [];
+    for(var i=0;i<this.points.length;i++)
+    {
+      this.hasLasted.push(0);
+      this.stepsDes.push(null);
+    } 
   },
   resetAnimationState(){
     this.animationstate={
@@ -127,13 +133,12 @@ Page({
       cacheDes:[],
     }
     this.hasLasted=[0,0,0,0,0,0,0,0,0,0]; 
-    this.stepsDes=[null,null,null,null,null,null,null,null,null]; 
-    this.destNum = [20,40,58,68,72,78,90,95,100]; 
+    this.stepsDes=[null,null,null,null,null,null,null,null,null];  
   },
   
   playAnimation(des)
   {
-    if(des.stepindex>=this.points.lenght||des.stepindex<0) {
+    if(des.stepindex>this.points.lenght||des.stepindex<0) {
       console.log("##################："+des.stepindex)
       return;
     } 
@@ -214,11 +219,13 @@ Page({
     },deltatime)
   },
 
-  setStepsDes(index,deltaNum)
+  setStepsDes(index)
   { 
+    //当前节点到下一个节点的距离插值
+    var deltaNum = this.points[index+1].rateNum-this.points[index].rateNum;
     var delatx = (this.points[index+1].x - this.points[index].x)/deltaNum;
     var delaty = (this.points[index+1].y - this.points[index].y)/deltaNum; 
-
+ 
     this.stepsDes[index] ={
       stepindex:index,
       x:this.points[index].x,
@@ -232,18 +239,14 @@ Page({
   {  
     //console.log("getdeltaDta rate:"+rate)
     var des =null;
-    for(var i=0;i<this.destNum.length;i++)
+    for(var i=0;i<this.points.length-1;i++)
     { 
-      if(rate<=this.destNum[i])
+      if(rate<=this.points[i+1].rateNum)
       {  
         des = this.stepsDes[i];
         if(des===null){
-          //初始化递增值
-          if(i==0){ 
-            this.setStepsDes(i,this.destNum[i]);
-          }else{ 
-            this.setStepsDes(i,this.destNum[i]-this.destNum[i-1]);
-          }
+          //初始化递增值 
+          this.setStepsDes(i);
           des = this.stepsDes[i];
         }
         //设置当前位置y
@@ -253,11 +256,11 @@ Page({
           des.y = rate*des.delaty+this.points[i].y;   
         }else{
           this.gobash(i);
-          des.x = (rate-this.destNum[i-1])*des.delatx+this.points[i].x;
-          des.y = (rate-this.destNum[i-1])*des.delaty+this.points[i].y; 
+          des.x = (rate-this.points[i].rateNum)*des.delatx+this.points[i].x;
+          des.y = (rate-this.points[i].rateNum)*des.delaty+this.points[i].y;
         }
-        //是否到达过关键节点
-        if(rate==this.destNum[i]){ 
+        //是否到已经完成达过关键节点
+        if(rate==this.points[i+1].rateNum){ 
           this.hasLasted[i] = 1;
         }
         //console.log("getdeltaDta rate:"+JSON.stringify(des))
