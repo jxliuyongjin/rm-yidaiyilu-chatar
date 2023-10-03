@@ -18,5 +18,5 @@
 
 <view class="loading_content" wx:if="{{onloading}}">
   <image class="loadin_bg" src="/assets/images/loading.jpg" ></image>
-  <image class="luotuo" style ="left:{{currentLuoTuoPosX}}vw;top:{{currentLuoTuoPosY}}vh;transform: rotateY({{luotuoFangxiang}}deg);" src="/assets/images/loadingactor.png"> </image>
+  <image class="luotuo" style ="left:{{currentLuoTuoPosX}}vw;top:{{currentLuoTuoPosY}}vh;transform:translate(0%,-100%) rotateY({{luotuoFangxiang}}deg);" src="/assets/images/loadingactor.png"> </image>
 </view>

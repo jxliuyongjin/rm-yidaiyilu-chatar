@@ -299,7 +299,7 @@ Page({
       canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
       
       var tht = this;
-      
+
       //生成一张没有二维码的,展示用
       // await this.getTempImage(canvas).then(res=>{ 
       //     log("res.tempFilePatp 111:"+res.tempFilePath);  
@@ -315,10 +315,12 @@ Page({
       //     return
       // })  
 
-      const erweitop = canvas_height*0.7916;
-      const erweiLeft = canvas_width*0.2002;
       const erweiWidth = canvas_width*0.214;
       const erweiHeight = erweiWidth;
+      const kuangfloot =  kuangTop + kuangHeight;
+      const erweitop = kuangfloot+(canvas_height -kuangfloot-erweiHeight)*0.4;
+      const erweiLeft = canvas_width*0.2002;
+      
       //绘制二维码
       const erweimaImage = canvas.createImage() 
       await new Promise(resolve => {

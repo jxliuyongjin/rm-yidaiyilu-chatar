@@ -39,6 +39,7 @@
   left: 0;
   width: 88rpx;
   height: 127rpx;
+  transform: translate(0%,-100%); 
 }
 
 .button1cls{

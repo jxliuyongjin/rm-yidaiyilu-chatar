@@ -20,7 +20,7 @@ Page({
       currentLuoTuoPosY:point.y,
     })  
      
-    //this.getdeltaDta(100*9/13);
+   //this.getdeltaDta(100);
   },
   
   onReady(){ 
@@ -42,7 +42,7 @@ Page({
     }) 
     if(imageLoadednum<=13)
     {
-      this.getdeltaDta(100*imageLoadednum/13);
+     this.getdeltaDta(100*imageLoadednum/13);
     }
   },
 
@@ -82,26 +82,43 @@ Page({
     return this.points[index];
   },
 
+  onLoad() {   
+    this.initanimation();  
+    var point = this.getPoint(0); 
+    this.setData({
+      imageLoadednum:0,
+      onloading:true,
+      currentLuoTuoPosX:point.x,
+      currentLuoTuoPosY:point.y,
+    })  
+     
+   //this.getdeltaDta(100);
+  },
   setAnimtionPositions()
   {
-    var point0 = {x:8.93,y:16.94}
-    var point1 = {x:50,y:22}
-    var point2 = {x:85,y:32}
-    var point3 = {x:42,y:38}
-    var point4 = {x:22,y:45}
-    var point5 = {x:47,y:47}
-    var point6 = {x:75,y:52}
-    var point7 = {x:80,y:61}
+    var point0 = {x:8.5,y:29}
+    var point1 = {x:37.5,y:30}
+    var point2 = {x:50,y:32}
+    var point3 = {x:83,y:37.5}
+    var point4 = {x:85,y:41}
+    var point5 = {x:69,y:47}
+    var point6 = {x:42,y:47.5}
+    var point7 = {x:18,y:50}
+    var point8 = {x:22,y:54.2}
+    var point9 = {x:48,y:56}
+    var point10 = {x:75,y:60.2}
+    var point11 = {x:70,y:66}
+    var point12 = {x:79,y:70.5}
     
-    this.points =[point0,point1,point2,point3,point4,point5,point6,point7]  
+    this.points =[point0,point1,point2,point3,point4,point5,point6,point7,point8,point9,point10,point11,point12]  
     this.animationstate={
       intervlId:0,
       isOnPlaying:false,
       cacheDes:[],
     }
-    this.hasLasted=[0,0,0,0,0,0,0,0]; 
-    this.stepsDes=[null,null,null,null,null,null,null,null]; 
-    this.destNum = [20,40,58,68,78,90,100]; 
+    this.hasLasted=[0,0,0,0,0,0,0,0,0,0,0]; 
+    this.stepsDes=[null,null,null,null,null,null,null,null,null,null,null,null]; 
+    this.destNum = [17,20,37,40,58,62,68,72,78,90,95,100]; 
   },
   resetAnimationState(){
     this.animationstate={
@@ -109,14 +126,15 @@ Page({
       isOnPlaying:false,
       cacheDes:[],
     }
-    this.hasLasted=[0,0,0,0,0,0,0,0]; 
-    this.stepsDes=[null,null,null,null,null,null,null,null]; 
-    this.destNum = [20,40,58,68,78,90,100]; 
+    this.hasLasted=[0,0,0,0,0,0,0,0,0,0]; 
+    this.stepsDes=[null,null,null,null,null,null,null,null,null]; 
+    this.destNum = [20,40,58,68,72,78,90,95,100]; 
   },
   
   playAnimation(des)
   {
-    if(des.stepindex>6||des.stepindex<0) {
+    if(des.stepindex>=this.points.lenght||des.stepindex<0) {
+      console.log("##################："+des.stepindex)
       return;
     } 
 
