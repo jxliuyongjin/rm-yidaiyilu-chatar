@@ -8,22 +8,19 @@ Page({
     imageLoadednum:0,
     currentLuoTuoPosX:0,
     currentLuoTuoPosY:0,
+    luotuoFangxiang:0,
+    hasFinshed:0
   }, 
 
-  onLoad() {   
-    this.initanimation();  
-    var point = this.getPoint(0); 
-    this.setData({
-      imageLoadednum:0,
-      onloading:true,
-      currentLuoTuoPosX:point.x,
-      currentLuoTuoPosY:point.y,
-    })  
-     
-   //this.getdeltaDta(100);
+  onLoad() {  
+    wx.createSelectorQuery().select('.loadpath')
+    .boundingClientRect(res => { 
+      this.initanimation(res);  
+    }).exec()
   },
   
   onReady(){ 
+    
   },
 
   onShareAppMessage() {
@@ -34,6 +31,7 @@ Page({
     };
   },
 
+  
   imageLoaded(e)
   {
     var imageLoadednum = this.data.imageLoadednum+1; 
@@ -41,15 +39,15 @@ Page({
       imageLoadednum
     }) 
     if(imageLoadednum<=13)
-    {
-     this.getdeltaDta(100*imageLoadednum/13);
+    { 
+      if(this.hasInitedLoading === true){
+        this.getdeltaDta(100*imageLoadednum/13); 
+      }
+      else{
+        this.hasloadfinshed = true; 
+      }
     }
-  },
-
-  setLuoTuoPos(rate)
-  { 
-    //this.animation.getdeltaDta(rate);
-  },
+  }, 
  
   gotoModel(e){
     console.log(e.target.id==1);
@@ -73,46 +71,69 @@ Page({
     console.log("!!!!!!!!!!!! anmationFinished !!!!!!!!!!!!!!!!!!!!!!")
   },
 
-  initanimation()
+  async initanimation(res)
   {
-    this.setAnimtionPositions(); 
+    this.windowV =  await wx.getSystemInfo(res=>res).catch(e=>{
+      console.log(e);
+    })
+
+    if(this.windowV==null)
+    {
+      this.windowV ={
+        windowWidth:750,
+        windowHeigth:1334
+      }
+    }
+   // console.log("windowV geted..."+JSON.stringify(this.windowV));  
+    console.log("res geted..."+JSON.stringify(res)); 
+    this.setAnimtionPositions(res); 
+     var point = this.getPoint(0); 
+    // console.log("point..."+JSON.stringify(point));  
+     this.setData({
+      currentLuoTuoPosX:point.x,
+      currentLuoTuoPosY:point.y,
+     })
+     
+     if(this.hasloadfinshed === true)
+     { 
+        this.getdeltaDta(100);
+     }
+     else{
+       this.hasInitedLoading = true; 
+     } 
   },
   getPoint(index)
   { 
     return this.points[index];
   },
-
-  onLoad() {   
-    this.initanimation();  
-    var point = this.getPoint(0); 
-    this.setData({
-      imageLoadednum:0,
-      onloading:true,
-      currentLuoTuoPosX:point.x,
-      currentLuoTuoPosY:point.y,
-    })  
-     
-   //this.getdeltaDta(100);
-  },
-  setAnimtionPositions()
+ 
+  setAnimtionPositions(pathEle)
   {
-    var point0 = {x:8.5,y:29,rateNum:0}
-    var point1 = {x:37.5,y:30,rateNum:17}
-    var point2 = {x:50,y:32,rateNum:20}
-    var point3 = {x:83,y:37.5,rateNum:35}
-    var point4 = {x:85,y:41,rateNum:40}
-    var point5 = {x:69,y:47,rateNum:50}
-    var point6 = {x:51.5,y:46,rateNum:58}
-    var point7 = {x:35,y:48,rateNum:62}
-    var point8 = {x:24,y:47.5,rateNum:70}
-    var point9 = {x:18,y:50,rateNum:72}
-    var point10 = {x:22,y:54.2,rateNum:78}
-    var point11 = {x:48,y:56,rateNum:85}
-    var point12 = {x:75,y:60.2,rateNum:90}
-    var point13 = {x:70,y:66,rateNum:95}
-    var point14 = {x:79,y:70.5,rateNum:100}
+    var point0 = {x:0,y:3,rateNum:0}
+    var point1 = {x:27,y:5,rateNum:9}
+    var point2 = {x:85,y:20,rateNum:23}
+    var point3 = {x:92,y:30.5,rateNum:27}
+    var point4 = {x:65,y:43,rateNum:35}
+    var point5 = {x:43,y:42,rateNum:39}
+    var point6 = {x:28.5,y:45.5,rateNum:45}
+    var point7 = {x:2,y:44,rateNum:50}
+    var point8 = {x:0,y:52,rateNum:55}
+    var point9 = {x:18,y:62,rateNum:60}
+    var point10 = {x:30,y:61.5,rateNum:64}
+    var point11 = {x:48,y:65,rateNum:68}
+    var point12 = {x:70,y:65,rateNum:72}
+    var point13 = {x:75,y:77,rateNum:82}
+    var point14 = {x:65,y:86,rateNum:90}
+    var point15 = {x:85,y:97,rateNum:100}
     
-    this.points =[point0,point1,point2,point3,point4,point5,point6,point7,point8,point9,point10,point11,point12,point13,point14];
+    this.points =[point0,point1,point2,point3,point4,point5,point6,point7,point8,point9,point10,point11,point12,point13,point14,point15]; 
+    this.points.forEach(value=>{  
+      value.x = (pathEle.left + 0.01*value.x*pathEle.width);// 100*(value.x+startposX)/this.windowV.windowWidth
+      value.y = (pathEle.top + 0.01*value.y*pathEle.height);
+    }); 
+    this.resetAnimationState();
+  },
+  resetAnimationState(){ 
     this.animationstate={
       intervlId:0,
       isOnPlaying:false,
@@ -125,15 +146,6 @@ Page({
       this.hasLasted.push(0);
       this.stepsDes.push(null);
     } 
-  },
-  resetAnimationState(){
-    this.animationstate={
-      intervlId:0,
-      isOnPlaying:false,
-      cacheDes:[],
-    }
-    this.hasLasted=[0,0,0,0,0,0,0,0,0,0]; 
-    this.stepsDes=[null,null,null,null,null,null,null,null,null];  
   },
   
   playAnimation(des)

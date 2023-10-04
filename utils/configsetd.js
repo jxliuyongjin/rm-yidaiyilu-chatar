@@ -16,7 +16,7 @@ var config = {
       model_idnex:1,
       glburl:"model/baochuan.glb", 
       iconurl:"ui/content/2.png",
-      size:6.50029
+      size:4
       }, 
       { 
       model_idnex:2,

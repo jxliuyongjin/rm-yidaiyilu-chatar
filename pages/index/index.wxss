@@ -33,6 +33,21 @@
   height: 100%;
 }
 
+.loadpath{ 
+  position: absolute;
+  left: 20.4vw;
+  top: 27.66vh;
+  width: 457rpx;
+  height: 593rpx; 
+}
+.loading_logo{
+  position: absolute;
+  left: 256rpx;
+  bottom: 191rpx;
+  width: 25vw;
+  height:1.867vw;
+}
+
 .luotuo{
   position: absolute;
   top: 0;
