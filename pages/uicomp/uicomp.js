@@ -24,7 +24,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-     // getInfoJson(); 
+      getInfoJson(); 
     },
 
     setmaskvisible(){
@@ -43,7 +43,7 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
-      
+      return;
       var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/glbconfig.json";  
       var that = this;
       requestFile(configurl,"text").then(res =>{ 

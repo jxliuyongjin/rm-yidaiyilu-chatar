@@ -91,7 +91,7 @@ Page({
       }
     }
    // console.log("windowV geted..."+JSON.stringify(this.windowV));  
-    console.log("res geted..."+JSON.stringify(res)); 
+    //console.log("res geted..."+JSON.stringify(res)); 
     this.setAnimtionPositions(res); 
      var point = this.getPoint(0); 
     // console.log("point..."+JSON.stringify(point));  
