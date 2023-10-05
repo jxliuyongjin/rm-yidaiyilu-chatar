@@ -1,19 +1,25 @@
  <kivicube-slam
   class="slam"
   license="{{license}}"
+  version="{{version}}" 
   bindready="ready"
   binderror="error"
   bind:tap="tap"
   bind:addAnchors="addAnchors"
 />
 
-<image wx:if="{{step != 'initing'}}" class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>  
-<view  wx:if="{{step != 'initing'}}" class="change_btn_content">  
-  <view class="change_btns" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{item.model_idnex}}" catch:tap="changebtn_clicked">
+<view class="scan-box animated fadeIn" wx:if="{{step === 'findPlane'}}">
+  <image class="scan-img" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/content/scaning.png" mode="widthFix" lazy-load="false" />
+  <view class="scan-txt">请寻找一个平面</view>
+</view>
+
+<image wx:if="{{step != 'initing'}}" class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>   
+<scroll-view wx:if="{{step != 'initing'}}" scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content">
+  <view class="change_btns" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{iconNames[item.model_idnex]}}" catch:tap="changebtn_clicked">
       <image class="change_btn" src="{{item.iconurl}}"> </image> 
       <image class="change_btn_mask" hidden="{{maskvisible[item.model_idnex]==0}}" src="{{uiIconsPath.changeBtnMark}}"></image>
   </view>
-</view>
+</scroll-view>
 
 <view wx:if="{{step === 'showPoint'}}" class="guide">请点击屏幕，放置模型</view>  
 <view  hidden="{{step != 'showHaibao'}}" class="haibaomake">  

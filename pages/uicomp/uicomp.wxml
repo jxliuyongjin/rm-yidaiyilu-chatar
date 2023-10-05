@@ -1,14 +1,17 @@
  
- <image class="change_btn_mask" hidden="{{maskvisible[moduleindex]==0}}" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/content/1.png"  lazy-load="true"></image>
+ <!-- <scroll-view scroll-x="true" scroll-into-view="{{iconNames[iconScrollPos]}}" style="white-space: nowrap;"> 
+    <image class="change_btn" id= "{{iconNames[0]}}" src="/assets/content/1.png"> </image>   
+    <image class="change_btn" id= "{{iconNames[1]}}"  src="/assets/content/2.png"> </image>   
+    <image class="change_btn" id= "{{iconNames[2]}}" src="/assets/content/3.png"> </image>   
+    <image class="change_btn" id= "{{iconNames[3]}}"  src="/assets/content/4.png"> </image>   
+    <image class="change_btn" id= "{{iconNames[4]}}"  src="/assets/content/5.png"> </image>   
+    <image class="change_btn" id= "{{iconNames[5]}}"  src="/assets/content/6.png"> </image>  
+    <image class="change_btn" id= "{{iconNames[6]}}"  src="/assets/content/6.png"> </image>
+</scroll-view>
+  <button bindtap="scrollToView">滚动到第三项</button> -->
 
-<view class="haibaomake">
-    <!-- <image class="haibao_exitbtn" bind:tap="take_photo" src="/assets/images/drawphoto/another.png">再来一张</image>
-      <canvas
-      disable-scroll 
-      class="haibao_canvas" 
-      type="2d"
-      id="showhaibao_canvas" 
-    > </canvas>    
-    
-    <image class="haibao_savebtn" bind:tap="onSaveImageClicked" src="/assets/images/drawphoto/savebtn.png">保存</image>  -->
-</view>
+  <scroll-view scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content">
+  <view class="change_btns" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{iconNames[item.model_idnex]}}" catch:tap="changebtn_clicked">
+      <image class="change_btn" src="{{item.iconurl}}"> </image>  
+  </view>
+</scroll-view>

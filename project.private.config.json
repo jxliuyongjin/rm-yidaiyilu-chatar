@@ -9,6 +9,13 @@
             "list": [
                 {
                     "name": "",
+                    "pathName": "pages/env-map/env-map",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
                     "pathName": "pages/uitest/uitest",
                     "query": "",
                     "launchMode": "default",

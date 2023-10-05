@@ -113,6 +113,7 @@ export function compareVersion(v1, v2) {
   }
   return 0
 }
+
 export function tryFun(promise){ 
   return promise.then(res=>[res,null]).catch(err=>[null,err]); 
 }

@@ -19,6 +19,12 @@ Page({
     }).exec()
   },
   
+  onUnload()
+  { 
+    this.points = null;
+    this.windowV = null;
+    this.animationstate = null;
+  },
   onReady(){ 
     
   },

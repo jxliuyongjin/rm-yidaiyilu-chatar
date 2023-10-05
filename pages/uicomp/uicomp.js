@@ -1,7 +1,6 @@
 import resource_manager from "./../scene/resource_manager"
 import {getInfoJson} from "./../../utils/configsetd"
-import {log} from "./../../utils/utils"
-
+import {log,requestFile} from "./../../utils/utils" 
 Page({
 
     /**
@@ -12,14 +11,20 @@ Page({
       photoPath:"",
       haibaoPhotoPath:"",
       moduleindex:1,
+      iconNames:["icon0","icon1","icon2","icon3","icon4","icon5","icon6"],
+      iconScrollPos:0,
+      modelIcons:[],
+      toView:"0",
       maskvisible:[0,1,1,1,1,1]
     },
-
+    scrollToView: function () {
+      
+    },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-      getInfoJson();
+     // getInfoJson(); 
     },
 
     setmaskvisible(){
@@ -38,19 +43,22 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
-      // this.resource = new  resource_manager();
-      // getInfoJson();
-    //   var that = this;
-    //   setInterval(function(){ 
-    //     var index = that.data.moduleindex+1;
-    //     if(index>5)  {
-    //       index = 0;
-    //     }
-    //     that.setData({
-    //       moduleindex:index
-    //     });
-    //     that.setmaskvisible();
-    //   },2000)
+      
+      var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/glbconfig.json";  
+      var that = this;
+      requestFile(configurl,"text").then(res =>{ 
+        that.resource_config = res;  
+        var getModelsInfo =  that.resource_config.modelsInfo; 
+        getModelsInfo.forEach(value=>{ 
+          value.iconurl = this.resource_config.baseurl+value.iconurl 
+        }); 
+        this.setData({ 
+          modelIcons:getModelsInfo, 
+          iconScrollPos:5
+        })   
+        
+      });   
+      
     },
     
 
@@ -83,8 +91,8 @@ Page({
 
     },  
 
-    changebtn_clicked: function(event) { 
-      console.log(event.currentTarget.id);
+    changebtn_clicked:function(event) { 
+      console.log(typeof(event.currentTarget.id));
     },
 
     take_photo(){

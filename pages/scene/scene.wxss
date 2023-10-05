@@ -60,12 +60,11 @@
   position:absolute;
   display: block;
   width:100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space:nowrap; 
+  height: 24vw;
+  white-space: nowrap;
   z-index: 1;
-  bottom: 0;
-}
+  bottom: 2vw;
+} 
  
 .change_btns{
   display:inline-block;

@@ -7,7 +7,7 @@ import {getSlamV2Support,log} from "../../utils/utils";
 //  modelchanging:正在切换模型,模型加载中
 //  showHaibao：用户点击了拍照，正在展示拍照海报
 //  baochunhaibao：用户点击了保存，正在保存海报
-const steps = ["initing", "showPoint", "modelSeted","modelchanging","showHaibao","baochunhaibao"]; // 一些UI限制的步骤
+const steps = ["initing", "showPoint", "modelSeted","modelchanging","showHaibao","baochunhaibao","findPlane"]; // 一些UI限制的步骤
 
 Page({
   data: {
@@ -16,6 +16,8 @@ Page({
     step: "initing",  
     uiIconsPath:{},
     modelIcons:[],
+    iconNames:["icon0","icon1","icon2","icon3","icon4","icon5","icon6"],
+    iconScrollPos:0,
     photoPath:"", 
     haibaoPhotoPath:"",
     haibaoPhotoPathErweima:"",
@@ -45,7 +47,7 @@ Page({
     {
       return;
     }
-    this.setData({
+    this.setData({ 
       currentModuleindex: moduleindex
     });
     this.setmaskvisible(moduleindex);
@@ -66,6 +68,16 @@ Page({
     this.resetTempIcon();
     ////加载配置
     this.resource.getConfigData();  
+  },
+
+  onUnload()
+  {
+    this.canvas = null;
+    if(this.resource)
+    {
+      this.resource.clear();
+      this.resource = null;
+    }
   },
 
   setUIPath()
@@ -93,11 +105,14 @@ Page({
   async ready({ detail: slam }) {
     this.slam = slam;
     log("ready 11111"); 
-    var moduleindex = this.data.currentModuleindex;
-    var boo = await this.resource.initScene(slam ,moduleindex); 
-    console.log("ready resource initscene end");
-    if(boo) {
-      this.addAnchors(); 
+    var moduleindex = this.data.currentModuleindex; 
+    var boo = await this.resource.initScene(slam ,moduleindex);  
+    if(boo) { 
+      if (this.data.version === "v1") { 
+        this.addAnchors(); 
+      }else{ 
+        this.hideLoading(6); 
+      }
       
       var getModelsInfo =  this.resource.getModelsInfo();   
       var that = this;
@@ -108,9 +123,9 @@ Page({
       var uiIconsPath = this.setUIPath();
       this.setData({ 
         modelIcons:getModelsInfo,
-        uiIconsPath
-      }) 
-
+        uiIconsPath,
+        iconScrollPos: moduleindex
+      })   
     }else{
       wx.hideLoading()
       wx.showToast({
@@ -121,7 +136,7 @@ Page({
   
   // v2模式下有平面新增
   addAnchors() { 
-    log("addAnchors 11111"); 
+    log("addAnchors gogogo"); 
     this.hideLoading(1);
     this.resource.findPlane();
   },
@@ -137,27 +152,29 @@ Page({
       return;
     }
 
-    var success = this.resource.tap({touches, target});
+    this.resource.tap(this.tapback); 
+  }, 
+
+  tapback(success)
+  {
     if(success)
     {
       this.setData({ step: steps[2] }); 
     } 
-  }, 
+  },
   
   async changebtn_clicked(event) { 
     if(this.data.step != steps[1] && this.data.step != steps[2] )
     {  
       log("当前状态不能切换场景:"+this.data.step ); 
       return;
-    }
-
-    var selectedId = event.currentTarget.id; 
+    } 
+    var selectedId = this.data.iconNames.indexOf(event.currentTarget.id);
     console.log("changebtn_clicked currentTarget.id:"+selectedId);
     this.setmaskvisible(selectedId);
     if(this.resource == null) {
       return;
-    }
-    var currentstep = steps.indexOf(this.data.step);
+    } 
     this.showLoading("场景加载中...",3);
     var success = await this.resource.selected_model_change(selectedId);
     if(success)
@@ -170,7 +187,7 @@ Page({
     }
     
     log("this.data.moduleindex:"+this.data.currentModuleindex);  
-    this.hideLoading(currentstep); 
+    this.hideLoading(1); 
   }, 
 
   async take_photo(e) {  
@@ -267,9 +284,7 @@ Page({
         bgImage.src = this.data.uiIconsPath.photoBgIcon // 要加载的图片 url
       }) 
       canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);  
-      
-      const rateHW = canvas_height/canvas_width; 
-      
+       
       var imageHW = 1.8
       const imageWidth = canvas_width*0.73;
       const imageHeight = imageHW*imageWidth; 
@@ -419,7 +434,7 @@ Page({
   hideLoading(step){ 
     if(step>0&&step<steps.length)
     { 
-      this.setData({ step: steps[step] }); 
+      this.setData({ step: steps[step] });  
     }
     wx.hideLoading();
   },

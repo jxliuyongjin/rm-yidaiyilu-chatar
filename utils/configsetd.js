@@ -1,45 +1,53 @@
 var config = {
   baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/",
-  light:{
-      defaultAmbientLight:"0.82",    
-      defaultDirectionalLight:"2.5",
-  }, 
   reticle:"reticle.glb", 
   modelsInfo:[
       {
       model_idnex:0,
       glburl:"model/shenmiao_ganlanshu_hepingge.glb", 
-      iconurl:"ui/content/1.png", 
+      iconurl:"ui/content/1.png",
+      defaultAmbientLight:"3",    
+      defaultDirectionalLight:"0",
       size:6
       }, 
       { 
       model_idnex:1,
       glburl:"model/baochuan.glb", 
       iconurl:"ui/content/2.png",
+      defaultAmbientLight:"2",    
+      defaultDirectionalLight:"0",
       size:1
       }, 
       { 
       model_idnex:2,
       glburl:"model/chelizhi_huolieniao.glb", 
       iconurl:"ui/content/3.png",
-      size:7.50704
+      defaultAmbientLight:"3",    
+      defaultDirectionalLight:"0",
+      size:3
       }, 
       { 
       model_idnex:3,
       glburl:"model/banma_feizhou.glb", 
       iconurl:"ui/content/4.png",
+      defaultAmbientLight:"3",    
+      defaultDirectionalLight:"0",
       size:3
       }, 
       { 
       model_idnex:4,
       glburl:"model/shamo_luotuo.glb", 
       iconurl:"ui/content/5.png",
+      defaultAmbientLight:"4",    
+      defaultDirectionalLight:"0",
       size:1
       }, 
       { 
       model_idnex:5,
       glburl:"model/tielu.glb", 
       iconurl:"ui/content/6.png",
+      defaultAmbientLight:"3",    
+      defaultDirectionalLight:"0",
       size:3
       }
   ]

@@ -1,5 +1,4 @@
-import { errorHandler,requestFile,showAuthModal,log} from "../../utils/utils"
-//import { get_reticle,get_config}  from "../../utils/glbconfig"
+import { errorHandler,requestFile,showAuthModal,log} from "../../utils/utils" 
 
 class resource_manager {
   constructor() {} 
@@ -9,15 +8,9 @@ class resource_manager {
     var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/glbconfig.json";  
     this.configPromise =  requestFile(configurl,"text"); 
     var that = this;
-    this.configPromise
-    // .then(res =>{ 
-    //   setTimeout(() => {
-    //     return this.configPromise;
-    //   }, 5);
-    // })
-    .then(res =>{ 
+    this.configPromise.then(res =>{ 
       that.resource_config = res;  
-    });  
+    }); 
   }
   getConfigPromise()
   {
@@ -34,34 +27,30 @@ class resource_manager {
    * @memberof Food
    */
   async initScene(slam , index=0) {   
-    if(!this.resource_config)
-    {
+    if(!this.resource_config) {
       this.resource_config = await this.configPromise;   
     }  
  
     try { 
-      this.slam = slam;
+      this.slam = slam; 
+      this.modelIndex = index; 
       const [
         reticleArrayBuffer, 
         glbArrayBuffer,
       ] = await this.fristLoadSource(index); 
       
-      log("initScene enner"); 
+      log("initScene inner"); 
       const [reticleModel, current_model] = await Promise.all([
         slam.createGltfModel(reticleArrayBuffer),
         slam.createGltfModel(glbArrayBuffer), 
       ]);  
-      
-      var defaultAmbientLight = this.resource_config.light.defaultAmbientLight; 
-      var defaultDirectionalLight =  this.resource_config.light.defaultDirectionalLight; 
-      slam.defaultAmbientLight.intensity = defaultAmbientLight;
-      slam.defaultDirectionalLight.intensity = defaultDirectionalLight;
+       
       slam.enableShadow(); // 开启阴影功能
 
-      log("initScene current_model geted"); 
       current_model.visible = false;  
-      var modelsize = this.currentModelInfo? this.currentModelInfo.size:0.5; 
-      console.log("modelsize:"+modelsize);
+      var modelsize = this.currentModelInfo? this.currentModelInfo.size:0.5;  
+      slam.defaultAmbientLight.intensity = this.currentModelInfo.defaultAmbientLight;
+      slam.defaultDirectionalLight.intensity = this.currentModelInfo.defaultDirectionalLight;
       slam.add(current_model, modelsize,0);
       // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
       slam.setGesture(current_model);   
@@ -80,8 +69,7 @@ class resource_manager {
   
   fristLoadSource(index=0)
   {
-    log("fristLoadSource 1111："+ this.resource_config);  
-    this.modelIndex = index; 
+    log("fristLoadSource："+ this.resource_config);  
 
     this.currentModelInfo = this.resource_config.modelsInfo[index]; 
     var reticleurl = this.geturl(this.resource_config.reticle); 
@@ -133,14 +121,14 @@ class resource_manager {
     var modelsize = this.currentModelInfo?this.currentModelInfo.size:0.5; 
     console.log("set_current_glb modelsize:"+modelsize);
      
+    this.slam.defaultAmbientLight.intensity = this.currentModelInfo.defaultAmbientLight;
+    this.slam.defaultDirectionalLight.intensity = this.currentModelInfo.defaultDirectionalLight;
     this.slam.add(this.current_model, modelsize,0); 
-    
+    this.current_model.visible = false;
      // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
     this.slam.setGesture(this.current_model); 
-    if(this.current_model_Pos !== undefined)
-    { 
-      this.tap(this.current_model_Pos)
-    }
+   
+    // this.tap()
     return true;
   }
 
@@ -171,9 +159,41 @@ class resource_manager {
    * 开始场景，将设定好的模型加入到场景内
    * @memberof Food
    */
-  tap({ touches, target }) {   
-    if (Array.isArray(touches) && touches.length > 0) {
-      
+  tap(tapback) {    
+    // 注意：只有开启slam平面追踪(slam.start())之后，才能让模型去尝试站在平面上。
+    const { windowWidth, windowHeight } = wx.getSystemInfoSync();
+    // 主动让模型站在屏幕中心映射到平面上的位置点。
+    // 此处组件全屏展示，所以窗口宽度除以2
+    const x = Math.round(windowWidth / 2);
+    // 此处组件全屏展示，所以窗口高度除以2
+    const y = Math.round(windowHeight / 2);
+    // 首次调用standOnThePlane，resetPlane参数必须设为true，以便确定一个平面。
+    // 如果为false，代表使用已经检测到的平面。默认为true。
+    var resetPlane =true;
+    if(this.notFristset === true){
+      resetPlane = false;
+    }
+    this.notFristset = true;
+    /**
+     * 让3D素材对象，站立在检测出来的平面之上。
+     * @param {Base3D} base3D - 3D对象
+     * @param {Number} x - kivicube-slam组件上的x轴横向坐标点
+     * @param {Number} y - kivicube-slam组件上的y轴纵向坐标点
+     * @param {Boolean} [resetPlane=true] - 是否重置平面。
+     * @r eturns {Boolean} 是否成功站立在平面上
+     */
+    const success = this.slam.standOnThePlane( this.current_model, x, y, resetPlane);
+    if (success) {
+      this.current_model.visible = true;
+      this.current_model.playAnimation({ loop: true });
+      tapback(true);
+    } else { 
+      wx.showToast({ title: "放置模型失败，请对准平面", icon: "none" }); 
+      tapback(false);
+    } 
+
+    return true;
+    if (Array.isArray(touches) && touches.length > 0) { 
       const { offsetLeft, offsetTop } = target;
       const { pageX, pageY } = touches[0];
       // 注意：需要传入在kivicube-slam组件上的坐标点，而不是页面上的坐标点。
@@ -222,9 +242,19 @@ class resource_manager {
   }
   // 清理
   clear() {
-    this.slam = null;
-    this.model = null;
+    console.log("################clear###############");
+    if(this.current_model)
+    {
+      this.slam.remove(this.current_model); 
+      this.slam.destroyObject(this.current_model); 
+    } 
+    this.slam = null; 
     this.downloadAssets = null;
+    this.resource_config= null;
+    this.current_model  =null;
+    this.reticleModel  =null;
+    this.currentModelInfo =null;
+    this.configPromise =null;
   }
 
 
