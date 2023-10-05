@@ -10,13 +10,13 @@ var config = {
       model_idnex:0,
       glburl:"model/shenmiao_ganlanshu_hepingge.glb", 
       iconurl:"ui/content/1.png", 
-      size:5.01580
+      size:6
       }, 
       { 
       model_idnex:1,
       glburl:"model/baochuan.glb", 
       iconurl:"ui/content/2.png",
-      size:4
+      size:1
       }, 
       { 
       model_idnex:2,
@@ -28,19 +28,19 @@ var config = {
       model_idnex:3,
       glburl:"model/banma_feizhou.glb", 
       iconurl:"ui/content/4.png",
-      size:33.54697
+      size:3
       }, 
       { 
       model_idnex:4,
       glburl:"model/shamo_luotuo.glb", 
       iconurl:"ui/content/5.png",
-      size:6.82142
+      size:1
       }, 
       { 
       model_idnex:5,
       glburl:"model/tielu.glb", 
       iconurl:"ui/content/6.png",
-      size:15.43312
+      size:3
       }
   ]
 }
