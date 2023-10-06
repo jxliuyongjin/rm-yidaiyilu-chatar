@@ -8,7 +8,7 @@ var config = {
       iconurl:"ui/content/1.png",
       defaultAmbientLight:"3",    
       defaultDirectionalLight:"0",
-      size:1
+      size:3
       }, 
       { 
       model_idnex:1,

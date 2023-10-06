@@ -2,6 +2,7 @@
     "pages": [
         "pages/index/index",
         "pages/scene/scene",
+        "pages/shadow/shadow",
         "pages/uicomp/uicomp"
     ],
     "plugins": {

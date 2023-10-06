@@ -9,6 +9,13 @@
             "list": [
                 {
                     "name": "",
+                    "pathName": "pages/shadow/shadow",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
                     "pathName": "pages/env-map/env-map",
                     "query": "",
                     "launchMode": "default",

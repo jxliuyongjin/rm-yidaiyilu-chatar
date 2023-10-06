@@ -162,7 +162,6 @@ Page({
       this.setData({ step: steps[2] }); 
     } 
   },
-  
   async changebtn_clicked(event) { 
     if(this.data.step != steps[1] && this.data.step != steps[2] )
     {  
