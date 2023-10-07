@@ -83,13 +83,13 @@ Page({
   setUIPath()
   { 
     var takephotoBtnIcon = this.resource.geturl("ui/content/photoBtn.png");
-    var photoBgIcon = this.resource.geturl("ui/drawphoto/bg.png");
     var anotherIcon = this.resource.geturl("ui/drawphoto/another.png");
-    var erweimaIcon = this.resource.geturl("ui/drawphoto/erweima.png");
-    var kuangIcon = this.resource.geturl("ui/drawphoto/kuang.png");
     var savebtnIcon = this.resource.geturl("ui/drawphoto/savebtn.png");
-    var textfIcon = this.resource.geturl("ui/drawphoto/textf.png");
     var changeBtnMark = this.resource.geturl("ui/content/mask.png");
+    var photoBgIcon ="https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/drawphoto/bg.png";
+    var erweimaIcon = "https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/drawphoto/erweima.png";
+    var kuangIcon = "https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/drawphoto/kuang.png";
+    var textfIcon = "https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/drawphoto/textf.png";
     return {
       takephotoBtnIcon,
       photoBgIcon,
@@ -147,9 +147,16 @@ Page({
   addAnchors() { 
     log("addAnchors gogogo："+this.data.step);
     if(this.data.step != steps[1] && this.data.step != steps[2] &&this.data.step != steps[6] )  {
+      log("addAnchors !!1111111gogogo：");
       return;
     }
-    this.hideLoading(1);
+    log("addAnchors !!222222222222222 1gogogo：");
+    if(this.data.step == steps[6])
+    {
+      this.hideLoading(1); 
+    }else{ 
+      this.hideLoading(-1);
+    }
     this.resource.findPlane();
   },
 
@@ -278,8 +285,7 @@ Page({
   
       const canvas_width = res.width;
       const canvas_height = res.height;
-  
-      log("drawHaiBao enner 22222");
+   
       //解决绘图不清晰
       const dpr = wx.getSystemInfoSync().pixelRatio;
       canvas.width = res.width * dpr;
@@ -287,74 +293,81 @@ Page({
       canvasContext.scale(dpr,dpr); 
       canvasContext.fillRect(0,0,canvas_width,canvas_height);  
       canvasContext.clearRect(0, 0, canvas_width, canvas_height);   
-    
+     
       //绘制背景
       const bgImage = canvas.createImage() 
+      bgImage.referrerPolicy = 'origin';
       await new Promise(resolve => {
-        bgImage.onload = resolve
-        bgImage.src = this.data.uiIconsPath.photoBgIcon // 要加载的图片 url
+        bgImage.onload = resolve;
+        bgImage.src = this.data.uiIconsPath.photoBgIcon; // 要加载的图片 url 
       }) 
       canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);  
-       
+        
       var imageHW = 1.8
       const imageWidth = canvas_width*0.73;
       const imageHeight = imageHW*imageWidth; 
       const imageLeft = (canvas_width -  imageWidth)*0.5;
       const imageTop = canvas_height*0.105;
 
-      const kuangwidth = imageWidth + canvas_width*0.0213;
-      const kuangHeight = imageHeight + canvas_width*0.16;
-      const kuangLeft = imageLeft - canvas_width*0.01067;
-      const kuangTop= imageTop-canvas_width*0.0173; 
+      const kuangwidth = imageWidth + canvas_width*0.08;
+      const kuangHeight = imageHeight + canvas_width*0.22;
+      const kuangLeft = imageLeft - canvas_width*0.025; 
+      const kuangTop= imageTop-canvas_width*0.02; 
 
       // 创建一个图片
-      const image = canvas.createImage() 
+      const image = canvas.createImage();
+      image.referrerPolicy = "origin";
       // 把图片画到 canvas 上 
       // 等待图片加载
       await new Promise(resolve => {
-        image.onload = resolve
+        image.onload = resolve;
         image.src =  this.data.photoPath;// 要加载的图片 url
       }) 
       canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight);  
+       
         //绘制框
       const kuangImage = canvas.createImage() 
+      kuangImage.referrerPolicy = "origin";
       await new Promise(resolve => {
-        kuangImage.onload = resolve
-        kuangImage.src = this.data.uiIconsPath.kuangIcon // 要加载的图片 url
+        kuangImage.onload = resolve;
+        kuangImage.src = this.data.uiIconsPath.kuangIcon; // 要加载的图片 url
       }) 
       canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
       
       var tht = this; 
 
       const erweiWidth = canvas_width*0.088;
-      const erweiHeight = erweiWidth;
-      const kuangfloot =  kuangTop + kuangHeight;
-      const erweitop = kuangfloot - erweiHeight - canvas_width*0.0227;
-      const erweiLeft = kuangLeft + canvas_width*0.0213;
+      const erweiHeight = erweiWidth; 
+      const erweitop =  imageTop + imageHeight + canvas_width*0.05;
+      const erweiLeft = imageLeft + canvas_width*0.01;
       
       //绘制二维码
-      const erweimaImage = canvas.createImage() 
+      const erweimaImage = canvas.createImage();
+      erweimaImage.referrerPolicy = "origin";
       await new Promise(resolve => {
-        erweimaImage.onload = resolve
-        erweimaImage.src =this.data.uiIconsPath.erweimaIcon// 要加载的图片 url
+        erweimaImage.onload = resolve;
+        erweimaImage.src =this.data.uiIconsPath.erweimaIcon;// 要加载的图片 url
       }) 
       canvasContext.drawImage(erweimaImage, erweiLeft, erweitop, erweiWidth, erweiHeight);  
-       
+        
       const textWidth = canvas_width*0.2659;
       const textHeight =  canvas_width*0.0252;
-      const texttop = kuangfloot - textHeight - canvas_width*0.0227;
-      const textLeft = kuangLeft + kuangwidth - canvas_width*0.0252;
+      const texttop = erweitop + erweiHeight - textHeight;
+      const textLeft = imageLeft + imageWidth - textWidth - canvas_width*0.01;
       //绘制文本
-      const textmaImage = canvas.createImage() 
+      const textmaImage = canvas.createImage();
+      textmaImage.referrerPolicy = "origin";
       await new Promise(resolve => {
-        textmaImage.onload = resolve
-        textmaImage.src = this.data.uiIconsPath.textfIcon// 要加载的图片 url
+        textmaImage.onload = resolve;
+        textmaImage.src = this.data.uiIconsPath.textfIcon;// 要加载的图片 url
       }) 
       canvasContext.drawImage(textmaImage, textLeft, texttop, textWidth, textHeight);  
 
-      this.getTempImage(canvas).then(res=>{  
+      console.log("start getTempImage:")
+      this.getTempImage(canvas).then(res=>{
+          console.log("res.tempFilePath:"+res.tempFilePath)
           tht.setData({
-            //haibaoPhotoPathErweima:res.tempFilePath
+            //haibaoPhotoPathErweima:res.tempFilePath 
             haibaoPhotoPath:res.tempFilePath
           })  
           log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPath);  
