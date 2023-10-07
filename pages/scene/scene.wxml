@@ -30,8 +30,8 @@
       id="showhaibao_canvas" 
     > </canvas>   
     
-    <image  class="haibao_canvas_shoImg" src="{{uiIconsPath.photoBgIcon}}"></image>
-    <image  wx:if="{{haibaoPhotoPath.lenght !== 0}}" class="haibao_canvas_shoImg" src="{{haibaoPhotoPath}}"></image> 
+    <!-- <image  class="haibao_canvas_shoImg" src="{{uiIconsPath.photoBgIcon}}"></image>
+    <image  wx:if="{{haibaoPhotoPath.lenght !== 0}}" class="haibao_canvas_shoImg" src="{{haibaoPhotoPath}}"></image>  -->
     <image class="haibao_exitbtn" catch:tap="exitBtnClicked" src="{{uiIconsPath.anotherIcon}}">再来一张</image>
     <image class="haibao_savebtn" catch:tap="onSaveImageClicked" src="{{uiIconsPath.savebtnIcon}}">>保存</image>
 </view>

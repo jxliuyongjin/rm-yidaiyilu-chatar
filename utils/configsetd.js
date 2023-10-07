@@ -6,17 +6,17 @@ var config = {
       model_idnex:0,
       glburl:"model/jiuselu.glb", 
       iconurl:"ui/content/1.png",
-      defaultAmbientLight:"3",    
+      defaultAmbientLight:"2",    
       defaultDirectionalLight:"0",
-      size:3
+      size:1
       }, 
       { 
       model_idnex:1,
       glburl:"model/taowa.glb", 
       iconurl:"ui/content/6.png",
-      defaultAmbientLight:"3",    
+      defaultAmbientLight:"1.6",    
       defaultDirectionalLight:"0",
-      size:1
+      size:0.3
       }, 
       { 
       model_idnex:2,

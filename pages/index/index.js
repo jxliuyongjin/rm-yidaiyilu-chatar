@@ -9,7 +9,8 @@ Page({
     currentLuoTuoPosX:0,
     currentLuoTuoPosY:0,
     luotuoFangxiang:0,
-    hasFinshed:0
+    hasFinshed:0,
+    animationDatas:[]
   }, 
 
   onLoad() {  
@@ -26,7 +27,16 @@ Page({
     this.animationstate = null;
   },
   onReady(){ 
-    
+    var animationDatas =[];
+    for(var i=0;i<6;i++)
+    {
+      var animation = wx.createAnimation() 
+      animation.scale(0,0).step(); 
+      animationDatas.push(animation.export())
+    } 
+    this.setData({
+      animationDatas
+    }) 
   },
 
   onShareAppMessage() {
@@ -70,11 +80,27 @@ Page({
  
   anmationFinished(res)
   {
+    console.log("!!!!!!!!!!!! anmationFinished !!!!!!!!!!!!!!!!!!!!!!")
     this.resetAnimationState();
     this.setData({ 
       onloading:false, 
     })  
-    console.log("!!!!!!!!!!!! anmationFinished !!!!!!!!!!!!!!!!!!!!!!")
+    
+    var animationDatas =[];
+    var delayT = 0;
+    for(var i=0;i<6;i++)
+    {
+      var animation = wx.createAnimation() 
+      animation.scale(1,1).step({duration: 150,delay:delayT , timingFunction:"ease"})
+      .scale(0.8,0.8).step()
+      .scale(1,1).step(); 
+      delayT += 150;
+      animationDatas.push(animation.export())
+    }
+   
+    this.setData({
+      animationDatas
+    }) 
   },
 
   async initanimation(res)

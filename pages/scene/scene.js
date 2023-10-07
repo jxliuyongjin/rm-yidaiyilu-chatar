@@ -120,12 +120,21 @@ Page({
         value.iconurl = that.resource.geturl(value.iconurl); 
       }); 
 
-      var uiIconsPath = this.setUIPath();
-      this.setData({ 
-        modelIcons:getModelsInfo,
-        uiIconsPath,
-        iconScrollPos: moduleindex
-      })   
+      var uiIconsPath = this.setUIPath(); 
+      if(moduleindex>2)
+      {
+        this.setData({ 
+          modelIcons:getModelsInfo,
+          uiIconsPath,
+          iconScrollPos: moduleindex
+        })
+      }
+      else{
+        this.setData({ 
+          modelIcons:getModelsInfo,
+          uiIconsPath
+        })
+      }
     }else{
       wx.hideLoading()
       wx.showToast({
@@ -136,7 +145,10 @@ Page({
   
   // v2模式下有平面新增
   addAnchors() { 
-    log("addAnchors gogogo"); 
+    log("addAnchors gogogo："+this.data.step);
+    if(this.data.step != steps[1] && this.data.step != steps[2] &&this.data.step != steps[6] )  {
+      return;
+    }
     this.hideLoading(1);
     this.resource.findPlane();
   },
@@ -290,10 +302,10 @@ Page({
       const imageLeft = (canvas_width -  imageWidth)*0.5;
       const imageTop = canvas_height*0.105;
 
-      const kuangwidth = imageWidth + canvas_width*0.06;
-      const kuangHeight = imageHeight + canvas_width*0.04;
-      const kuangLeft = imageLeft - canvas_width*0.0133;
-      const kuangTop= imageTop-canvas_width*0.008; 
+      const kuangwidth = imageWidth + canvas_width*0.0213;
+      const kuangHeight = imageHeight + canvas_width*0.16;
+      const kuangLeft = imageLeft - canvas_width*0.01067;
+      const kuangTop= imageTop-canvas_width*0.0173; 
 
       // 创建一个图片
       const image = canvas.createImage() 
@@ -312,28 +324,13 @@ Page({
       }) 
       canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
       
-      var tht = this;
+      var tht = this; 
 
-      //生成一张没有二维码的,展示用
-      // await this.getTempImage(canvas).then(res=>{ 
-      //     log("res.tempFilePatp 111:"+res.tempFilePath);  
-      //     tht.setData({
-      //       haibaoPhotoPath:res.tempFilePath
-      //     })  
-      //     log("this.data.haibaoPhotoPath"+tht.data.haibaoPhotoPath); 
-      // })
-      // .catch(err=>{ 
-      //     wx.hideLoading();
-      //     wx.showToast({ title: "生成照片失败"}); 
-      //     log(err)
-      //     return
-      // })  
-
-      const erweiWidth = canvas_width*0.214;
+      const erweiWidth = canvas_width*0.088;
       const erweiHeight = erweiWidth;
       const kuangfloot =  kuangTop + kuangHeight;
-      const erweitop = kuangfloot+(canvas_height -kuangfloot-erweiHeight)*0.4;
-      const erweiLeft = canvas_width*0.2002;
+      const erweitop = kuangfloot - erweiHeight - canvas_width*0.0227;
+      const erweiLeft = kuangLeft + canvas_width*0.0213;
       
       //绘制二维码
       const erweimaImage = canvas.createImage() 
@@ -343,10 +340,10 @@ Page({
       }) 
       canvasContext.drawImage(erweimaImage, erweiLeft, erweitop, erweiWidth, erweiHeight);  
        
-      const textWidth = canvas_width*0.20472;
-      const textLeft =  canvas_width*0.61;
-      const texttop = erweitop+canvas_width*0.121333;
-      const textHeight =  textWidth*0.45206;
+      const textWidth = canvas_width*0.2659;
+      const textHeight =  canvas_width*0.0252;
+      const texttop = kuangfloot - textHeight - canvas_width*0.0227;
+      const textLeft = kuangLeft + kuangwidth - canvas_width*0.0252;
       //绘制文本
       const textmaImage = canvas.createImage() 
       await new Promise(resolve => {

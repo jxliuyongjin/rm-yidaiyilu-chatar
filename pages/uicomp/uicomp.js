@@ -1,4 +1,3 @@
-import resource_manager from "./../scene/resource_manager"
 import {getInfoJson} from "./../../utils/configsetd"
 import {log,requestFile} from "./../../utils/utils" 
 Page({
@@ -26,41 +25,123 @@ Page({
     onLoad(options) {
       getInfoJson(); 
     },
-
-    setmaskvisible(){
-      for(var index =0;index<this.data.maskvisible.length;index++)
-      {
-        if(index===this.data.moduleindex)
-        {
-          this.data.maskvisible[index] =0;
-        }
-        else{
-          this.data.maskvisible[index] =1;
-        }
-      }
-    },
+ 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady() {
-      return;
-      var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/glbconfig.json";  
-      var that = this;
-      requestFile(configurl,"text").then(res =>{ 
-        that.resource_config = res;  
-        var getModelsInfo =  that.resource_config.modelsInfo; 
-        getModelsInfo.forEach(value=>{ 
-          value.iconurl = this.resource_config.baseurl+value.iconurl 
-        }); 
-        this.setData({ 
-          modelIcons:getModelsInfo, 
-          iconScrollPos:5
-        })   
-        
-      });   
+    onReady() { 
       
     },
     
+    //绘制海报
+  async drawHaiBao(res)
+  { 
+    var canvas = res.node
+    if(!canvas) { 
+      log("canvas is null");
+      return;
+    }
+    this.canvas = canvas;
+    console.log("canvas geted:"+canvas); 
+    try{ 
+      // 创建离屏 2D canvas 实例 
+      // 获取 context。注意这里必须要与创建时的 type 一致
+      const canvasContext = canvas.getContext('2d')
+  
+      const canvas_width = res.width;
+      const canvas_height = res.height;
+  
+      log("drawHaiBao enner 22222");
+      //解决绘图不清晰
+      const dpr = wx.getSystemInfoSync().pixelRatio;
+      canvas.width = res.width * dpr;
+      canvas.height = res.height * dpr;
+      canvasContext.scale(dpr,dpr); 
+      canvasContext.fillRect(0,0,canvas_width,canvas_height);  
+      canvasContext.clearRect(0, 0, canvas_width, canvas_height);   
+    
+      //绘制背景
+      const bgImage = canvas.createImage() 
+      await new Promise(resolve => {
+        bgImage.onload = resolve
+        bgImage.src = this.data.uiIconsPath.photoBgIcon // 要加载的图片 url
+      }) 
+      canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);  
+       
+      var imageHW = 1.8
+      const imageWidth = canvas_width*0.73;
+      const imageHeight = imageHW*imageWidth; 
+      const imageLeft = (canvas_width -  imageWidth)*0.5;
+      const imageTop = canvas_height*0.105;
+
+      const kuangwidth = imageWidth + canvas_width*0.06;
+      const kuangHeight = imageHeight + canvas_width*0.04;
+      const kuangLeft = imageLeft - canvas_width*0.0133;
+      const kuangTop= imageTop-canvas_width*0.008; 
+
+      // 创建一个图片
+      const image = canvas.createImage() 
+      // 把图片画到 canvas 上 
+      // 等待图片加载
+      await new Promise(resolve => {
+        image.onload = resolve
+        image.src =  this.data.photoPath;// 要加载的图片 url
+      }) 
+      canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight);  
+        //绘制框
+      const kuangImage = canvas.createImage() 
+      await new Promise(resolve => {
+        kuangImage.onload = resolve
+        kuangImage.src = this.data.uiIconsPath.kuangIcon // 要加载的图片 url
+      }) 
+      canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
+      
+      var tht = this; 
+      const erweiWidth = canvas_width*0.214;
+      const erweiHeight = erweiWidth;
+      const kuangfloot =  kuangTop + kuangHeight;
+      const erweitop = kuangfloot+(canvas_height -kuangfloot-erweiHeight)*0.4;
+      const erweiLeft = canvas_width*0.2002;
+      
+      //绘制二维码
+      const erweimaImage = canvas.createImage() 
+      await new Promise(resolve => {
+        erweimaImage.onload = resolve
+        erweimaImage.src =this.data.uiIconsPath.erweimaIcon// 要加载的图片 url
+      }) 
+      canvasContext.drawImage(erweimaImage, erweiLeft, erweitop, erweiWidth, erweiHeight);  
+       
+      const textWidth = canvas_width*0.20472;
+      const textLeft =  canvas_width*0.61;
+      const texttop = erweitop+canvas_width*0.121333;
+      const textHeight =  textWidth*0.45206;
+      //绘制文本
+      const textmaImage = canvas.createImage() 
+      await new Promise(resolve => {
+        textmaImage.onload = resolve
+        textmaImage.src = this.data.uiIconsPath.textfIcon// 要加载的图片 url
+      }) 
+      canvasContext.drawImage(textmaImage, textLeft, texttop, textWidth, textHeight);  
+
+      this.getTempImage(canvas).then(res=>{  
+          tht.setData({
+            //haibaoPhotoPathErweima:res.tempFilePath
+            haibaoPhotoPath:res.tempFilePath
+          })  
+          log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPath);  
+          wx.hideLoading();
+      })
+      .catch(err=>{ 
+          wx.hideLoading();
+          wx.showToast({ title: "生成照片失败"}); 
+          log(err)
+      }) 
+    }
+    catch(err) {
+      console.log(err); 
+    }
+  }, 
+
 
     /**
      * 生命周期函数--监听页面显示
