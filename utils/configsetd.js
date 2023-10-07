@@ -73,6 +73,14 @@ var config = {
       defaultAmbientLight:"4",    
       defaultDirectionalLight:"0",
       size:1
+      }, 
+      { 
+      model_idnex:9,
+      glburl:"model/shenmiao.glb", 
+      iconurl:"ui/content/5.png",
+      defaultAmbientLight:"4",    
+      defaultDirectionalLight:"0",
+      size:1
       }
   ]
 }
