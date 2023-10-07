@@ -21,7 +21,7 @@
   </view>
 </scroll-view>
 
-<view wx:if="{{step === 'showPoint'}}" class="guide">选择最佳位置，点击屏幕放置模型</view>  
+<view wx:if="{{step === 'showPoint'}}" class="guide">请选择一个开阔的平面，点击绿色坐标放置模型</view>  
 <view  hidden="{{step != 'showHaibao'}}" class="haibaomake">  
     <canvas
       disable-scroll 
