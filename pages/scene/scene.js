@@ -146,12 +146,12 @@ Page({
   // v2模式下有平面新增
   addAnchors() { 
     log("addAnchors gogogo："+this.data.step);
-    if(this.data.step != steps[1] && this.data.step != steps[2] &&this.data.step != steps[6] )  {
+    if(this.data.step != steps[0] &&this.data.step != steps[1] && this.data.step != steps[2] &&this.data.step != steps[6] )  {
       log("addAnchors !!1111111gogogo：");
       return;
     }
     log("addAnchors !!222222222222222 1gogogo：");
-    if(this.data.step == steps[6])
+    if(this.data.step == steps[6]||this.data.step == steps[0])
     {
       this.hideLoading(1); 
     }else{ 
@@ -303,13 +303,13 @@ Page({
       }) 
       canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);  
         
-      var imageHW = 1.8
-      const imageWidth = canvas_width*0.73;
+      var imageHW = canvas_height/canvas_width;
+      const imageWidth = canvas_width*0.6;
       const imageHeight = imageHW*imageWidth; 
       const imageLeft = (canvas_width -  imageWidth)*0.5;
       const imageTop = canvas_height*0.105;
 
-      const kuangwidth = imageWidth + canvas_width*0.08;
+      const kuangwidth = imageWidth + canvas_width*0.07;
       const kuangHeight = imageHeight + canvas_width*0.22;
       const kuangLeft = imageLeft - canvas_width*0.025; 
       const kuangTop= imageTop-canvas_width*0.02; 

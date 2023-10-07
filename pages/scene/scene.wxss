@@ -6,11 +6,12 @@
 
 .guide {
   position: absolute;
-  left: 50%;
-  bottom: 30vh;
-  transform: translate(-50%);
-  z-index: 1;
-
+  left: 0;
+  width: 100%;
+  text-align:center;
+  font-weight:bold;
+  top: 30vh; 
+  z-index: 1; 
   color: white;
   pointer-events: none;
 }
