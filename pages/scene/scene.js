@@ -302,8 +302,7 @@ Page({
       canvas.height = res.height * dpr;
       canvasContext.scale(dpr,dpr); 
       canvasContext.fillRect(0,0,canvas_width,canvas_height);  
-      canvasContext.clearRect(0, 0, canvas_width, canvas_height);   
-     
+      canvasContext.clearRect(0, 0, canvas_width, canvas_height);    
       //绘制背景
       const bgImage = canvas.createImage() 
       bgImage.referrerPolicy = 'origin';
@@ -317,12 +316,12 @@ Page({
       const imageWidth = canvas_width*0.6;
       const imageHeight = imageHW*imageWidth; 
       const imageLeft = (canvas_width -  imageWidth)*0.5;
-      const imageTop = canvas_height*0.105;
+      const imageTop =canvas_height*0.105;
 
-      const kuangwidth = imageWidth + canvas_width*0.07;
-      const kuangHeight = imageHeight + canvas_width*0.22;
-      const kuangLeft = imageLeft - canvas_width*0.025; 
-      const kuangTop= imageTop-canvas_width*0.02; 
+      const kuangwidth = imageWidth + canvas_width*0.05733;
+      const kuangHeight = imageHeight + canvas_width*0.17866;
+      const kuangLeft = imageLeft - canvas_width*0.018; 
+      const kuangTop= imageTop-canvas_width*0.018;
 
       // 创建一个图片
       const image = canvas.createImage();
@@ -332,10 +331,9 @@ Page({
       await new Promise(resolve => {
         image.onload = resolve;
         image.src =  this.data.photoPath;// 要加载的图片 url
-      }) 
-      canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight);  
+      })  
        
-        //绘制框
+      //   //绘制框
       const kuangImage = canvas.createImage() 
       kuangImage.referrerPolicy = "origin";
       await new Promise(resolve => {
@@ -343,13 +341,14 @@ Page({
         kuangImage.src = this.data.uiIconsPath.kuangIcon; // 要加载的图片 url
       }) 
       canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
+      canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight); 
       
       var tht = this; 
 
       const erweiWidth = canvas_width*0.088;
       const erweiHeight = erweiWidth; 
-      const erweitop =  imageTop + imageHeight + canvas_width*0.05;
-      const erweiLeft = imageLeft + canvas_width*0.01;
+      const erweitop =  imageTop + imageHeight + canvas_width*0.037333;
+      const erweiLeft = imageLeft ;
       
       //绘制二维码
       const erweimaImage = canvas.createImage();
@@ -363,7 +362,7 @@ Page({
       const textWidth = canvas_width*0.2659;
       const textHeight =  canvas_width*0.0252;
       const texttop = erweitop + erweiHeight - textHeight;
-      const textLeft = imageLeft + imageWidth - textWidth - canvas_width*0.01;
+      const textLeft = imageLeft + imageWidth - textWidth// - canvas_width*0.01;
       //绘制文本
       const textmaImage = canvas.createImage();
       textmaImage.referrerPolicy = "origin";
@@ -415,7 +414,7 @@ Page({
 
   async onSaveImageClicked()
   { 
-    var tempFilePath =this.data.haibaoPhotoPath;// this.data.photoPath;//this.data.haibaoPhotoPath;
+    var tempFilePath = this.data.haibaoPhotoPath;//this.data.photoPath;//this.data.haibaoPhotoPath;
     if(this.data.step!=steps[4]||tempFilePath.length===0)
     {
       log("没有照片呢...")
