@@ -1,6 +1,6 @@
 import resource_manager from "./resource_manager"
 import {getSlamV2Support,log} from "../../utils/utils";  
-
+const app = getApp();
 //  initing:场景正在初始化
 //  showPoint:初始化已经完成，展示引导放置模型
 //  modelSeted：用户点击屏幕，放置了模型
@@ -40,6 +40,9 @@ Page({
   },
 
   onLoad(options) { 
+    wx.uma.trackEvent(app.globalData.uMengPageArived,{
+      Um_Key_PageName:"场景界面"
+    })
     this.showLoading("初始化中...",0)
     var moduleindex = options.moduleindex;
     console.log("onload moduleindex:"+moduleindex);
@@ -103,6 +106,7 @@ Page({
   },
 
   async ready({ detail: slam }) {
+    
     this.slam = slam;
     log("ready 11111"); 
     var moduleindex = this.data.currentModuleindex; 
@@ -193,7 +197,7 @@ Page({
     if(this.resource == null) {
       return;
     } 
-    this.showLoading("场景加载中...",3);
+    this.showLoading("场景加载中...",3); 
     var success = await this.resource.selected_model_change(selectedId);
     if(success)
     { 
@@ -219,6 +223,9 @@ Page({
 
     this.resetTempIcon();
 
+    wx.uma.trackEvent(app.globalData.uMengClickedEventId,{
+      Um_Key_ButtonName:"拍照"
+    }) 
     this.resource.setVisibleReticleMode(false);
     var currentTep = this.data.step;
     this.showLoading("拍照中...",4);
@@ -231,7 +238,7 @@ Page({
        * @param {Number} [quality=0.9] - 照片质量，jpg时有效。默认为0.9
        * @returns {Promise<photoPath>} - 照片文件临时地址
        */
-      const photoPath = await that.slam.takePhoto(); 
+      const photoPath = await that.slam.takePhoto({quality:1}); 
       that.setData({
         photoPath
       })
@@ -255,7 +262,10 @@ Page({
   },
 
   exitBtnClicked()
-  {   
+  {    
+    wx.uma.trackEvent(app.globalData.uMengClickedEventId,{
+      Um_Key_ButtonName:"再来一次"
+    })
     this.resetTempIcon();
     this.setData({ step: steps[2]}); 
   }, 
@@ -404,14 +414,17 @@ Page({
   },
 
   async onSaveImageClicked()
-  {
-    var tempFilePath = this.data.haibaoPhotoPath;
+  { 
+    var tempFilePath =this.data.haibaoPhotoPath;// this.data.photoPath;//this.data.haibaoPhotoPath;
     if(this.data.step!=steps[4]||tempFilePath.length===0)
     {
       log("没有照片呢...")
       return;
     } 
-
+    
+    wx.uma.trackEvent(app.globalData.uMengClickedEventId,{
+      Um_Key_ButtonName:"保存照片"
+    }) 
     this.showLoading("开始保存照片...",5); 
     var that = this;
     wx.saveImageToPhotosAlbum({
