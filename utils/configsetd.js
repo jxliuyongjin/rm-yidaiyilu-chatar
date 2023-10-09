@@ -68,7 +68,7 @@ var config = {
       { 
       model_idnex:7,
       modelName:"长颈鹿",
-      glburl:"model/banma_feizhou.glb", 
+      glburl:"model/changjinglu.glb", 
       iconurl:"ui/content1/7.png",
       defaultAmbientLight:"3",    
       defaultDirectionalLight:"0",
