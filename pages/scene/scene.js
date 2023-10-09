@@ -16,27 +16,13 @@ Page({
     step: "initing",  
     uiIconsPath:{},
     modelIcons:[],
-    iconNames: ["icon0", "icon1", "icon2", "icon3", "icon4", "icon5", "icon6", "icon7", "icon8", "icon9"],
+    iconNames: [],
     iconScrollPos:0,
     photoPath:"", 
     haibaoPhotoPath:"",
     haibaoPhotoPathErweima:"",
     currentModuleindex:0,
-    maskvisible:[1,1,1,1,1,1,1,1,1,1,1,1]
-  },
-  setmaskvisible(tempMmodelIndex){
-    var tempArr =  this.data.maskvisible;  
-    for(var index = 0;index<tempArr.length;index++)
-    {  
-      if(index == tempMmodelIndex) {
-        tempArr[index] = 0; 
-      } else{ 
-        tempArr[index] =1; 
-      }
-    } 
-    this.setData({
-      maskvisible:tempArr
-    }) 
+    maskvisible:[]
   },
 
   onLoad(options) {  
@@ -45,7 +31,7 @@ Page({
     })
 
     this.showLoading("初始化中...",0)
-    var moduleindex = options.moduleindex;
+    var moduleindex = parseInt(options.moduleindex);
     console.log("onload moduleindex:"+moduleindex);
     if(moduleindex<0||moduleindex>=6) {
       return;
@@ -70,16 +56,47 @@ Page({
     ////加载配置
     this.resource = new  resource_manager();
     this.resource.onload(moduleindex);  
+    this.initData(moduleindex);
+  },
+
+  initData(moduleindex) { 
+    //初始化配置
+    var getModelsInfo =  this.resource.getModelsInfo();   
+    var value = null; var iconNames = []; var maskvisible = []; 
+    for(var i=0;i<getModelsInfo.length;i++)
+    {
+      value = getModelsInfo[i];
+      value.iconurl = this.resource.geturl(value.iconurl); 
+      maskvisible[i] = 1;
+      iconNames[i] = "icon"+i;
+    }  
+    var uiIconsPath = this.setUIPath(); 
+    if(moduleindex>2)
+    {
+      this.setData({ 
+        modelIcons:getModelsInfo,
+        uiIconsPath,
+        iconNames,
+        maskvisible,
+        iconScrollPos: moduleindex
+      })
+    }
+    else{
+      this.setData({ 
+        modelIcons:getModelsInfo,
+        uiIconsPath,
+        iconNames,
+        maskvisible,
+      })
+    }
   },
 
   onUnload()
   {
-    this.canvas = null;
-    if(this.resource)
-    {
-      this.resource.clear();
-      this.resource = null;
-    }
+    console.log("#################### onunload #######################")
+    this.canvas = null; 
+    this.resource.clear();
+    this.resource = null; 
   },
 
   setUIPath()
@@ -88,10 +105,11 @@ Page({
     var anotherIcon = this.resource.geturl("ui/drawphoto/another.png");
     var savebtnIcon = this.resource.geturl("ui/drawphoto/savebtn.png");
     var changeBtnMark = this.resource.geturl("ui/content/mask.png");
-    var photoBgIcon ="https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/drawphoto/bg.png";
-    var erweimaIcon = "https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/drawphoto/erweima.png";
-    var kuangIcon = "https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/drawphoto/kuang.png";
-    var textfIcon = "https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/drawphoto/textf.png";
+    
+    var photoBgIcon =this.resource.gethaibaourl("drawphoto/bg.png");
+    var erweimaIcon = this.resource.gethaibaourl("drawphoto/erweima.png");
+    var kuangIcon = this.resource.gethaibaourl("drawphoto/kuang.png");
+    var textfIcon = this.resource.gethaibaourl("drawphoto/textf.png"); 
     return {
       takephotoBtnIcon,
       photoBgIcon,
@@ -114,39 +132,7 @@ Page({
         this.addAnchors(); 
       }else{ 
         this.hideLoading(6); 
-      }
-      
-      var getModelsInfo =  this.resource.getModelsInfo();   
-      var value = null; var iconNames = []; var maskvisible = []; 
-      for(var i=0;i<getModelsInfo.length;i++)
-      {
-        value = getModelsInfo[i];
-        value.iconurl = this.resource.geturl(value.iconurl); 
-        maskvisible[i] = 1;
-        iconNames[i] = "icon"+i;
       } 
-      console.log(maskvisible)
-      console.log(iconNames) 
-
-      var uiIconsPath = this.setUIPath(); 
-      if(moduleindex>2)
-      {
-        this.setData({ 
-          modelIcons:getModelsInfo,
-          uiIconsPath,
-          iconNames,
-          maskvisible,
-          iconScrollPos: moduleindex
-        })
-      }
-      else{
-        this.setData({ 
-          modelIcons:getModelsInfo,
-          uiIconsPath,
-          iconNames,
-          maskvisible,
-        })
-      }
     }else{
       wx.hideLoading()
       wx.showToast({
@@ -222,6 +208,22 @@ Page({
     this.hideLoading(1); 
   }, 
 
+  setmaskvisible(tempMmodelIndex){
+    var tempArr =  this.data.maskvisible;  
+    for(var index = 0;index<tempArr.length;index++)
+    {  
+      if(index == tempMmodelIndex) {
+        tempArr[index] = 0; 
+      } else{ 
+        tempArr[index] =1; 
+      }
+    } 
+    this.setData({
+      maskvisible:tempArr
+    }) 
+  },
+
+  ///////////////////////////////////以下关于海报/////////////////////////////////////////////////
   async take_photo(e) {  
     if(this.data.step!= steps[2])
     {

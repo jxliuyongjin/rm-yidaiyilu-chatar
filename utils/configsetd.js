@@ -1,6 +1,7 @@
 var config = {
   baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/",
   reticle:"reticle.glb", 
+  baibaourl:"https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/",
   modelsInfo:[ 
       {
       model_idnex:0,

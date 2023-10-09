@@ -213,6 +213,11 @@ class resource_manager {
     return this.resource_config.baseurl+url
   } 
 
+  gethaibaourl(url)
+  {
+    return this.resource_config.baibaourl+url
+  }
+
   setmapSize(slam)
   { 
       // 设置阴影的分辨率, 注意：分辨率越高性能消耗越大，另外请设置分辨率为2的幂次方
@@ -283,9 +288,8 @@ class resource_manager {
     const directionalLight = this.slam.defaultDirectionalLight;
     const directionalPosition = directionalLight.position.clone().set(0, 1, 0);
 		const axisX = directionalPosition.clone().set(1, 0, 0);
-    const	axisY = directionalPosition.clone();
-
-    console.log(axisX, axisY)
+    const	axisY = directionalPosition.clone(); 
+    //console.log(axisX, axisY)
     
     const horizontalRadius = Math.PI / 180 * 45;
     const verticalRadius = Math.PI / 180 * 45;
@@ -319,7 +323,8 @@ class resource_manager {
     this.current_model  =null;
     this.reticleModel  =null;
     this.currentModelInfo =null;
-    this.configPromise =null; this.shadowPlanes = null
+    this.configPromise =null; 
+    this.shadowPlanes = null
   }
 
 

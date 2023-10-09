@@ -17,7 +17,7 @@ Page({
 
   getConfigData()
   { 
-    var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/glbconfig.json";  
+    var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/config.json";  
     this.configPromise =  requestFile(configurl,"text"); 
     var that = this;
     this.configPromise.then(res =>{ 
