@@ -20,5 +20,5 @@
   <image class="loadin_bg" src="/assets/images/loading.png" ></image>
   <image class="loadpath" src="/assets/images/path.png"></image>
   <image class="loading_logo" src="/assets/images/loading-icon.png"></image>
-  <image class="luotuo" style ="left:{{currentLuoTuoPosX}}px;top:{{currentLuoTuoPosY}}px;transform:translate(0%,-100%) rotateY({{luotuoFangxiang}}deg);" src="/assets/images/loadingactor.png"> </image>
+  <image class="luotuo" style ="left:{{currentLuoTuoPosX}}px;top:{{currentLuoTuoPosY}}px;transform:translate(0%,-100%) rotateY({{luotuoFangxiang}}deg);" src="/assets/images/loadingactor.gif"> </image>
 </view>

@@ -475,23 +475,26 @@ Page({
 
   /**
    * 用户点击右上角分享
-   */
-  onShareAppMessage() {  
+   */ 
+  onShareAppMessage() {
     return {
-      title: '分享',
-      path: '/pages/scene/scene',  
-    }
-  },  
+      title: app.globalData.appName,
+      path: "/pages/index/index",
+      imageUrl: this.geturl("share.jpg")
+    };
+  },
   
+
   /**
    * 用户点击右上角盆友圈分享
    */
-  onShareTimeline(){ 
-    return {
-      title: app.globalData.appName,
-      imageUrl:this.resource.geturl("share.jpg")
-    }
-  },
+  // onShareTimeline(){ 
+  //   return {
+  //     title: app.globalData.appName,
+  //     imageUrl:this.geturl("share.jpg")
+  //   }
+  // },
+  
   error({ detail }) {
     this.resource.error({ detail }); 
   },

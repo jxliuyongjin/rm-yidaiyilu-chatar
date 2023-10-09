@@ -61,8 +61,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 88rpx;
-  height: 127rpx;
+  width: 204rpx;
+  height: 238rpx;
   transform: translate(0%,-100%); 
 }
 
