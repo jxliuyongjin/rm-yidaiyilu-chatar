@@ -1,3 +1,4 @@
+import {requestFile} from "../../utils/utils" 
 const app = getApp();
 Page({ 
   data: {
@@ -10,10 +11,23 @@ Page({
     currentLuoTuoPosY:0,
     luotuoFangxiang:0,
     hasFinshed:0,
-    animationDatas:[]
+    animationDatas:[],
+    uipath:{}
   }, 
 
-  onLoad() {   
+  getConfigData()
+  { 
+    var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/glbconfig.json";  
+    this.configPromise =  requestFile(configurl,"text"); 
+    var that = this;
+    this.configPromise.then(res =>{ 
+      that.resource_config = res;  
+      app.globalData.resource_config = res;
+    }); 
+  },
+  onLoad() { 
+    //加载配置
+    this.getConfigData(); 
     wx.reportEvent("page_show", {
       "page_name": "loading"
     })
@@ -28,8 +42,41 @@ Page({
     this.points = null;
     this.windowV = null;
     this.animationstate = null;
+    this.resource_config = null;
   },
-  onReady(){ 
+
+  geturl(url)
+  {   
+    return this.resource_config.baseurl+url
+  },
+  setUIPath()
+  { 
+    const uipath = {
+      bg:this.geturl("ui/shouye/bg.png"),
+      btn1Icon:this.geturl("ui/shouye/btn1.png"),
+      btn2Icon:this.geturl("ui/shouye/btn2.png"),
+      btn3Icon:this.geturl("ui/shouye/btn3.png"), 
+      btn4Icon:this.geturl("ui/shouye/btn4.png"),
+      btn5Icon:this.geturl("ui/shouye/btn5.png"),
+      btn6Icon:this.geturl("ui/shouye/btn6.png"),
+      dec1Icon:this.geturl("ui/shouye/dec1.png"),
+      dec2Icon:this.geturl("ui/shouye/dec2.png"),
+      dec3Icon:this.geturl("ui/shouye/dec3.png"),
+      dec4Icon:this.geturl("ui/shouye/dec4.png"),
+      dec5Icon:this.geturl("ui/shouye/dec5.png"),
+      dec6Icon:this.geturl("ui/shouye/dec6.png"),
+      titleIcon:this.geturl("ui/shouye/title.png"), 
+    }
+    this.setData({
+      uipath
+    })
+  },
+
+  async onReady(){  
+    if(app.globalData.resource_config == null){ 
+        this.resource_config = await this.configPromise;  
+        app.globalData.resource_config = this.resource_config;   
+    } 
     var animationDatas =[];
     for(var i=0;i<6;i++)
     {
@@ -39,7 +86,8 @@ Page({
     } 
     this.setData({
       animationDatas
-    }) 
+    })  
+    this.setUIPath();
   },
 
   onShareAppMessage() {

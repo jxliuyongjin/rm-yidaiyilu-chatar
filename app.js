@@ -8,6 +8,7 @@ App({
   onLaunch() { 
     let shareImg = "https://kivicube-resource.kivisense.com/slam-ar/share.jpeg";
     this.globalData = {
+      resource_config:null,
       shareImg,
       appName: "送你一次环球之旅",
       uMengClickedEventId: "Um_Event_ModularClick",

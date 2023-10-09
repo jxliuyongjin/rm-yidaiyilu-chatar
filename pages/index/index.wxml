@@ -1,19 +1,19 @@
 <!--index.wxml-->
 <view class="wrapper"> 
-  <image class="home-bg" mode="scaleToFill" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/bg.png"></image> 
-  
-  <image animation="{{animationDatas[0]}}" class="button1cls" id="0" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn1.png"></image>  
-  <image animation="{{animationDatas[1]}}" class="button2cls" id="1" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn2.png"></image>  
-      <image class="decoration1" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec1.png"></image>
-      <image class="decoration2" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec2.png"></image>
-  <image animation="{{animationDatas[2]}}" class="button3cls" id="2" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn3.png"></image>  
-  <image animation="{{animationDatas[3]}}" class="button4cls" id="3" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn4.png"></image>  
-    <image class="decoration3" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec3.png"></image>
-    <image class="decoration4" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec4.png"></image>
-  <image animation="{{animationDatas[4]}}" class="button5cls" id="4" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn5.png"></image>  
-  <image animation="{{animationDatas[5]}}" class="button6cls" id="5" bind:tap="gotoModel" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/btn6.png"></image>   
-    <image class="decoration5" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec5.png"></image>
-    <image class="decoration6" bindload="imageLoaded" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/shouye/dec6.png"></image>
+  <image class="home-bg" mode="scaleToFill" bindload="imageLoaded" src="{{uipath.bg}}"></image> 
+  <image animation="{{animationDatas[0]}}" class="button1cls" id="0" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn1Icon}}"></image>  
+  <image animation="{{animationDatas[1]}}" class="button2cls" id="1" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn2Icon}}"></image>  
+      <image class="decoration1" bindload="imageLoaded" src="{{uipath.dec1Icon}}"></image>
+      <image class="decoration2" bindload="imageLoaded" src="{{uipath.dec2Icon}}"></image>
+  <image animation="{{animationDatas[2]}}" class="button3cls" id="2" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn3Icon}}"></image>  
+  <image animation="{{animationDatas[3]}}" class="button4cls" id="3" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn4Icon}}"></image>  
+    <image class="decoration3" bindload="imageLoaded" src="{{uipath.dec3Icon}}"></image>
+    <image class="decoration4" bindload="imageLoaded" src="{{uipath.dec4Icon}}"></image>
+  <image animation="{{animationDatas[4]}}" class="button5cls" id="4" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn5Icon}}"></image>  
+  <image animation="{{animationDatas[5]}}" class="button6cls" id="5" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn6Icon}}"></image>   
+    <image class="decoration5" bindload="imageLoaded" src="{{uipath.dec5Icon}}"></image>
+    <image class="decoration6" bindload="imageLoaded" src="{{uipath.dec6Icon}}"></image> 
+  <image class="title" src="{{uipath.titleIcon}}"></image>
 </view> 
 
 <view class="loading_content" wx:if="{{onloading}}">

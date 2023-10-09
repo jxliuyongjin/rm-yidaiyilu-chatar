@@ -16,6 +16,15 @@
   height: 100%;
 }
 
+.title{
+  position: absolute;
+  top: 8.32vh;
+  left: 50%;
+  width: 637.8rpx;
+  height:124.31rpx; 
+  transform: translate(-50%);
+}
+
 .loading_content{
   position: absolute;
   top: 0;
@@ -59,12 +68,12 @@
 
 .button1cls{
   position: absolute;
-  top:16.49vh;
-  left:10.67vw;
+  top:13.87vh;
+  left:2.93vw;
   width:334rpx;
   height:342rpx; 
-  /* background-color: green; */
   z-index: 0;
+  /* background-color: green; */
 }
 
 .button2cls{

@@ -8,24 +8,28 @@ function updateMatrix(object, { transform }) {
   }
 }
 class resource_manager {
-  constructor() {} 
-  
-  getConfigData()
-  { 
-    var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/glbconfig.json";  
-    this.configPromise =  requestFile(configurl,"text"); 
-    var that = this;
-    this.configPromise.then(res =>{ 
-      that.resource_config = res;  
-    }); 
-  }
-  getConfigPromise()
-  {
-    return this.configPromise;
-  }
+  constructor() {}  
   getModelsInfo()
   {
     return this.resource_config.modelsInfo;
+  }
+
+  onload(index)
+  {  
+    this.resource_config = app.globalData.resource_config;     
+    this.currentModelInfo = this.resource_config.modelsInfo[index];   
+    var reticleurl = this.geturl(this.resource_config.reticle); 
+    var glburl = this.geturl(this.currentModelInfo.glburl);  
+     
+    wx.reportEvent("model_showing", {
+      "model_name":this.currentModelInfo.modelName
+    }) 
+    this.downloadAssets = Promise.all([
+      requestFile(reticleurl), 
+      requestFile(glburl)
+    ]).then((res) => { 
+      return res;
+    });  
   }
   /**
    * 初始化场景和模型，但此时还没有将模型加入到场景内。
@@ -33,18 +37,14 @@ class resource_manager {
    * @param {*} slam 传入的slam对象
    * @memberof Food
    */
-  async initScene(slam , index=0) {   
-    if(!this.resource_config) {
-      this.resource_config = await this.configPromise;   
-    }  
- 
+  async initScene(slam , index=0) {  
     try { 
       this.slam = slam; 
       this.modelIndex = index; 
       const [
         reticleArrayBuffer, 
         glbArrayBuffer,
-      ] = await this.fristLoadSource(index); 
+      ] = await this.downloadAssets;
       
       log("initScene inner"); 
       const [reticleModel, current_model] = await Promise.all([
@@ -75,32 +75,7 @@ class resource_manager {
       return false;
     }
   } 
-  
-  fristLoadSource(index=0)
-  {
-    log("fristLoadSource："+ this.resource_config);  
-
-    this.currentModelInfo = this.resource_config.modelsInfo[index]; 
-    var reticleurl = this.geturl(this.resource_config.reticle); 
-    var glburl = this.geturl(this.currentModelInfo.glburl);  
-     
-    wx.reportEvent("model_showing", {
-      "model_name":this.currentModelInfo.modelName
-    })
-
-    if(this.currentModelInfo&&reticleurl)
-    {  
-      var downloadAssets = Promise.all([
-        requestFile(reticleurl), 
-        requestFile(glburl)
-      ]).then((res) => { 
-        return res;
-      });  
-      return downloadAssets;
-    }
-    return downloadAssets;
-  }
-
+   
   
   setVisibleReticleMode(bool)
   {
@@ -234,7 +209,7 @@ class resource_manager {
   }
 
   geturl(url)
-  {   
+  {    
     return this.resource_config.baseurl+url
   } 
 

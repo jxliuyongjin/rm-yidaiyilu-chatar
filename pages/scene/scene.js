@@ -16,13 +16,13 @@ Page({
     step: "initing",  
     uiIconsPath:{},
     modelIcons:[],
-    iconNames:["icon0","icon1","icon2","icon3","icon4","icon5","icon6"],
+    iconNames: ["icon0", "icon1", "icon2", "icon3", "icon4", "icon5", "icon6", "icon7", "icon8", "icon9"],
     iconScrollPos:0,
     photoPath:"", 
     haibaoPhotoPath:"",
     haibaoPhotoPathErweima:"",
     currentModuleindex:0,
-    maskvisible:[0,1,1,1,1,1]
+    maskvisible:[1,1,1,1,1,1,1,1,1,1,1,1]
   },
   setmaskvisible(tempMmodelIndex){
     var tempArr =  this.data.maskvisible;  
@@ -47,14 +47,12 @@ Page({
     this.showLoading("初始化中...",0)
     var moduleindex = options.moduleindex;
     console.log("onload moduleindex:"+moduleindex);
-    if(moduleindex<0||moduleindex>=6)
-    {
+    if(moduleindex<0||moduleindex>=6) {
       return;
     }
     this.setData({ 
       currentModuleindex: moduleindex
     });
-    this.setmaskvisible(moduleindex);
 
     const isSupportV2 = getSlamV2Support(); 
     if(isSupportV2) {
@@ -63,7 +61,6 @@ Page({
       }); 
     }
  
-    this.resource = new  resource_manager();
     // 设置屏幕常亮
     wx.setKeepScreenOn({
       keepScreenOn: true,
@@ -71,7 +68,8 @@ Page({
     
     this.resetTempIcon();
     ////加载配置
-    this.resource.getConfigData();  
+    this.resource = new  resource_manager();
+    this.resource.onload(moduleindex);  
   },
 
   onUnload()
@@ -107,7 +105,6 @@ Page({
   },
 
   async ready({ detail: slam }) {
-    
     this.slam = slam;
     log("ready 11111"); 
     var moduleindex = this.data.currentModuleindex; 
@@ -120,10 +117,16 @@ Page({
       }
       
       var getModelsInfo =  this.resource.getModelsInfo();   
-      var that = this;
-      getModelsInfo.forEach(value=>{ 
-        value.iconurl = that.resource.geturl(value.iconurl); 
-      }); 
+      var value = null; var iconNames = []; var maskvisible = []; 
+      for(var i=0;i<getModelsInfo.length;i++)
+      {
+        value = getModelsInfo[i];
+        value.iconurl = this.resource.geturl(value.iconurl); 
+        maskvisible[i] = 1;
+        iconNames[i] = "icon"+i;
+      } 
+      console.log(maskvisible)
+      console.log(iconNames) 
 
       var uiIconsPath = this.setUIPath(); 
       if(moduleindex>2)
@@ -131,13 +134,17 @@ Page({
         this.setData({ 
           modelIcons:getModelsInfo,
           uiIconsPath,
+          iconNames,
+          maskvisible,
           iconScrollPos: moduleindex
         })
       }
       else{
         this.setData({ 
           modelIcons:getModelsInfo,
-          uiIconsPath
+          uiIconsPath,
+          iconNames,
+          maskvisible,
         })
       }
     }else{
@@ -146,6 +153,8 @@ Page({
         title: '网络出问题了...',
       })
     }
+    
+    this.setmaskvisible(moduleindex);
   }, 
   
   // v2模式下有平面新增
@@ -209,7 +218,7 @@ Page({
       this.setmaskvisible(this.data.currentModuleindex)
     }
     
-    log("this.data.moduleindex:"+this.data.currentModuleindex);  
+    //log("this.data.moduleindex:"+this.data.currentModuleindex);  
     this.hideLoading(1); 
   }, 
 
@@ -321,8 +330,8 @@ Page({
 
       const kuangwidth = imageWidth + canvas_width*0.05733;
       const kuangHeight = imageHeight + canvas_width*0.17866;
-      const kuangLeft = imageLeft - canvas_width*0.018; 
-      const kuangTop= imageTop-canvas_width*0.018;
+      const kuangLeft = imageLeft - canvas_width*0.016; 
+      const kuangTop= imageTop-canvas_width*0.016;
 
       // 创建一个图片
       const image = canvas.createImage();
