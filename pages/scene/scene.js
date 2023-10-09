@@ -73,12 +73,13 @@ Page({
     var uiIconsPath = this.setUIPath(); 
     if(moduleindex>2)
     {
+      var iconScrollPos = moduleindex-2;
       this.setData({ 
         modelIcons:getModelsInfo,
         uiIconsPath,
         iconNames,
         maskvisible,
-        iconScrollPos: moduleindex
+        iconScrollPos
       })
     }
     else{
@@ -485,10 +486,10 @@ Page({
   /**
    * 用户点击右上角盆友圈分享
    */
-  onShareTimeline(){
+  onShareTimeline(){ 
     return {
-      title: '分享',
-      path: '/pages/scene/scene', 
+      title: app.globalData.appName,
+      imageUrl:this.resource.geturl("share.jpg")
     }
   },
   error({ detail }) {
