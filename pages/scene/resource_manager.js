@@ -83,10 +83,11 @@ class resource_manager {
     this.currentModelInfo = this.resource_config.modelsInfo[index]; 
     var reticleurl = this.geturl(this.resource_config.reticle); 
     var glburl = this.geturl(this.currentModelInfo.glburl);  
-    
-    wx.uma.trackEvent(app.globalData.uMengPageArived,{
-      Um_Key_PageName:this.currentModelInfo.modelName
+     
+    wx.reportEvent("model_showing", {
+      "model_name":this.currentModelInfo.modelName
     })
+
     if(this.currentModelInfo&&reticleurl)
     {  
       var downloadAssets = Promise.all([
@@ -125,11 +126,9 @@ class resource_manager {
     } 
 
     this.currentModelInfo = this.resource_config.modelsInfo[index];  
-    // wx.uma.trackEvent(app.globalData.uMengPageArived,{
-    //   Um_Key_PageName:"展示模型：" + this.currentModelInfo.modelName
-    // }); 
-    wx.uma.trackEvent(app.globalData.uMengPageArived,{
-      Um_Key_PageName:this.currentModelInfo.modelName
+    
+    wx.reportEvent("model_showing", {
+      "model_name":this.currentModelInfo.modelName
     })
     var glburl = this.geturl(this.currentModelInfo.glburl);
 

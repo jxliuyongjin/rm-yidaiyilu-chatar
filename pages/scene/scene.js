@@ -39,10 +39,11 @@ Page({
     }) 
   },
 
-  onLoad(options) { 
-    wx.uma.trackEvent(app.globalData.uMengPageArived,{
-      Um_Key_PageName:"场景界面"
+  onLoad(options) {  
+    wx.reportEvent("page_show", {
+      "page_name":"场景界面"
     })
+
     this.showLoading("初始化中...",0)
     var moduleindex = options.moduleindex;
     console.log("onload moduleindex:"+moduleindex);
@@ -223,9 +224,9 @@ Page({
 
     this.resetTempIcon();
 
-    wx.uma.trackEvent(app.globalData.uMengClickedEventId,{
-      Um_Key_ButtonName:"拍照"
-    }) 
+    wx.reportEvent("button_clicked", {
+      "btn_name": "拍照"
+    })
     this.resource.setVisibleReticleMode(false);
     var currentTep = this.data.step;
     this.showLoading("拍照中...",4);
@@ -263,8 +264,8 @@ Page({
 
   exitBtnClicked()
   {    
-    wx.uma.trackEvent(app.globalData.uMengClickedEventId,{
-      Um_Key_ButtonName:"再来一次"
+    wx.reportEvent("button_clicked", {
+      "btn_name": "再来一次"
     })
     this.resetTempIcon();
     this.setData({ step: steps[2]}); 
@@ -420,10 +421,10 @@ Page({
       log("没有照片呢...")
       return;
     } 
-    
-    wx.uma.trackEvent(app.globalData.uMengClickedEventId,{
-      Um_Key_ButtonName:"保存照片"
-    }) 
+     
+    wx.reportEvent("button_clicked", {
+      "btn_name": "保存照片"
+    })
     this.showLoading("开始保存照片...",5); 
     var that = this;
     wx.saveImageToPhotosAlbum({

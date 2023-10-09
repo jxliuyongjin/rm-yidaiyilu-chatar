@@ -6,7 +6,7 @@ var config = {
       model_idnex:0,
       modelName:"九色鹿",
       glburl:"model/jiuselu.glb", 
-      iconurl:"ui/content1/1.png",
+      iconurl:"ui/content/1.png",
       defaultAmbientLight:"2",    
       defaultDirectionalLight:"0",
       size:1
@@ -15,7 +15,7 @@ var config = {
       model_idnex:1,
       modelName:"火烈鸟",
       glburl:"model/chelizhi_huolieniao.glb", 
-      iconurl:"ui/content1/2.png",
+      iconurl:"ui/content/2.png",
       defaultAmbientLight:"3",    
       defaultDirectionalLight:"0",
       size:3
@@ -24,7 +24,7 @@ var config = {
       model_idnex:2,
       modelName:"热气球",
       glburl:"model/reqiqiu.glb", 
-      iconurl:"ui/content1/3.png",
+      iconurl:"ui/content/3.png",
       defaultAmbientLight:"3.5",    
       defaultDirectionalLight:"0",
       size:1
@@ -33,7 +33,7 @@ var config = {
       model_idnex:3,
       modelName:"郁金香热气球",
       glburl:"model/yujingxiang.glb", 
-      iconurl:"ui/content1/3.png",
+      iconurl:"ui/content/3.png",
       defaultAmbientLight:"3.5",    
       defaultDirectionalLight:"0",
       size:1
@@ -42,7 +42,7 @@ var config = {
       model_idnex:4,
       modelName:"宝船",
       glburl:"model/baochuan.glb", 
-      iconurl:"ui/content1/4.png",
+      iconurl:"ui/content/4.png",
       defaultAmbientLight:"2",    
       defaultDirectionalLight:"0",
       size:1
@@ -51,7 +51,7 @@ var config = {
       model_idnex:5,
       modelName:"神庙",
       glburl:"model/shenmiao.glb", 
-      iconurl:"ui/content1/5.png",
+      iconurl:"ui/content/5.png",
       defaultAmbientLight:"4",    
       defaultDirectionalLight:"0",
       size:1
@@ -60,7 +60,7 @@ var config = {
       model_idnex:6,
       modelName:"套娃",
       glburl:"model/taowa.glb", 
-      iconurl:"ui/content1/6.png",
+      iconurl:"ui/content/6.png",
       defaultAmbientLight:"1.6",    
       defaultDirectionalLight:"0",
       size:0.3
@@ -69,7 +69,7 @@ var config = {
       model_idnex:7,
       modelName:"长颈鹿",
       glburl:"model/changjinglu.glb", 
-      iconurl:"ui/content1/7.png",
+      iconurl:"ui/content/7.png",
       defaultAmbientLight:"3",    
       defaultDirectionalLight:"0",
       size:3
@@ -78,7 +78,7 @@ var config = {
       model_idnex:8,
       modelName:"骆驼",
       glburl:"model/shamo_luotuo.glb", 
-      iconurl:"ui/content1/8.png",
+      iconurl:"ui/content/8.png",
       defaultAmbientLight:"4",    
       defaultDirectionalLight:"0",
       size:1
@@ -87,7 +87,7 @@ var config = {
       model_idnex:9,
       modelName:"飞毛毯",
       glburl:"model/feimaotan.glb", 
-      iconurl:"ui/content1/5.png",
+      iconurl:"ui/content/5.png",
       defaultAmbientLight:"3.5",    
       defaultDirectionalLight:"0",
       size:1

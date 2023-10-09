@@ -13,10 +13,10 @@ Page({
     animationDatas:[]
   }, 
 
-  onLoad() {  
-    wx.uma.trackEvent(app.globalData.uMengPageArived,{
-      Um_Key_PageName:"loading界面"
-    }) 
+  onLoad() {   
+    wx.reportEvent("page_show", {
+      "page_name": "loading"
+    })
     wx.createSelectorQuery().select('.loadpath')
     .boundingClientRect(res => { 
       this.initanimation(res);  
@@ -74,9 +74,9 @@ Page({
     if(moduleindex<0||moduleindex>=6)
     {
       return;
-    }
-    wx.uma.trackEvent(app.globalData.uMengClickedEventId,{
-      Um_Key_ButtonName:"首页按钮"+moduleindex
+    } 
+    wx.reportEvent("button_clicked", {
+      "btn_name": "首页按钮-"+moduleindex
     })
     wx.navigateTo({ url: `/pages/scene/scene?moduleindex=${moduleindex}`});
   },
@@ -90,10 +90,10 @@ Page({
     this.resetAnimationState();
     this.setData({ 
       onloading:false, 
-    })  
-    wx.uma.trackEvent(app.globalData.uMengPageArived,{
-      Um_Key_PageName:"首页界面"
-    })  
+    })   
+    wx.reportEvent("page_show", {
+      "page_name": "首页"
+    })
     var animationDatas =[];
     var delayT = 0;
     for(var i=0;i<6;i++)
