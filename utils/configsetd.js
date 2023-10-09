@@ -1,5 +1,5 @@
 var config = {
-  baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/",
+  baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource1/",
   reticle:"reticle.glb", 
   baibaourl:"https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/",
   modelsInfo:[ 

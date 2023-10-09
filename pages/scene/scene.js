@@ -481,6 +481,10 @@ Page({
       path: '/pages/scene/scene',  
     }
   },  
+  
+  /**
+   * 用户点击右上角盆友圈分享
+   */
   onShareTimeline(){
     return {
       title: '分享',

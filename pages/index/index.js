@@ -89,15 +89,6 @@ Page({
     })  
     this.setUIPath();
   },
-
-  onShareAppMessage() {
-    return {
-      title: app.globalData.appName,
-      path: this.data.sharePagePath,
-      imageUrl: app.globalData.shareImg,
-    };
-  },
-
   
   imageLoaded(e)
   {
@@ -384,5 +375,26 @@ Page({
         this.playAnimation(tempDes);
       } 
     } 
-  }
+  },
+
+  /////////////////////////分享////////////////////////////////// 
+  onShareAppMessage() {
+    return {
+      title: app.globalData.appName,
+      path: "/pages/index/index",
+      imageUrl: this.geturl("share.jpg")
+    };
+  },
+
+  /**
+   * 用户点击右上角盆友圈分享
+   */
+  onShareTimeline(){ 
+    return {
+      title: app.globalData.appName,
+      imageUrl:this.geturl("share.jpg")
+    }
+  },
+
+
 });

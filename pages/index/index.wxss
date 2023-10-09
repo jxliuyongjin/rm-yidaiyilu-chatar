@@ -18,10 +18,10 @@
 
 .title{
   position: absolute;
-  top: 8.32vh;
+  top: 8.85vh;
   left: 50%;
-  width: 637.8rpx;
-  height:124.31rpx; 
+  width: 638rpx;
+  height:125rpx; 
   transform: translate(-50%);
 }
 
@@ -68,102 +68,102 @@
 
 .button1cls{
   position: absolute;
-  top:13.87vh;
-  left:2.93vw;
-  width:334rpx;
-  height:342rpx; 
+  top:13.49vh;
+  left:17rpx;
+  width:370rpx;
+  height:404rpx; 
   z-index: 0;
   /* background-color: green; */
 }
 
 .button2cls{
   position: absolute;
-  top:22.5vh;
-  left:61vw;
+  top:22.11vh;
+  left:387rpx;
   width: 279rpx;
   height: 295rpx; 
 }
 
 .button3cls{
   position: absolute;
-  top:44vh;
-  left:0.2vw;
-  width: 373rpx;
-  height: 349rpx; 
+  top:46.25vh;
+  left:54rpx;
+  width: 262rpx;
+  height: 268rpx; 
   /* background-color: red; */
 }
 
 .button4cls{
   position: absolute;
-  top:47.6vh;
-  left:59vw;
+  top:50vh;
+  left:364rpx;
   width: 289rpx;
-  height: 306rpx; 
+  height: 305rpx; 
   /* background-color: gold; */
 }
 
 .button5cls{
   position: absolute;
-  top:70.5vh;
-  left:2.8vw;
-  width: 346rpx;
-  height: 279rpx; 
+  top:68.29vh;
+  left:71rpx;
+  width: 282rpx;
+  height: 272rpx; 
   /* background-color: rgb(40, 34, 128); */
 }
 
 .button6cls{
   position: absolute;
-  top:70.91vh;
-  left:64vw;
-  width: 268rpx;
+  top:75.56vh;
+  left:408rpx;
+  width: 267rpx;
   height: 289rpx; 
   /* background-color: rgb(40, 34, 128); */
 }
 
 .decoration1{
   position: absolute;
-  left:0.1333vw;
-  top:29.3853vh;
-  width:382rpx;
-  height:315rpx; 
+  top:31.86vh;
+  left:4rpx;
+  width:371rpx;
+  height:192rpx; 
 }
 
 .decoration2{
   position: absolute;
-  left:47vw;
-  top:37.856vh;
-  width:248rpx;
-  height:188rpx; 
+  top:30.81vh;
+  left:364rpx;
+  width:355rpx;
+  height:306rpx; 
 }
 
 .decoration3{
   position: absolute;
+  top:59.82vh;
   left:0vw;
-  top:57.121vh;
-  width:405rpx;
-  height:246rpx; 
+  width:404rpx;
+  height:174rpx; 
 } 
 
 .decoration4{
   position: absolute;
-  left:55.867vw;
-  top:62.069vh;
-  width:218rpx;
-  height:176rpx; 
+  top:61.77vh;
+  left:436rpx;
+  width:283rpx;
+  height:174rpx; 
 }
 
 .decoration5{
   position: absolute;
-  left:6.27vw;
-  top:83.81vh;
-  width:187rpx;
-  height:188rpx; 
+  top:81.63vh;
+  left:71rpx;
+  width:304rpx;
+  height:198rpx; 
 }
 
 .decoration6{
   position: absolute;
-  left:55.2vw;
-  top:84.858vh;
-  width:293rpx;
-  height:200rpx; 
+  top:90.85vh;
+  left:388rpx;
+  width:247rpx;
+  height:122rpx; 
 }
