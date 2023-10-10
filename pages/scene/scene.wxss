@@ -115,7 +115,7 @@
   left:0;
   width: 100vw;
   height:100vh;
-  /* background-color: rebeccapurple; */
+  /* background-color:#ffffff; */
 } 
 .haibao_canvas_shoImg
 { 
@@ -127,24 +127,31 @@
   /* background-color: rebeccapurple; */
 } 
 
+.haibao_btn_content
+{
+  position:absolute; 
+  bottom:10vh; 
+  z-index: 99; 
+  left: 50%;
+  width: 365rpx;
+  transform: translateX(-50%);
+}
+
+
 .haibao_exitbtn
 {
-  position:absolute;
+  position:relative;
   display:inline-block;
   width: 136rpx;
   height: 137rpx;
-  bottom:10vh;
-  left:195rpx;  
-  z-index: 99; 
+  left:0rpx; 
 }
 
 .haibao_savebtn
 { 
-  position:absolute;
+  position:relative;
   display:inline-block;
   width: 136rpx;
   height: 137rpx;
-  bottom:10vh;
-  left:424rpx;  
-  z-index: 99; 
+  left: 93rpx;   
 }

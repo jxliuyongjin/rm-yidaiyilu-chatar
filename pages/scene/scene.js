@@ -21,6 +21,7 @@ Page({
     photoPath:"", 
     haibaoPhotoPath:"",
     haibaoPhotoPathErweima:"",
+    showSaveBtn:false,
     currentModuleindex:0,
     maskvisible:[]
   },
@@ -287,7 +288,8 @@ Page({
   {
     this.setData({
       haibaoPhotoPath:"",
-      haibaoPhotoPathErweima:""
+      haibaoPhotoPathErweima:"",
+      showSaveBtn:false
     }) 
   },
   
@@ -326,15 +328,24 @@ Page({
       canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);  
         
       var imageHW = canvas_height/canvas_width;
-      const imageWidth = canvas_width*0.6;
+      const imageWidth = canvas_width*0.85;
       const imageHeight = imageHW*imageWidth; 
       const imageLeft = (canvas_width -  imageWidth)*0.5;
-      const imageTop =canvas_height*0.105;
 
-      const kuangwidth = imageWidth + canvas_width*0.05733;
-      const kuangHeight = imageHeight + canvas_width*0.17866;
-      const kuangLeft = imageLeft - canvas_width*0.016; 
-      const kuangTop= imageTop-canvas_width*0.016;
+      const erweiWidth = canvas_width*0.088;
+      const erweiHeight = erweiWidth; 
+
+      var kongbaiHeight = canvas_height - imageHeight - erweiWidth;
+      kongbaiHeight = kongbaiHeight/3;
+      const imageTop = kongbaiHeight;
+      
+      const erweitop =  imageTop + imageHeight + kongbaiHeight/3;
+      const erweiLeft = imageLeft ;
+
+      // const kuangwidth = imageWidth + canvas_width*0.05733;
+      // const kuangHeight = imageHeight + canvas_width*0.17866;
+      // const kuangLeft = imageLeft - canvas_width*0.016; 
+      // const kuangTop= imageTop-canvas_width*0.016;
 
       // 创建一个图片
       const image = canvas.createImage();
@@ -347,21 +358,17 @@ Page({
       })  
        
       //   //绘制框
-      const kuangImage = canvas.createImage() 
-      kuangImage.referrerPolicy = "origin";
-      await new Promise(resolve => {
-        kuangImage.onload = resolve;
-        kuangImage.src = this.data.uiIconsPath.kuangIcon; // 要加载的图片 url
-      }) 
-      canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
+      // const kuangImage = canvas.createImage() 
+      // kuangImage.referrerPolicy = "origin";
+      // await new Promise(resolve => {
+      //   kuangImage.onload = resolve;
+      //   kuangImage.src = this.data.uiIconsPath.kuangIcon; // 要加载的图片 url
+      // }) 
+     // canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
       canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight); 
       
       var tht = this; 
 
-      const erweiWidth = canvas_width*0.088;
-      const erweiHeight = erweiWidth; 
-      const erweitop =  imageTop + imageHeight + canvas_width*0.037333;
-      const erweiLeft = imageLeft ;
       
       //绘制二维码
       const erweimaImage = canvas.createImage();
@@ -390,8 +397,13 @@ Page({
           console.log("res.tempFilePath:"+res.tempFilePath)
           tht.setData({
             //haibaoPhotoPathErweima:res.tempFilePath 
-            haibaoPhotoPath:res.tempFilePath
+            haibaoPhotoPath:res.tempFilePath ,
+            showSaveBtn:true
           })  
+          // setTimeout(() => {
+          //   tht.setData({ 
+          //   })  
+          // }, 100);
           log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPath);  
           wx.hideLoading();
       })
