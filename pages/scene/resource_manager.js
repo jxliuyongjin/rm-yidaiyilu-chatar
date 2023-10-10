@@ -66,7 +66,7 @@ class resource_manager {
       log("initScene set end"); 
       this.current_model = current_model;  
       this.reticleModel = reticleModel;  
- 
+      this.setVisibleReticleMode(false);
       await slam.start();  
       this.setmapSize(slam);
       return true;
@@ -128,7 +128,8 @@ class resource_manager {
    * @memberof Food
    */
   findPlane() { 
-    const { slam ,reticleModel} = this; 
+    const { slam ,reticleModel} = this;  
+    var that = this;
     slam.addPlaneIndicator(reticleModel, {
        // camera画面中心，可以映射到平面上某一个点时调用
        onPlaneShow() {
@@ -141,7 +142,8 @@ class resource_manager {
       // camera画面中心，可以映射到平面上某一个点时，**持续**调用。
       // 因此可以用此方法，让指示器旋转起来。 
       onPlaneShowing() {
-        reticleModel.rotation.y += 0.02;
+        reticleModel.rotation.y += 0.02; 
+        that.setVisibleReticleMode(true);
       },
     });  
   }

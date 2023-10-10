@@ -399,11 +399,7 @@ Page({
             //haibaoPhotoPathErweima:res.tempFilePath 
             haibaoPhotoPath:res.tempFilePath ,
             showSaveBtn:true
-          })  
-          // setTimeout(() => {
-          //   tht.setData({ 
-          //   })  
-          // }, 100);
+          })   
           log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPath);  
           wx.hideLoading();
       })
