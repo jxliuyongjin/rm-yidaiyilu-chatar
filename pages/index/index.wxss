@@ -66,7 +66,9 @@
   transform: translate(0%,-100%); 
 }
 
-.button1cls{
+.button1cls,
+.btn1Action
+{
   position: absolute;
   top:13.49vh;
   left:17rpx;
@@ -75,7 +77,13 @@
   z-index: 0;
   /* background-color: green; */
 }
+.btn1Action,.btn2Action,.btn3Action,
+.btn4Action,.btn5Action,.btn6Action{
+  background-color: green;
+  opacity: 0;
+}
 
+.btn2Action,
 .button2cls{
   position: absolute;
   top:22.11vh;
@@ -83,7 +91,8 @@
   width: 279rpx;
   height: 295rpx; 
 }
-
+ 
+.btn3Action,
 .button3cls{
   position: absolute;
   top:46.25vh;
@@ -91,8 +100,9 @@
   width: 262rpx;
   height: 268rpx; 
   /* background-color: red; */
-}
+} 
 
+.btn4Action,
 .button4cls{
   position: absolute;
   top:50vh;
@@ -100,8 +110,9 @@
   width: 289rpx;
   height: 305rpx; 
   /* background-color: gold; */
-}
+} 
 
+.btn5Action,
 .button5cls{
   position: absolute;
   top:68.29vh;
@@ -111,6 +122,7 @@
   /* background-color: rgb(40, 34, 128); */
 }
 
+.btn6Action,
 .button6cls{
   position: absolute;
   top:75.56vh;

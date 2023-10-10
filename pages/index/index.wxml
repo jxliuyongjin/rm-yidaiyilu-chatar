@@ -1,19 +1,26 @@
 <!--index.wxml-->
 <view class="wrapper"> 
   <image class="home-bg" mode="scaleToFill" bindload="imageLoaded" src="{{uipath.bg}}"></image> 
-  <image animation="{{animationDatas[0]}}" class="button1cls" id="0" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn1Icon}}"></image>  
-  <image animation="{{animationDatas[1]}}" class="button2cls" id="1" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn2Icon}}"></image>  
+  <image animation="{{animationDatas[0]}}" class="button1cls" bindload="imageLoaded" src="{{uipath.btn1Icon}}"></image>  
+  <image animation="{{animationDatas[1]}}" class="button2cls" bindload="imageLoaded" src="{{uipath.btn2Icon}}"></image>  
       <image class="decoration1" bindload="imageLoaded" src="{{uipath.dec1Icon}}"></image>
       <image class="decoration2" bindload="imageLoaded" src="{{uipath.dec2Icon}}"></image>
-  <image animation="{{animationDatas[2]}}" class="button3cls" id="2" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn3Icon}}"></image>  
-  <image animation="{{animationDatas[3]}}" class="button4cls" id="3" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn4Icon}}"></image>  
+  <image animation="{{animationDatas[2]}}" class="button3cls" bindload="imageLoaded" src="{{uipath.btn3Icon}}"></image>  
+  <image animation="{{animationDatas[3]}}" class="button4cls" bindload="imageLoaded" src="{{uipath.btn4Icon}}"></image>  
     <image class="decoration3" bindload="imageLoaded" src="{{uipath.dec3Icon}}"></image>
     <image class="decoration4" bindload="imageLoaded" src="{{uipath.dec4Icon}}"></image>
-  <image animation="{{animationDatas[4]}}" class="button5cls" id="4" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn5Icon}}"></image>  
-  <image animation="{{animationDatas[5]}}" class="button6cls" id="5" bind:tap="gotoModel" bindload="imageLoaded" src="{{uipath.btn6Icon}}"></image>   
+  <image animation="{{animationDatas[4]}}" class="button5cls" bindload="imageLoaded" src="{{uipath.btn5Icon}}"></image>  
+  <image animation="{{animationDatas[5]}}" class="button6cls" bindload="imageLoaded" src="{{uipath.btn6Icon}}"></image>   
     <image class="decoration5" bindload="imageLoaded" src="{{uipath.dec5Icon}}"></image>
     <image class="decoration6" bindload="imageLoaded" src="{{uipath.dec6Icon}}"></image> 
   <image class="title" src="{{uipath.titleIcon}}"></image>
+
+  <view  class="btn1Action" id="0" bind:tap="gotoModel"></view>  
+  <view  class="btn2Action" id="1" bind:tap="gotoModel"></view>  
+  <view  class="btn3Action" id="2" bind:tap="gotoModel"></view>  
+  <view  class="btn4Action" id="3" bind:tap="gotoModel"></view>  
+  <view  class="btn5Action" id="4" bind:tap="gotoModel"></view>  
+  <view  class="btn6Action" id="5" bind:tap="gotoModel"></view>  
 </view> 
 
 <view class="loading_content" wx:if="{{onloading}}">
