@@ -30,7 +30,7 @@ Page({
     wx.reportEvent("page_show", {
       "page_name":"场景界面"
     })
-
+    this.canvas = null;
     this.showLoading("初始化中...",0)
     var moduleindex = parseInt(options.moduleindex);
     console.log("onload moduleindex:"+moduleindex);
@@ -233,9 +233,8 @@ Page({
         title: '请放置场景再拍照...'+this.data.step,
       })
       return;
-    } 
-
-    this.resetTempIcon();
+    }  
+    this.resetTempIcon(); 
 
     wx.reportEvent("button_clicked", {
       "btn_name": "拍照"
@@ -243,7 +242,7 @@ Page({
     this.resource.setVisibleReticleMode(false);
     var currentTep = this.data.step;
     this.showLoading("拍照中...",4);
-    var that = this;
+    var that = this; 
     try {
       /**
        * 拍照接口
@@ -256,16 +255,19 @@ Page({
       that.setData({
         photoPath
       })
-      
       log("take_photo photoPath:"+that.data.photoPath);
-      const query = wx.createSelectorQuery()
-      query.select('#showhaibao_canvas')
-        .fields({ node: true, size: true })
-        .exec((res) => { 
-          log("canvas geted...");
-          this.drawHaiBao(res[0])    
-        })
-      console.log("drawHaiBao is out") 
+      if(this.canvas!==null) {
+        this.drawHaiBao(this.canvas)    
+      } else{
+        const query = wx.createSelectorQuery()
+        query.select('#showhaibao_canvas')
+          .fields({ node: true, size: true })
+          .exec((res) => { 
+            log("canvas geted...");
+            this.drawHaiBao(res[0].node)    
+          })
+        console.log("drawHaiBao is out")
+      }  
     } catch (e) {
       log("drawhaibao error:"+e)  
       that.hideLoading(currentTep);
@@ -280,8 +282,11 @@ Page({
     wx.reportEvent("button_clicked", {
       "btn_name": "再来一次"
     })
-    this.resetTempIcon();
-    this.setData({ step: steps[2]}); 
+    this.resetTempIcon(); 
+    this.clearHaiBao();
+    setTimeout(() => { 
+      this.setData({ step: steps[2]}); 
+    }, 500);
   }, 
 
   resetTempIcon()
@@ -292,11 +297,19 @@ Page({
       showSaveBtn:false
     }) 
   },
-  
+  clearHaiBao()
+  {
+    if(this.canvas !==null) { 
+      const dpr = wx.getSystemInfoSync();
+      var canvasContext = this.canvas.getContext('2d') 
+      canvasContext.fillRect(0,0,dpr.windowWidth, dpr.windowHeight);   
+      canvasContext.clearRect(0, 0, dpr.windowWidth, dpr.windowHeight);  
+      console.log("dpr.windowWidth:"+dpr.windowWidth)
+    }
+  },
     //绘制海报
-  async drawHaiBao(res)
-  { 
-    var canvas = res.node
+  async drawHaiBao(canvas)
+  {  
     if(!canvas) { 
       log("canvas is null");
       return;
@@ -306,15 +319,15 @@ Page({
     try{ 
       // 创建离屏 2D canvas 实例 
       // 获取 context。注意这里必须要与创建时的 type 一致
-      const canvasContext = canvas.getContext('2d')
-  
-      const canvas_width = res.width;
-      const canvas_height = res.height;
+      const canvasContext = canvas.getContext('2d') 
    
       //解决绘图不清晰
-      const dpr = wx.getSystemInfoSync().pixelRatio;
-      canvas.width = res.width * dpr;
-      canvas.height = res.height * dpr;
+      const system =  wx.getSystemInfoSync();
+      const dpr =system.pixelRatio;
+      const canvas_width = system.windowWidth;
+      const canvas_height = system.windowHeight;
+      canvas.width = canvas_width * dpr;
+      canvas.height = canvas_height * dpr;
       canvasContext.scale(dpr,dpr); 
       canvasContext.fillRect(0,0,canvas_width,canvas_height);  
       canvasContext.clearRect(0, 0, canvas_width, canvas_height);    
@@ -399,7 +412,7 @@ Page({
             //haibaoPhotoPathErweima:res.tempFilePath 
             haibaoPhotoPath:res.tempFilePath ,
             showSaveBtn:true
-          })   
+          })    
           log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPath);  
           wx.hideLoading();
       })
@@ -434,14 +447,13 @@ Page({
   },
 
   async onSaveImageClicked()
-  { 
+  {  
     var tempFilePath = this.data.haibaoPhotoPath;//this.data.photoPath;//this.data.haibaoPhotoPath;
     if(this.data.step!=steps[4]||tempFilePath.length===0)
     {
       log("没有照片呢...")
       return;
     } 
-     
     wx.reportEvent("button_clicked", {
       "btn_name": "保存照片"
     })

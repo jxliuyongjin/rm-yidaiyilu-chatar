@@ -17,7 +17,8 @@ Page({
 
   getConfigData()
   { 
-    var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/config.json";  
+    var randomStr = Math.floor(Math.random() * 1000000);
+    var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/config.json?version="+randomStr;  
     this.configPromise =  requestFile(configurl,"text"); 
     var that = this;
     this.configPromise.then(res =>{ 

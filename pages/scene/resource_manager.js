@@ -46,6 +46,8 @@ class resource_manager {
         glbArrayBuffer,
       ] = await this.downloadAssets;
       
+      this.downloadAssets = null; 
+      
       log("initScene inner"); 
       const [reticleModel, current_model] = await Promise.all([
         slam.createGltfModel(reticleArrayBuffer),
@@ -98,6 +100,7 @@ class resource_manager {
       this.slam.remove(this.current_model);
       // 销毁创建的3D对象(回收内存)
       this.slam.destroyObject(this.current_model); 
+      this.current_model = null;
     } 
 
     this.currentModelInfo = this.resource_config.modelsInfo[index];  

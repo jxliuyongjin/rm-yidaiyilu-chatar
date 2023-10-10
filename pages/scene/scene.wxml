@@ -22,7 +22,7 @@
 </scroll-view>
 
 <view wx:if="{{step === 'showPoint'}}" class="guide">请选择一个开阔的平面，点击绿色坐标放置模型</view>  
-<view  hidden="{{step != 'showHaibao'}}" class="haibaomake">  
+<view  hidden="{{(step != 'showHaibao') && (step != 'baochunhaibao') }}" class="haibaomake">  
     <canvas
       disable-scroll 
       class="haibao_canvas" 
