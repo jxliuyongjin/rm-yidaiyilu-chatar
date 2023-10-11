@@ -1,5 +1,5 @@
 var config = {
-  baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource1/",
+  baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource4/",
   reticle:"reticle.glb", 
   baibaourl:"https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/",
   modelsInfo:[ 
@@ -8,7 +8,7 @@ var config = {
       modelName:"九色鹿",
       glburl:"model/jiuselu.glb", 
       iconurl:"ui/content/1.png",
-      defaultAmbientLight:"2",    
+      defaultAmbientLight:"3.5",    
       defaultDirectionalLight:"0",
       size:1
       }, 
