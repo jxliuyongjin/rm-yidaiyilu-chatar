@@ -27,6 +27,7 @@ Page({
     }); 
   },
   onLoad() { 
+    this.onClear();
     //加载配置
     this.getConfigData(); 
     wx.reportEvent("page_show", {
@@ -38,8 +39,9 @@ Page({
     }).exec()
   },
   
-  onUnload()
+  onClear()
   { 
+    console.log("###############index onClear##################")
     this.points = null;
     this.windowV = null;
     this.animationstate = null;
@@ -73,10 +75,12 @@ Page({
     })
   },
 
-  async onReady(){  
+  async onReady(){   
     if(app.globalData.resource_config == null){ 
         this.resource_config = await this.configPromise;  
         app.globalData.resource_config = this.resource_config;   
+    } else{ 
+      this.resource_config = app.globalData.resource_config;
     } 
     var animationDatas =[];
     for(var i=0;i<6;i++)
@@ -87,7 +91,7 @@ Page({
     } 
     this.setData({
       animationDatas
-    })  
+    })   
     this.setUIPath();
   },
   
@@ -119,6 +123,7 @@ Page({
       "btn_name": "首页按钮-"+moduleindex
     })
     wx.navigateTo({ url: `/pages/scene/scene?moduleindex=${moduleindex}`});
+   // wx.navigateTo({ url: "/pages/scene/scene"});
   },
 
  
@@ -376,7 +381,7 @@ Page({
         this.playAnimation(tempDes);
       } 
     } 
-  },
+  }, 
 
   /////////////////////////分享////////////////////////////////// 
   onShareAppMessage() {

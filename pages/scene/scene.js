@@ -11,9 +11,10 @@ const steps = ["initing", "showPoint", "modelSeted","modelchanging","showHaibao"
 
 Page({
   data: {
-    license: "", // 小程序授权证书，可用来去除水印，联系我们获取，需提供小程序appid
+    license: "ad51dc82b4846b28943338eeaac37f5605498aa79e568f7fdd3074405c8bf58cf9376c502f118f16080716e102239ff3277749b489f35b7b3d7fbc7df486540d", // 小程序授权证书，可用来去除水印，联系我们获取，需提供小程序appid
     version: "v1",
     step: "initing",  
+    showOnPengyouquan:false,
     uiIconsPath:{},
     modelIcons:[],
     iconNames: [],
@@ -26,7 +27,20 @@ Page({
     maskvisible:[]
   },
 
-  onLoad(options) {  
+  onLoad(options) {   
+    if(app.globalData.currentSenceId === 1154){
+      this.setData({
+        showOnPengyouquan:true
+      })
+      return;
+    }
+    
+    if(app.globalData.resource_config === null){ 
+      this.resource = null;
+      return;
+    }
+    this.onUnload();
+
     wx.reportEvent("page_show", {
       "page_name":"场景界面"
     })
@@ -37,7 +51,7 @@ Page({
     if(moduleindex<0||moduleindex>=6) {
       return;
     }
-    this.setData({ 
+    this.setData({
       currentModuleindex: moduleindex
     });
 
@@ -97,8 +111,11 @@ Page({
   {
     console.log("#################### onunload #######################")
     this.canvas = null; 
-    this.resource.clear();
+    if(this.resource){
+      this.resource.clear(); 
+    }
     this.resource = null; 
+    this.slam = null;
   },
 
   setUIPath()
@@ -125,8 +142,13 @@ Page({
   },
 
   async ready({ detail: slam }) {
-    this.slam = slam;
+    if(this.resource === null) {
+      wx.navigateTo({ url: "/pages/index/index"});
+      return; 
+   }
+
     log("ready 11111"); 
+    this.slam = slam;
     var moduleindex = this.data.currentModuleindex; 
     var boo = await this.resource.initScene(slam ,moduleindex);  
     if(boo) { 
@@ -502,9 +524,16 @@ Page({
       path: "/pages/index/index",
       imageUrl: this.geturl("share.jpg")
     };
+  }, 
+  /**
+   * 用户点击右上角盆友圈分享
+   */
+  onShareTimeline(){ 
+    return {
+      title: app.globalData.appName, 
+      imageUrl:this.resource.geturl("share.jpg")
+    }
   },
-  
-
   /**
    * 用户点击右上角盆友圈分享
    */
@@ -516,6 +545,13 @@ Page({
   // },
   
   error({ detail }) {
-    this.resource.error({ detail }); 
+    if(this.resource){
+      this.resource.error({ detail });  
+    }
   },
+  slamError()
+  {
+    wx.hideLoading();  
+  }
+
 });

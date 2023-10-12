@@ -3,10 +3,13 @@
   license="{{license}}"
   version="{{version}}" 
   bindready="ready"
-  binderror="error"
+  binderror="slamError"
   bind:tap="tap"
   bind:addAnchors="addAnchors"
 />
+<view wx:if="{{showOnPengyouquan}}" class="showOnPenYouquan" >
+  <text class="showOnPenYouquanText">请点击右下角:\n<text style="color: red;">前往小程序按钮</text></text>
+</view>
 <!-- 
 <view class="scan-box animated fadeIn" wx:if="{{step === 'findPlane'}}">
   <image class="scan-img" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/content/scaning.png" mode="widthFix" lazy-load="false" />

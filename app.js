@@ -7,6 +7,7 @@ const {
 App({ 
   onLaunch() { 
     this.globalData = {
+      currentSenceId:0,
       resource_config:null, 
       appName: "送你一次环球之旅",
       uMengClickedEventId: "Um_Event_ModularClick",
@@ -34,6 +35,6 @@ App({
       promise: new Promise((resolve) => {  
       }),
     });
-    
+    this.globalData.currentSenceId = wx.getLaunchOptionsSync().scene;
   },
 });

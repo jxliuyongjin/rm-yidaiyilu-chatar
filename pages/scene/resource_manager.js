@@ -16,6 +16,7 @@ class resource_manager {
 
   onload(index)
   {  
+    this.clear();
     this.resource_config = app.globalData.resource_config;     
     this.currentModelInfo = this.resource_config.modelsInfo[index];   
     var reticleurl = this.geturl(this.resource_config.reticle); 
@@ -131,8 +132,13 @@ class resource_manager {
    * @memberof Food
    */
   findPlane() { 
+    if(this.hasaddReticle === true) {
+      this.setVisibleReticleMode(true);
+      return 
+    } 
     const { slam ,reticleModel} = this;  
     var that = this;
+    this.hasaddReticle = true;
     slam.addPlaneIndicator(reticleModel, {
        // camera画面中心，可以映射到平面上某一个点时调用
        onPlaneShow() {
@@ -329,7 +335,7 @@ class resource_manager {
     this.reticleModel  =null;
     this.currentModelInfo =null;
     this.configPromise =null; 
-    this.shadowPlanes = null
+    this.shadowPlanes = null; 
   }
 
 

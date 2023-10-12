@@ -9,6 +9,13 @@
             "list": [
                 {
                     "name": "",
+                    "pathName": "pages/scene/scene",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
                     "pathName": "pages/index/index",
                     "query": "_ttn=6522529fb2f6fa00ba5f1dc8",
                     "launchMode": "default",
