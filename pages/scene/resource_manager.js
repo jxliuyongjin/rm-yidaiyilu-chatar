@@ -20,8 +20,7 @@ class resource_manager {
     this.resource_config = app.globalData.resource_config;     
     this.currentModelInfo = this.resource_config.modelsInfo[index];   
     var reticleurl = this.geturl(this.resource_config.reticle); 
-    var glburl = this.geturl(this.currentModelInfo.glburl);  
-     
+    var glburl = this.geturl(this.currentModelInfo.glburl);   
     wx.reportEvent("model_showing", {
       "model_name":this.currentModelInfo.modelName
     }) 
@@ -38,43 +37,47 @@ class resource_manager {
    * @param {*} slam 传入的slam对象
    * @memberof Food
    */
-  async initScene(slam , index=0) {  
+  async initScene(slam , index=0) {   
     try { 
       this.slam = slam; 
-      this.modelIndex = index; 
+      this.modelIndex = index;  
+    
       const [
         reticleArrayBuffer, 
         glbArrayBuffer,
       ] = await this.downloadAssets;
+     
+      wx.hideLoading()   
       
       this.downloadAssets = null; 
       
-      log("initScene inner"); 
+      log("initScene inner");
+      
       const [reticleModel, current_model] = await Promise.all([
         slam.createGltfModel(reticleArrayBuffer),
         slam.createGltfModel(glbArrayBuffer), 
       ]);  
-       
+      wx.showToast({
+        title: "@##11111111111111111",
+      }) 
       this.shadowPlanes = {};
-      //slam.enableShadow(); // 开启阴影功能
-
+      //slam.enableShadow(); // 开启阴影功能 
       current_model.visible = false;  
       var modelsize = this.currentModelInfo? this.currentModelInfo.size:0.5;  
       slam.defaultAmbientLight.intensity = this.currentModelInfo.defaultAmbientLight;
       slam.defaultDirectionalLight.intensity = this.currentModelInfo.defaultDirectionalLight;
-      slam.add(current_model, modelsize,0);
+      slam.add(current_model, modelsize,0); 
       // 让模型可用手势进行操作。默认点击移动到平面上的新位置，单指旋转，双指缩放。
-      slam.setGesture(current_model);   
-
+      slam.setGesture(current_model);    
       log("initScene set end"); 
       this.current_model = current_model;  
       this.reticleModel = reticleModel;  
-      this.setVisibleReticleMode(false);
+      this.setVisibleReticleMode(false);  
       await slam.start();  
       this.setmapSize(slam);
       return true;
     } catch (e) {
-      errorHandler(e);
+     
       return false;
     }
   } 
