@@ -1,7 +1,7 @@
 var config = {
-  baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource3/",
+  baseurl:"https://yidaiyilu-quanguo.oss-cn-beijing.aliyuncs.com/resource/",
   reticle:"reticle.glb", 
-  baibaourl:"https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/",
+  baibaourl:"https://yidaiyilu-baijin-buchong.oss-cn-beijing.aliyuncs.com/", 
   modelsInfo:[ 
       { 
       model_idnex:0,

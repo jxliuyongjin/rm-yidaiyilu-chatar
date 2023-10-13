@@ -47,7 +47,7 @@ export function showAuthModal(page) {
   });
 }
 
-export function requestFile(url,responseType="arraybuffer") {
+export function requestFile(url,responseType="arraybuffer") { 
   return new Promise((resolve, reject) => {
     wx.request({
       url,
@@ -73,7 +73,9 @@ export function downloadFile(url) {
         if (statusCode === 200) {
           resolve(tempFilePath);
         } else {
-          reject(new Error(`下载文件：${url} 失败。statusCode：${statusCode}`));
+          var str = `下载文件：${url} 失败。statusCode：${statusCode}`;
+          console.log("url:"+str)
+          reject(new Error(str));
         }
       },
       fail: reject,

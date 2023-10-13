@@ -77,7 +77,7 @@ Page({
     })
   },
 
-  async onReady(){ 
+  async onReady(){
     // if(app.globalData.resource_config == null){ 
     //     this.resource_config = await this.configPromise;  
     //     app.globalData.resource_config = this.resource_config;   
@@ -213,8 +213,8 @@ Page({
     var point13 = {x:51,y:61,rateNum:77}
     var point14 = {x:63,y:73,rateNum:80}
     var point15 = {x:56,y:83,rateNum:88}
-    var point16 = {x:80,y:98,rateNum:95}
-    var point17 = {x:110,y:98,rateNum:100}
+    var point16 = {x:78,y:98,rateNum:98}
+    var point17 = {x:81,y:98,rateNum:100}
     
     this.points =[point0,point1,point2,point3,point4,point5,point6,point7,point8,point9,point10,point11,point12,point13,point14,point15,point16,point17]; 
     this.points.forEach(value=>{  
