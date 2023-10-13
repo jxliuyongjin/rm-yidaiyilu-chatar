@@ -84,6 +84,7 @@ Page({
     // } else{ 
       this.resource_config = app.globalData.resource_config;
     // } 
+    
     var animationDatas =[];
     for(var i=0;i<6;i++)
     {
