@@ -77,7 +77,7 @@ Page({
     })
   },
 
-  async onReady(){   
+  async onReady(){ 
     // if(app.globalData.resource_config == null){ 
     //     this.resource_config = await this.configPromise;  
     //     app.globalData.resource_config = this.resource_config;   
@@ -181,6 +181,7 @@ Page({
       currentLuoTuoPosY:point.y,
      })
      
+    // this.getdeltaDta(100);
      if(this.hasloadfinshed === true)
      { 
         this.getdeltaDta(100);
@@ -196,24 +197,26 @@ Page({
  
   setAnimtionPositions(pathEle)
   {
-    var point0 = {x:0,y:3,rateNum:0}
-    var point1 = {x:27,y:5,rateNum:9}
-    var point2 = {x:85,y:20,rateNum:23}
-    var point3 = {x:92,y:30.5,rateNum:27}
-    var point4 = {x:65,y:43,rateNum:35}
-    var point5 = {x:43,y:42,rateNum:39}
-    var point6 = {x:28.5,y:45.5,rateNum:45}
-    var point7 = {x:2,y:44,rateNum:50}
-    var point8 = {x:0,y:52,rateNum:55}
-    var point9 = {x:18,y:62,rateNum:60}
-    var point10 = {x:30,y:61.5,rateNum:64}
-    var point11 = {x:48,y:65,rateNum:68}
-    var point12 = {x:70,y:65,rateNum:72}
-    var point13 = {x:75,y:77,rateNum:82}
-    var point14 = {x:65,y:86,rateNum:90}
-    var point15 = {x:85,y:97,rateNum:100}
+    var point0 = {x:-10,y:0,rateNum:0}
+    var point1 = {x:0,y:5,rateNum:3}
+    var point2 = {x:20,y:5,rateNum:12}
+    var point3 = {x:68,y:20,rateNum:30}
+    var point4 = {x:75,y:28.5,rateNum:35}
+    var point5 = {x:58,y:40.5,rateNum:45}
+    var point6 = {x:40,y:39,rateNum:50}
+    var point7 = {x:20,y:43,rateNum:56}
+    var point8 = {x:10,y:42,rateNum:59}
+    var point9 = {x:0,y:48,rateNum:63}
+    var point10 = {x:10,y:58.5,rateNum:66}
+    var point11 = {x:25,y:58,rateNum:70}
+    var point12 = {x:34,y:61,rateNum:72}
+    var point13 = {x:51,y:61,rateNum:77}
+    var point14 = {x:63,y:73,rateNum:80}
+    var point15 = {x:56,y:83,rateNum:88}
+    var point16 = {x:80,y:98,rateNum:95}
+    var point17 = {x:110,y:98,rateNum:100}
     
-    this.points =[point0,point1,point2,point3,point4,point5,point6,point7,point8,point9,point10,point11,point12,point13,point14,point15]; 
+    this.points =[point0,point1,point2,point3,point4,point5,point6,point7,point8,point9,point10,point11,point12,point13,point14,point15,point16,point17]; 
     this.points.forEach(value=>{  
       value.x = (pathEle.left + 0.01*value.x*pathEle.width);// 100*(value.x+startposX)/this.windowV.windowWidth
       value.y = (pathEle.top + 0.01*value.y*pathEle.height);

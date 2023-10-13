@@ -43,10 +43,10 @@
 }
 .loadpath{ 
   position: absolute;
-  left: 20.4vw;
-  top: 27.66vh;
-  width: 457rpx;
-  height: 593rpx; 
+  left: 140rpx;
+  top: 366rpx;
+  width: 603rpx;
+  height: 691rpx; 
 }
 .loading_logo{
   position: absolute;
@@ -63,7 +63,7 @@
   left: 0;
   width: 102rpx;
   height: 119rpx;
-  transform: translate(0%,-100%); 
+  transform: translate(0,-100%); 
 }
 
 .button1cls,
