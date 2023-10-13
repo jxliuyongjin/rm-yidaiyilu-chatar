@@ -16,8 +16,9 @@
   <view class="scan-txt">请寻找一个平面</view>
 </view> -->
 
-<view wx:if="{{step != 'initing'}}" class= "topMark" ></view>
+<image wx:if="{{step != 'initing'}}" class= "topMark"  src="{{uiIconsPath.topbord}}"></image>
 <view wx:if="{{step != 'initing'}}" class="icons_content" >
+<image class="icon_bg" src="{{uiIconsPath.bottombord}}"></image>
   <image  class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>   
   <scroll-view scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content">
     <view class="change_btns" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{iconNames[item.model_idnex]}}" catch:tap="changebtn_clicked">

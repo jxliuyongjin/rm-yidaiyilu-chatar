@@ -1,5 +1,5 @@
 var config = {
-  baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource4/",
+  baseurl:"https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource3/",
   reticle:"reticle.glb", 
   baibaourl:"https://yidaiyilu-buchong.oss-cn-shanghai.aliyuncs.com/",
   modelsInfo:[ 
@@ -89,6 +89,15 @@ var config = {
       modelName:"飞毛毯",
       glburl:"model/feimaotan.glb", 
       iconurl:"ui/content/5.png",
+      defaultAmbientLight:"3.5",    
+      defaultDirectionalLight:"0",
+      size:1
+      },   
+      { 
+      model_idnex:10,
+      modelName:"水果",
+      glburl:"model/shuiguo.glb", 
+      iconurl:"ui/content/1.png",
       defaultAmbientLight:"3.5",    
       defaultDirectionalLight:"0",
       size:1
