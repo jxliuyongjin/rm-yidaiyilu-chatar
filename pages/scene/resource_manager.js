@@ -202,7 +202,7 @@ class resource_manager {
     if (detail?.isCameraAuthDenied) {
       showAuthModal(this);
     } else {
-      errorHandler(detail);
+      errorHandler({ detail });
     }
   }
 

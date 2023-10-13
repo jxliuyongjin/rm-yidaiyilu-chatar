@@ -12,7 +12,7 @@ App({
       currentSenceId:0,
       hasLoadIndex:false,
       resource_config:getInfo(), 
-      appName: "送你一次环球之旅",
+      appName: "AR丝路之旅",
       uMengClickedEventId: "Um_Event_ModularClick",
       uMengPageArived:"Um_Event_PageView"
     }

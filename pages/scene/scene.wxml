@@ -16,15 +16,20 @@
   <view class="scan-txt">请寻找一个平面</view>
 </view> -->
 
-<image wx:if="{{step != 'initing'}}" class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>   
-<scroll-view wx:if="{{step != 'initing'}}" scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content">
-  <view class="change_btns" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{iconNames[item.model_idnex]}}" catch:tap="changebtn_clicked">
-      <image class="change_btn" src="{{item.iconurl}}"> </image> 
-      <image class="change_btn_mask" hidden="{{maskvisible[item.model_idnex]==0}}" src="{{uiIconsPath.changeBtnMark}}"></image>
-  </view>
-</scroll-view>
+<view wx:if="{{step != 'initing'}}" class= "topMark" ></view>
+<view wx:if="{{step != 'initing'}}" class="icons_content" >
+  <image  class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>   
+  <scroll-view scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content">
+    <view class="change_btns" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{iconNames[item.model_idnex]}}" catch:tap="changebtn_clicked">
+        <image class="change_btn" src="{{item.iconurl}}"> </image> 
+        <image class="change_btn_mask" hidden="{{maskvisible[item.model_idnex]==0}}" src="{{uiIconsPath.changeBtnMark}}"></image>
+    </view>
+  </scroll-view>
+</view>
 
-<view wx:if="{{step === 'showPoint'}}" class="guide">请选择一个开阔的平面，点击绿色坐标放置模型</view>  
+<view wx:if="{{step === 'showPoint'}}" class="guide">请选择一个开阔的平面
+出现绿色坐标后
+点击坐标放置AR模型</view>  
 <view  hidden="{{(step != 'showHaibao') && (step != 'baochunhaibao') }}" class="haibaomake">  
     <canvas
       disable-scroll 

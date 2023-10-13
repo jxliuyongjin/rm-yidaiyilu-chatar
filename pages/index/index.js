@@ -388,7 +388,7 @@ Page({
   /////////////////////////分享////////////////////////////////// 
   onShareAppMessage() {
     return {
-      title: app.globalData.appName,
+      title: "穿越古今，送你一趟丝路之旅",
       path: "/pages/index/index",
       imageUrl: this.geturl("share.jpg")
     };
@@ -399,7 +399,7 @@ Page({
    */
   onShareTimeline(){ 
     return {
-      title: app.globalData.appName,
+      title: "穿越古今，送你一趟丝路之旅",
       imageUrl:this.geturl("share.jpg")
     }
   },

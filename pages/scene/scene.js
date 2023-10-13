@@ -1,6 +1,6 @@
 import resource_manager from "./resource_manager"
 import { getMeiYan } from "../../signature";
-import {getSlamV2Support,log} from "../../utils/utils";  
+import {getSlamV2Support,log,errorHandler} from "../../utils/utils";  
 const app = getApp();
 //  initing:场景正在初始化
 //  showPoint:初始化已经完成，展示引导放置模型
@@ -374,22 +374,21 @@ Page({
         bgImage.onload = resolve;
         bgImage.src = this.data.uiIconsPath.photoBgIcon; // 要加载的图片 url 
       }) 
-      canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);  
-        
+      canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);   
+
       var imageHW = canvas_height/canvas_width;
-      const imageWidth = canvas_width*0.85;
-      const imageHeight = imageHW*imageWidth; 
-      const imageLeft = (canvas_width -  imageWidth)*0.5;
+      const imageWidth = canvas_width;
+      const imageHeight = canvas_height; 
+      const imageLeft = 0;
+      const imageTop = 0;
 
       const erweiWidth = canvas_width*0.088;
       const erweiHeight = erweiWidth; 
 
-      var kongbaiHeight = canvas_height - imageHeight - erweiWidth;
-      kongbaiHeight = kongbaiHeight/3;
-      const imageTop = kongbaiHeight;
+      // var kongbaiHeight = canvas_height - imageHeight - erweiWidth;
+      // kongbaiHeight = kongbaiHeight/3;
+      // const imageTop = kongbaiHeight;
       
-      const erweitop =  imageTop + imageHeight + kongbaiHeight/3;
-      const erweiLeft = imageLeft ;
 
       // const kuangwidth = imageWidth + canvas_width*0.05733;
       // const kuangHeight = imageHeight + canvas_width*0.17866;
@@ -416,9 +415,15 @@ Page({
      // canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
       canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight); 
       
+      const bottomFill = canvas_height - canvas_width*0.54
+      canvasContext.fillRect(0, 0, canvas_width, canvas_height*0.1) 
+      canvasContext.fillRect(0, bottomFill, canvas_width, canvas_width*0.54) 
+
       var tht = this; 
 
       
+      const erweitop = bottomFill + canvas_width*0.18;
+      const erweiLeft = canvas_width*0.1 ;
       //绘制二维码
       const erweimaImage = canvas.createImage();
       erweimaImage.referrerPolicy = "origin";
@@ -451,14 +456,13 @@ Page({
           })    
           log("this.data.haibaoPhotoPathErweima:"+tht.data.haibaoPhotoPath);  
           wx.hideLoading();
-      })
-      .catch(err=>{ 
+      }).catch(err=>{ 
           wx.hideLoading();
           wx.showToast({ title: "生成照片失败"}); 
           this.error(err)
       }) 
     }
-    catch(err) {
+    catch(err) { 
       this.error(err)
     }
   }, 
@@ -534,7 +538,7 @@ Page({
    */ 
   onShareAppMessage() {
     return {
-      title: app.globalData.appName,
+      title: "穿越古今，送你一趟丝路之旅",
       path: "/pages/index/index",
       imageUrl: this.geturl("share.jpg")
     };
@@ -544,7 +548,7 @@ Page({
    */
   onShareTimeline(){ 
     return {
-      title: app.globalData.appName, 
+      title: "穿越古今，送你一趟丝路之旅", 
       imageUrl:this.resource.geturl("share.jpg")
     }
   },
@@ -558,7 +562,7 @@ Page({
   //   }
   // },
   
-  error({ detail }) { 
+  error(detail) {  
     errorHandler(detail);
   },
   slamError({ detail })

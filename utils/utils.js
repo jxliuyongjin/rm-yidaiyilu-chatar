@@ -1,6 +1,7 @@
 import {ERROR,RUN} from "./log";  
 export function errorHandler(errInfo) { 
   if(errInfo==null) {
+    console.log("nulllllllllll")
     return;
   }
   let message = errInfo;
