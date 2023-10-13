@@ -1,6 +1,6 @@
 import resource_manager from "./resource_manager"
 import { getMeiYan } from "../../signature";
-import {getSlamV2Support,log} from "../../utils/utils";   
+import {getSlamV2Support,log} from "../../utils/utils";  
 const app = getApp();
 //  initing:场景正在初始化
 //  showPoint:初始化已经完成，展示引导放置模型
@@ -48,7 +48,7 @@ Page({
     this.canvas = null;
     this.showLoading("初始化中...",0)
     var moduleindex = parseInt(options.moduleindex);
-    console.log("onload moduleindex:"+moduleindex);
+    log("onload moduleindex:"+moduleindex);  
     if(moduleindex<0||moduleindex>=6) {
       return;
     }
@@ -111,6 +111,7 @@ Page({
   onUnload()
   {
     console.log("#################### onunload #######################")
+     
     this.canvas = null; 
     if(this.resource){
       this.resource.clear(); 
@@ -147,8 +148,7 @@ Page({
       wx.navigateTo({ url: "/pages/index/index"});
       return; 
    }
-
-    log("ready 11111"); 
+ 
     this.slam = slam; 
     var moduleindex = this.data.currentModuleindex; 
     this.initData(moduleindex);
@@ -170,13 +170,13 @@ Page({
   }, 
   
   // v2模式下有平面新增
-  addAnchors() { 
-    log("addAnchors gogogo："+this.data.step);
+  addAnchors() {  
+    console.log("addAnchors gogogo："+this.data.step);
     if(this.data.step != steps[0] &&this.data.step != steps[1] && this.data.step != steps[2] &&this.data.step != steps[6] )  {
-      log("addAnchors !!1111111gogogo：");
+      console.log("addAnchors !!1111111gogogo：");
       return;
     }
-    log("addAnchors !!222222222222222 1gogogo：");
+    console.log("addAnchors !!222222222222222 1gogogo：");
     if(this.data.step == steps[6]||this.data.step == steps[0])
     {
       this.hideLoading(1); 
@@ -210,7 +210,7 @@ Page({
   async changebtn_clicked(event) { 
     if(this.data.step != steps[1] && this.data.step != steps[2] )
     {  
-      log("当前状态不能切换场景:"+this.data.step ); 
+      log("当前状态不能切换场景:"+this.data.step );   
       return;
     } 
     var selectedId = this.data.iconNames.indexOf(event.currentTarget.id);
@@ -277,7 +277,7 @@ Page({
       const photoPath = await this.slam.takePhoto({quality:1});  
       getMeiYan(photoPath,this.meiyanResult)
     } catch (e) {
-      log("drawhaibao error:"+e)  
+      log("drawhaibao error:"+e)   
       this.hideLoading(currentTep);
       this.error(e); 
     }finally{ 
@@ -455,11 +455,11 @@ Page({
       .catch(err=>{ 
           wx.hideLoading();
           wx.showToast({ title: "生成照片失败"}); 
-          log(err)
+          this.error(err)
       }) 
     }
     catch(err) {
-      console.log(err); 
+      this.error(err)
     }
   }, 
 
@@ -498,7 +498,7 @@ Page({
     wx.saveImageToPhotosAlbum({
       filePath: tempFilePath,
       success() { 
-        console.log("保存成功！！！！！！！！！！！！")
+        log("保存成功！！！！！！！！！！！！")
         that.hideLoading(4);
         wx.showToast({
           title: '保存成功！',
@@ -506,7 +506,7 @@ Page({
       },
       fail(e) { 
         console.log("saveImage error")
-        that.hideLoading(4);
+        that.hideLoading(4); 
         that.error(e); 
       }
     }) 
@@ -558,14 +558,13 @@ Page({
   //   }
   // },
   
-  error({ detail }) {
-    if(this.resource){
-      this.resource.error({ detail });  
-    }
+  error({ detail }) { 
+    errorHandler(detail);
   },
-  slamError()
+  slamError({ detail })
   {
-    wx.hideLoading();  
+    wx.hideLoading(); 
+    errorHandler(detail);
   }
 
 });

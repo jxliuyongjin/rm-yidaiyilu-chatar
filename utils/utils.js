@@ -1,3 +1,4 @@
+import {ERROR,RUN} from "./log";  
 export function errorHandler(errInfo) { 
   if(errInfo==null) {
     return;
@@ -17,11 +18,13 @@ export function errorHandler(errInfo) {
   wx.showToast({
     title: message,
     icon: "none",
-  });
+  });  
+  ERROR({str: message},'error log', 100, [])
 }
 
 export function log(message) {
-  console.log(message);
+  console.log(message); 
+  RUN({str: message},'info log', 100, []) 
 }
 
 export function showAuthModal(page) {
