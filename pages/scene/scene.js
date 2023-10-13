@@ -1,5 +1,6 @@
 import resource_manager from "./resource_manager"
-import {getSlamV2Support,log} from "../../utils/utils";  
+import { getMeiYan } from "../../signature";
+import {getSlamV2Support,log} from "../../utils/utils";   
 const app = getApp();
 //  initing:场景正在初始化
 //  showPoint:初始化已经完成，展示引导放置模型
@@ -27,7 +28,7 @@ Page({
     maskvisible:[]
   },
 
-  onLoad(options) {   
+  onLoad(options) {    
     if(app.globalData.currentSenceId === 1154){
       this.setData({
         showOnPengyouquan:true
@@ -35,10 +36,10 @@ Page({
       return;
     }
     
-    if(app.globalData.resource_config === null){ 
-      this.resource = null;
+    if(app.globalData.hasLoadIndex === false){  
       return;
     }
+
     this.onUnload();
 
     wx.reportEvent("page_show", {
@@ -71,13 +72,12 @@ Page({
     ////加载配置
     this.resource = new  resource_manager();
     this.resource.onload(moduleindex);  
-    this.initData(moduleindex);
   },
 
   initData(moduleindex) { 
     //初始化配置
     var getModelsInfo =  this.resource.getModelsInfo();   
-    var value = null; var iconNames = []; var maskvisible = []; 
+    var value = null;  var iconNames = [];  var maskvisible = [];   
     for(var i=0;i<getModelsInfo.length;i++)
     {
       value = getModelsInfo[i];
@@ -86,6 +86,7 @@ Page({
       iconNames[i] = "icon"+i;
     }  
     var uiIconsPath = this.setUIPath(); 
+    
     if(moduleindex>2)
     {
       var iconScrollPos = moduleindex-2;
@@ -142,14 +143,15 @@ Page({
   },
 
   async ready({ detail: slam }) {
-    if(this.resource === null) {
+    if(app.globalData.hasLoadIndex===false){  
       wx.navigateTo({ url: "/pages/index/index"});
       return; 
    }
 
     log("ready 11111"); 
-    this.slam = slam;
+    this.slam = slam; 
     var moduleindex = this.data.currentModuleindex; 
+    this.initData(moduleindex);
     var boo = await this.resource.initScene(slam ,moduleindex);  
     if(boo) { 
       if (this.data.version === "v1") { 
@@ -263,8 +265,7 @@ Page({
     })
     this.resource.setVisibleReticleMode(false);
     var currentTep = this.data.step;
-    this.showLoading("拍照中...",4);
-    var that = this; 
+    this.showLoading("拍照中...",4); 
     try {
       /**
        * 拍照接口
@@ -273,30 +274,43 @@ Page({
        * @param {Number} [quality=0.9] - 照片质量，jpg时有效。默认为0.9
        * @returns {Promise<photoPath>} - 照片文件临时地址
        */
-      const photoPath = await that.slam.takePhoto({quality:1}); 
-      that.setData({
-        photoPath
-      })
-      log("take_photo photoPath:"+that.data.photoPath);
-      if(this.canvas!==null) {
-        this.drawHaiBao(this.canvas)    
-      } else{
-        const query = wx.createSelectorQuery()
-        query.select('#showhaibao_canvas')
-          .fields({ node: true, size: true })
-          .exec((res) => { 
-            log("canvas geted...");
-            this.drawHaiBao(res[0].node)    
-          })
-        console.log("drawHaiBao is out")
-      }  
+      const photoPath = await this.slam.takePhoto({quality:1});  
+      getMeiYan(photoPath,this.meiyanResult)
     } catch (e) {
       log("drawhaibao error:"+e)  
-      that.hideLoading(currentTep);
-      that.error(e); 
+      this.hideLoading(currentTep);
+      this.error(e); 
     }finally{ 
       this.resource.setVisibleReticleMode(true);
     }
+  },
+
+  meiyanResult(beauty_url,code=0)
+  { 
+    if(code != 0)
+    {
+      wx.hideLoading();
+      wx.showToast({
+        title: '美颜报错了：'+beauty_url,
+      })
+      return ;
+    }
+    this.setData({
+      photoPath:beauty_url
+    })
+    log("take_photo photoPath:"+this.data.photoPath);
+    if(this.canvas!==null) {
+      this.drawHaiBao(this.canvas)    
+    } else{
+      const query = wx.createSelectorQuery()
+      query.select('#showhaibao_canvas')
+        .fields({ node: true, size: true })
+        .exec((res) => { 
+          log("canvas geted...");
+          this.drawHaiBao(res[0].node)    
+        })
+      console.log("drawHaiBao is out")
+    }  
   },
 
   exitBtnClicked()

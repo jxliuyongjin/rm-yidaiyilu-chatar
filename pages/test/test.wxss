@@ -1,0 +1,6 @@
+/* pages/test/test.wxss */
+.click{
+  width: 50vw;
+  height: 50vh;
+  background-color: aquamarine;
+}

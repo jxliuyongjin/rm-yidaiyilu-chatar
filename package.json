@@ -1,0 +1,24 @@
+{
+  "name": "rm-yidaiyilu-chatar-photo-gai1",
+  "version": "1.0.0",
+  "description": "| 主要目录 | 示例内容 |\r | --- | ---- \r | pages/index | 接入slam场景展示页面【插件页面】 |\r | pages/scene | 接入kivicube-slam组件【插件组件】 |\r | app.json  | 页面配置与插件引入，详见`plugins`配置项 |",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jxliuyongjin/rm-yidaiyilu-chatar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jxliuyongjin/rm-yidaiyilu-chatar/issues"
+  },
+  "homepage": "https://github.com/jxliuyongjin/rm-yidaiyilu-chatar#readme",
+  "dependencies": {
+    "hash.js": "^1.1.7",
+    "sha.js": "^2.4.11"
+  }
+}

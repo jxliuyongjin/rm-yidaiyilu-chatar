@@ -1,3 +1,5 @@
+
+import { getInfo } from "./utils/configsetd";
 const {
   setBackPagePath,
   setAuthorize,
@@ -8,7 +10,8 @@ App({
   onLaunch() { 
     this.globalData = {
       currentSenceId:0,
-      resource_config:null, 
+      hasLoadIndex:false,
+      resource_config:getInfo(), 
       appName: "送你一次环球之旅",
       uMengClickedEventId: "Um_Event_ModularClick",
       uMengPageArived:"Um_Event_PageView"

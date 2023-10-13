@@ -1,0 +1,1 @@
+<button class = "click" bind:tap="click">点击选择图片</button>

@@ -89,6 +89,32 @@ export function getSlamV2Support() {
   return false;
 }
 
+export function showmeiyan(){
+  const uploadOptions = uploadFileSignature({
+    url: "https://project.kivisense.com/unified-service/beauty",
+    filePath: tempFilePaths[0],
+    name: "image",
+    formData: {
+        pid: "the-peoples-daily",
+        beauty:"true",
+        whitening:99,
+    },
+    success({ statusCode, data }) {
+        if (statusCode === 200) {
+            const { code, data: res, message } = JSON.parse(data);
+            if (code === 200 && res?.beauty_url) {
+                console.log("美颜后照片url", res.beauty_url);
+            } else {
+                console.error(code, message);
+            }
+        } else {
+            console.error(statusCode);
+        }
+    }
+});
+console.log(uploadOptions) 
+return uploadOptions
+}
 
 export function compareVersion(v1, v2) {
   v1 = v1.split('.')

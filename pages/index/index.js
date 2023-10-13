@@ -16,20 +16,22 @@ Page({
   }, 
 
   getConfigData()
-  { 
-    var randomStr = Math.floor(Math.random() * 1000000);
-    var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/config.json?version="+randomStr;  
-    this.configPromise =  requestFile(configurl,"text"); 
-    var that = this;
-    this.configPromise.then(res =>{ 
-      that.resource_config = res;  
-      app.globalData.resource_config = res;
-    }); 
+  {  
+    // var randomStr = Math.floor(Math.random() * 1000000);
+    // var configurl = "https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/config.json?version="+randomStr;  
+    // this.configPromise =  requestFile(configurl,"text"); 
+    // var that = this;
+    // this.configPromise.then(res =>{ 
+    //   that.resource_config = res;  
+    //   app.globalData.resource_config = res;
+    // }); 
   },
   onLoad() { 
-    this.onClear();
+    this.onClear(); 
+    this.resource_config = app.globalData.resource_config;
+    app.globalData.hasLoadIndex = true;
     //加载配置
-    this.getConfigData(); 
+    //this.getConfigData(); 
     wx.reportEvent("page_show", {
       "page_name": "loading"
     })
@@ -76,12 +78,12 @@ Page({
   },
 
   async onReady(){   
-    if(app.globalData.resource_config == null){ 
-        this.resource_config = await this.configPromise;  
-        app.globalData.resource_config = this.resource_config;   
-    } else{ 
+    // if(app.globalData.resource_config == null){ 
+    //     this.resource_config = await this.configPromise;  
+    //     app.globalData.resource_config = this.resource_config;   
+    // } else{ 
       this.resource_config = app.globalData.resource_config;
-    } 
+    // } 
     var animationDatas =[];
     for(var i=0;i<6;i++)
     {

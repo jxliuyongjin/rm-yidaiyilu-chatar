@@ -45,21 +45,14 @@ class resource_manager {
       const [
         reticleArrayBuffer, 
         glbArrayBuffer,
-      ] = await this.downloadAssets;
-     
-      wx.hideLoading()   
-      
-      this.downloadAssets = null; 
-      
+      ] = await this.downloadAssets; 
+      this.downloadAssets = null;  
       log("initScene inner");
       
       const [reticleModel, current_model] = await Promise.all([
         slam.createGltfModel(reticleArrayBuffer),
         slam.createGltfModel(glbArrayBuffer), 
-      ]);  
-      wx.showToast({
-        title: "@##11111111111111111",
-      }) 
+      ]);   
       this.shadowPlanes = {};
       //slam.enableShadow(); // 开启阴影功能 
       current_model.visible = false;  
@@ -76,8 +69,7 @@ class resource_manager {
       await slam.start();  
       this.setmapSize(slam);
       return true;
-    } catch (e) {
-     
+    } catch (e) { 
       return false;
     }
   } 
@@ -331,14 +323,20 @@ class resource_manager {
       this.slam.remove(this.current_model); 
       this.slam.destroyObject(this.current_model); 
     } 
-    this.slam = null; 
-    this.downloadAssets = null;
-    this.resource_config= null;
+    if(this.shadowPlanes) {
+      this.shadowPlanes.forEach(value=>{
+        this.slam.remove(value); 
+        this.slam.destroyObject(value); 
+      })
+    }
     this.current_model  =null;
     this.reticleModel  =null;
     this.currentModelInfo =null;
     this.configPromise =null; 
+    this.resource_config= null;
+    this.downloadAssets = null;
     this.shadowPlanes = null; 
+    this.slam = null; 
   }
 
 

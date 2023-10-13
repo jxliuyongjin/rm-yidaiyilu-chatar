@@ -96,6 +96,10 @@ var config = {
   ]
 }
 
+export function getInfo()
+{
+  return config;
+}
 export function getInfoJson()
 {
     const jsonstr = JSON.stringify(config);

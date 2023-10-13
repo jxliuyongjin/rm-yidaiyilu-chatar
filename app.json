@@ -1,8 +1,9 @@
 {
-    "pages": [
+    "pages": [ 
         "pages/index/index",
         "pages/scene/scene",
         "pages/shadow/shadow",
+        "pages/test/test",
         "pages/uicomp/uicomp"
     ],
     "plugins": {
