@@ -165,7 +165,7 @@
 .haibao_btn_content
 {
   position:absolute; 
-  bottom:10vh; 
+  bottom:27vh; 
   z-index: 1; 
   left: 50%;
   width: 365rpx;

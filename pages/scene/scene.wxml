@@ -15,8 +15,7 @@
   <image class="scan-img" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/content/scaning.png" mode="widthFix" lazy-load="false" />
   <view class="scan-txt">请寻找一个平面</view>
 </view> -->
-
-<image wx:if="{{step != 'initing'}}" class= "topMark"  src="{{uiIconsPath.topbord}}"></image>
+ 
 <view wx:if="{{step != 'initing'}}" class="icons_content" >
 <image class="icon_bg" src="{{uiIconsPath.bottombord}}"></image>
   <image  class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>   

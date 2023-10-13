@@ -15,7 +15,17 @@ App({
       appName: "AR丝路之旅",
       uMengClickedEventId: "Um_Event_ModularClick",
       uMengPageArived:"Um_Event_PageView"
-    }
+    } 
+
+    var modelsInfo =  this.globalData.resource_config.modelsInfo; 
+    var value = null;
+    for(var i=0;i<modelsInfo.length;i++)
+    {
+      value = modelsInfo[i];
+      value.iconurl = this.globalData.resource_config.baseurl + value.iconurl; //this.resource.geturl(value.iconurl);  
+    }  
+
+
     const isTabbarPage = false;
     setBackPagePath("/pages/index/index", isTabbarPage);
     // Slam场景展示页面需要申请camera权限。如果小程序配置基础库最低版本>=2.14.4，也可不设置此API。

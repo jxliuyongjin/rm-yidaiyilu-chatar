@@ -77,11 +77,9 @@ Page({
   initData(moduleindex) { 
     //初始化配置
     var getModelsInfo =  this.resource.getModelsInfo();   
-    var value = null;  var iconNames = [];  var maskvisible = [];   
+    var iconNames = [];  var maskvisible = [];   
     for(var i=0;i<getModelsInfo.length;i++)
-    {
-      value = getModelsInfo[i];
-      value.iconurl = this.resource.geturl(value.iconurl); 
+    { 
       maskvisible[i] = 1;
       iconNames[i] = "icon"+i;
     }  
@@ -121,7 +119,7 @@ Page({
   },
 
   setUIPath()
-  { 
+  {  
     var takephotoBtnIcon = this.resource.geturl("ui/content/photoBtn.png");
     var anotherIcon = this.resource.geturl("ui/drawphoto/another.png");
     var savebtnIcon = this.resource.geturl("ui/drawphoto/savebtn.png");
@@ -132,8 +130,7 @@ Page({
     
     var photoBgIcon =this.resource.gethaibaourl("drawphoto/bg.png");
     var erweimaIcon = this.resource.gethaibaourl("drawphoto/erweima.png");
-    var kuangIcon = this.resource.gethaibaourl("drawphoto/kuang.png");
-    var topbordcanvas = this.resource.gethaibaourl("drawphoto/topbord.png"); 
+    var kuangIcon = this.resource.gethaibaourl("drawphoto/kuang.png"); 
     var bottombordcanvas = this.resource.gethaibaourl("drawphoto/bottombord.png"); 
     var textfIcon = this.resource.gethaibaourl("drawphoto/textf.png"); 
     return {
@@ -146,7 +143,6 @@ Page({
       kuangIcon,
       savebtnIcon,
       textfIcon,
-      topbordcanvas,
       bottombordcanvas,
       changeBtnMark
     }
@@ -409,44 +405,27 @@ Page({
       await new Promise(resolve => {
         image.onload = resolve;
         image.src =  this.data.photoPath;// 要加载的图片 url
-      })  
-       
-      //   //绘制框
-      // const kuangImage = canvas.createImage() 
-      // kuangImage.referrerPolicy = "origin";
-      // await new Promise(resolve => {
-      //   kuangImage.onload = resolve;
-      //   kuangImage.src = this.data.uiIconsPath.kuangIcon; // 要加载的图片 url
-      // }) 
-     // canvasContext.drawImage(kuangImage, kuangLeft, kuangTop, kuangwidth, kuangHeight);  
+      })   
       canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight); 
       
       const bottombordHeight = canvas_width*0.54
       const bottomFill = canvas_height - bottombordHeight; 
 
-      const  topBroad = canvas.createImage() 
-      topBroad.referrerPolicy = 'origin';
-      await new Promise(resolve => {
-        topBroad.onload = resolve;
-        topBroad.src = this.data.uiIconsPath.topbord; // 要加载的图片 url 
-      }) 
-      canvasContext.drawImage(topBroad, 0, 0, canvas_width, canvas_width*0.08265);   
-
       const  bottombord = canvas.createImage() 
-      bottombord.referrerPolicy = 'origin';
+      bottombord.referrerPolicy = 'origin'; 
       await new Promise(resolve => {
         bottombord.onload = resolve;
-        bottombord.src = this.data.uiIconsPath.bottombord; // 要加载的图片 url 
+        bottombord.src = this.data.uiIconsPath.bottombordcanvas; // 要加载的图片 url 
       }) 
       canvasContext.drawImage(bottombord, 0, bottomFill, canvas_width, bottombordHeight);
 
       var tht = this;  
       
 
-      const erweiWidth = canvas_width*0.176;
+      const erweiWidth = canvas_width*0.1773;
       const erweiHeight = erweiWidth; 
-      const erweitop = bottomFill + bottombordHeight*0.4;
-      const erweiLeft = canvas_width*0.0613;
+      const erweitop = bottomFill + bottombordHeight*0.3;
+      const erweiLeft = canvas_width*0.7747;
       //绘制二维码
       const erweimaImage = canvas.createImage();
       erweimaImage.referrerPolicy = "origin";
@@ -456,10 +435,10 @@ Page({
       }) 
       canvasContext.drawImage(erweimaImage, erweiLeft, erweitop, erweiWidth, erweiHeight);  
         
-      const textWidth = canvas_width*0.496;
-      const textHeight =  textWidth*0.164;
-      const texttop = erweitop +  canvas_width*0.096;
-      const textLeft = canvas_width - textWidth  - canvas_width*0.008;
+      const textWidth = canvas_width*0.2413;
+      const textHeight =  textWidth*0.1271;
+      const texttop = erweitop + erweiHeight + canvas_width*0.0133;
+      const textLeft = erweiLeft - (textWidth  - erweiWidth)*0.5;
       //绘制文本
       const textmaImage = canvas.createImage();
       textmaImage.referrerPolicy = "origin";

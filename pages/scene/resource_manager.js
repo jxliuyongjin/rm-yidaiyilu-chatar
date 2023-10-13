@@ -53,7 +53,7 @@ class resource_manager {
         slam.createGltfModel(reticleArrayBuffer),
         slam.createGltfModel(glbArrayBuffer), 
       ]);   
-      this.shadowPlanes = {};
+      this.shadowPlanes = [];
       //slam.enableShadow(); // 开启阴影功能 
       current_model.visible = false;  
       var modelsize = this.currentModelInfo? this.currentModelInfo.size:0.5;  
@@ -215,7 +215,7 @@ class resource_manager {
   }
 
   geturl(url)
-  {    
+  {     
     return this.resource_config.baseurl+url
   } 
 
