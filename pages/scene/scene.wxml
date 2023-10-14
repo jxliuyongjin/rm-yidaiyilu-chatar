@@ -19,8 +19,8 @@
 <view wx:if="{{step != 'initing'}}" class="icons_content" >
 <image class="icon_bg" src="{{uiIconsPath.bottombord}}"></image>
   <image  class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>   
-  <scroll-view scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content">
-    <view class="change_btns" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{iconNames[item.model_idnex]}}" catch:tap="changebtn_clicked">
+  <scroll-view scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content"> 
+    <view class="change_btns{{item.model_idnex}}" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{iconNames[item.model_idnex]}}" catch:tap="changebtn_clicked">
         <image class="change_btn" src="{{item.iconurl}}"> </image> 
         <image class="change_btn_mask" hidden="{{maskvisible[item.model_idnex]==0}}" src="{{uiIconsPath.changeBtnMark}}"></image>
     </view>

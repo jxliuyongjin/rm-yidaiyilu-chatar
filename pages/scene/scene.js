@@ -19,7 +19,7 @@ Page({
     uiIconsPath:{},
     modelIcons:[],
     iconNames: [],
-    iconScrollPos:0,
+    iconScrollPos:-1,
     photoPath:"", 
     haibaoPhotoPath:"",
     haibaoPhotoPathErweima:"",
@@ -133,6 +133,10 @@ Page({
     var kuangIcon = this.resource.gethaibaourl("drawphoto/kuang.png"); 
     var bottombordcanvas = this.resource.gethaibaourl("drawphoto/bottombord.png"); 
     var textfIcon = this.resource.gethaibaourl("drawphoto/textf.png"); 
+
+    var renmingwang = this.resource.gethaibaourl("drawphoto/renmingwang.png"); 
+    var jiuselu = this.resource.gethaibaourl("drawphoto/jiuselu.png"); 
+    var chufa = this.resource.gethaibaourl("drawphoto/chufa.png");  
     return {
       topbord,
       bottombord,
@@ -143,6 +147,9 @@ Page({
       kuangIcon,
       savebtnIcon,
       textfIcon,
+      jiuselu,
+      renmingwang,
+      chufa,
       bottombordcanvas,
       changeBtnMark
     }
@@ -371,31 +378,13 @@ Page({
       canvas.height = canvas_height * dpr;
       canvasContext.scale(dpr,dpr); 
       canvasContext.fillRect(0,0,canvas_width,canvas_height);  
-      canvasContext.clearRect(0, 0, canvas_width, canvas_height);    
-      //绘制背景
-      // const bgImage = canvas.createImage() 
-      // bgImage.referrerPolicy = 'origin';
-      // await new Promise(resolve => {
-      //   bgImage.onload = resolve;
-      //   bgImage.src = this.data.uiIconsPath.photoBgIcon; // 要加载的图片 url 
-      // }) 
-      // canvasContext.drawImage(bgImage, 0, 0, canvas_width, canvas_height);   
+      canvasContext.clearRect(0, 0, canvas_width, canvas_height);     
 
       var imageHW = canvas_height/canvas_width;
       const imageWidth = canvas_width;
       const imageHeight = canvas_height; 
       const imageLeft = 0;
-      const imageTop = 0;
-
-      // var kongbaiHeight = canvas_height - imageHeight - erweiWidth;
-      // kongbaiHeight = kongbaiHeight/3;
-      // const imageTop = kongbaiHeight;
-      
-
-      // const kuangwidth = imageWidth + canvas_width*0.05733;
-      // const kuangHeight = imageHeight + canvas_width*0.17866;
-      // const kuangLeft = imageLeft - canvas_width*0.016; 
-      // const kuangTop= imageTop-canvas_width*0.016;
+      const imageTop = 0; 
 
       // 创建一个图片
       const image = canvas.createImage();
@@ -408,7 +397,7 @@ Page({
       })   
       canvasContext.drawImage(image, imageLeft, imageTop, imageWidth, imageHeight); 
       
-      const bottombordHeight = canvas_width*0.54
+      const bottombordHeight = canvas_width*0.4427
       const bottomFill = canvas_height - bottombordHeight; 
 
       const  bottombord = canvas.createImage() 
@@ -422,9 +411,9 @@ Page({
       var tht = this;  
       
 
-      const erweiWidth = canvas_width*0.1773;
+      const erweiWidth = canvas_width*0.1653;
       const erweiHeight = erweiWidth; 
-      const erweitop = bottomFill + bottombordHeight*0.3;
+      const erweitop = bottomFill + bottombordHeight*0.223;
       const erweiLeft = canvas_width*0.7747;
       //绘制二维码
       const erweimaImage = canvas.createImage();
@@ -435,9 +424,9 @@ Page({
       }) 
       canvasContext.drawImage(erweimaImage, erweiLeft, erweitop, erweiWidth, erweiHeight);  
         
-      const textWidth = canvas_width*0.2413;
-      const textHeight =  textWidth*0.1271;
-      const texttop = erweitop + erweiHeight + canvas_width*0.0133;
+      const textWidth = canvas_width*0.111;
+      const textHeight =  textWidth*0.253;
+      const texttop = erweitop + erweiHeight + canvas_width*0.016;
       const textLeft = erweiLeft - (textWidth  - erweiWidth)*0.5;
       //绘制文本
       const textmaImage = canvas.createImage();
@@ -446,7 +435,49 @@ Page({
         textmaImage.onload = resolve;
         textmaImage.src = this.data.uiIconsPath.textfIcon;// 要加载的图片 url
       }) 
-      canvasContext.drawImage(textmaImage, textLeft, texttop, textWidth, textHeight);  
+      canvasContext.drawImage(textmaImage, textLeft, texttop, textWidth, textHeight);
+        
+      const rmtextWidth = canvas_width*0.2573;
+      const  rmtextHeight =  rmtextWidth*0.3886;
+      const rmtexttop = texttop +textHeight + canvas_width*0.0147;
+      const rmtextLeft = canvas_width -rmtextWidth-  canvas_width*0.013;
+      //绘制文本
+      const rmtextmaImage = canvas.createImage();
+      rmtextmaImage.referrerPolicy = "origin";
+      await new Promise(resolve => {
+        rmtextmaImage.onload = resolve;
+        rmtextmaImage.src = this.data.uiIconsPath.renmingwang;// 要加载的图片 url
+      }) 
+      canvasContext.drawImage(rmtextmaImage,  rmtextLeft, rmtexttop, rmtextWidth, rmtextHeight);  
+
+
+      const cftextWidth = canvas_width*0.416;
+      const  cftextHeight =  cftextWidth*0.52;
+      const cftexttop = bottomFill + canvas_width*0.1;
+      const cftextLeft =  canvas_width*0.24;
+      //绘制文本
+      const cftextmaImage = canvas.createImage();
+      cftextmaImage.referrerPolicy = "origin";
+      await new Promise(resolve => {
+        cftextmaImage.onload = resolve;
+        cftextmaImage.src = this.data.uiIconsPath.chufa;// 要加载的图片 url
+      }) 
+      canvasContext.drawImage(cftextmaImage, cftextLeft,cftexttop,  cftextWidth, cftextHeight);  
+
+
+      const jslWidth = canvas_width*0.187;
+      const  jslHeight =  jslWidth*0.6642;
+      const jsltop = cftexttop + canvas_width*0.125;
+      const jslLeft = cftextLeft - canvas_width*0.111;
+      //绘制文本
+      const jslImage = canvas.createImage();
+      jslImage.referrerPolicy = "origin";
+      await new Promise(resolve => {
+        jslImage.onload = resolve;
+        jslImage.src = this.data.uiIconsPath.jiuselu;// 要加载的图片 url
+      }) 
+      canvasContext.drawImage(jslImage, jslLeft,jsltop,  jslWidth, jslHeight); 
+
 
       console.log("start getTempImage:")
       this.getTempImage(canvas).then(res=>{

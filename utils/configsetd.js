@@ -32,10 +32,10 @@ var config = {
       }, 
       { 
       model_idnex:3,
-      modelName:"热气球",
-      glburl:"model/reqiqiu.glb", 
+      modelName:"郁金香热气球",
+      glburl:"model/yujingxiang.glb", 
       iconurl:"ui/content/3.png",
-      defaultAmbientLight:"3",    
+      defaultAmbientLight:"3.5",    
       defaultDirectionalLight:"0",
       size:1
       },
@@ -56,51 +56,15 @@ var config = {
       defaultAmbientLight:"3",    
       defaultDirectionalLight:"0",
       size:3
-      }, 
+      },
       { 
       model_idnex:6,
-      modelName:"郁金香热气球",
-      glburl:"model/yujingxiang.glb", 
-      iconurl:"ui/content/3.png",
-      defaultAmbientLight:"3.5",    
-      defaultDirectionalLight:"0",
-      size:1
-      },
-      { 
-      model_idnex:7,
-      modelName:"神庙",
-      glburl:"model/shenmiao.glb", 
-      iconurl:"ui/content/5.png",
-      defaultAmbientLight:"4",    
-      defaultDirectionalLight:"0",
-      size:1
-      },
-      { 
-      model_idnex:8,
       modelName:"套娃",
       glburl:"model/taowa.glb", 
       iconurl:"ui/content/6.png",
-      defaultAmbientLight:"1.6",    
+      defaultAmbientLight:"4",    
       defaultDirectionalLight:"0",
       size:0.3
-      },   
-      { 
-      model_idnex:9,
-      modelName:"飞毛毯",
-      glburl:"model/feimaotan.glb", 
-      iconurl:"ui/content/5.png",
-      defaultAmbientLight:"3.5",    
-      defaultDirectionalLight:"0",
-      size:1
-      },   
-      { 
-      model_idnex:10,
-      modelName:"水果",
-      glburl:"model/shuiguo.glb", 
-      iconurl:"ui/content/1.png",
-      defaultAmbientLight:"3.5",    
-      defaultDirectionalLight:"0",
-      size:1
       }
   ]
 }

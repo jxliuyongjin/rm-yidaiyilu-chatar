@@ -61,7 +61,7 @@
 {
   position: absolute;
   width: 100%;
-  height: 54vw;
+  height: 332rpx;
   bottom: 0;
   /* background-color: black; */
   z-index: 98;
@@ -85,29 +85,40 @@
 {
   position:absolute;
   display: inline;
-  width: 25vw; 
-  height:25vw; 
-  bottom: 27vw;
-  left: 50vw; 
-  transform: translateX(-50%);
+  width: 127.28rpx; 
+  height:127.28rpx; 
+  bottom: 186rpx;
+  left: 318.18rpx; 
+  /* transform: translateX(-50%); */
 }
 
 .change_btn_content{
   position:absolute;
   display: block;
   width:100%;
-  height: 24vw;
+  height: 120rpx;
   white-space: nowrap;
   z-index: 1;
-  bottom: 2vw;
+  bottom: 18rpx;  
 } 
  
+.change_btns1,.change_btns2,.change_btns3,.change_btns4,.change_btns5,
+.change_btns6,.change_btns7,.change_btns8,.change_btns9,.change_btns10,.change_btns11, 
 .change_btns{
   display:inline-block;
   position: relative;
-  width: 20vw; 
-  height:20vw;
-  margin:2vw;
+  width: 120rpx; 
+  height:120rpx;
+  margin-right: 13rpx; 
+}
+
+.change_btns0{
+  display:inline-block;
+  position: relative;
+  width: 120rpx; 
+  height:120rpx;
+  margin-right: 13rpx;  
+  margin-left: 61rpx; 
 }
 
 .change_btn{ 
@@ -165,7 +176,7 @@
 .haibao_btn_content
 {
   position:absolute; 
-  bottom:27vh; 
+  bottom:362rpx; 
   z-index: 1; 
   left: 50%;
   width: 365rpx;
