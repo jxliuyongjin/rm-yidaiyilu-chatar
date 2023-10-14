@@ -46,7 +46,7 @@ Page({
       "page_name":"场景界面"
     })
     this.canvas = null;
-    this.showLoading("初始化中...",0)
+    this.showLoading("场景加载中...",0)
     var moduleindex = parseInt(options.moduleindex);
     log("onload moduleindex:"+moduleindex);  
     if(moduleindex<0||moduleindex>=6) {
@@ -279,7 +279,7 @@ Page({
        * @param {Number} [quality=0.9] - 照片质量，jpg时有效。默认为0.9
        * @returns {Promise<photoPath>} - 照片文件临时地址
        */
-      const photoPath = await this.slam.takePhoto({quality:1});  
+      const photoPath = await this.slam.takePhoto({quality:0.7});  
       getMeiYan(photoPath,this.meiyanResult)
     } catch (e) {
       log("drawhaibao error:"+e)   

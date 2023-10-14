@@ -18,10 +18,10 @@
 
 .title{
   position: absolute;
-  top: 2.77vh;
+  top: 3.15vh;
   left: 50%;
-  width: 562rpx;
-  height:225rpx; 
+  width: 502rpx;
+  height:251rpx; 
   transform: translate(-50%);
 }
 
@@ -70,8 +70,8 @@
 .btn1Action
 {
   position: absolute;
-  top:23.54vh;
-  left:88rpx;
+  top:24vh;
+  left:84.2rpx;
   width:277rpx;
   height:297rpx; 
   z-index: 0;
@@ -86,17 +86,24 @@
 .btn2Action,
 .button2cls{
   position: absolute;
-  top:25.34vh;
-  left:358rpx;
-  width: 308rpx;
-  height: 319rpx; 
+  top:25.11vh;
+  left:377.01rpx;
+  width: 310rpx;
+  height: 322rpx; 
+}
+.btn3Action,
+.btn3content
+{ 
+  position: absolute;
+  position: absolute;
+  top:47.75vh;
+  left:88.71rpx;
+  width: 279rpx;
+  height: 295rpx; 
 }
  
-.btn3Action,
 .button3cls{
-  position: absolute;
-  top:47.38vh;
-  left:79rpx;
+  position: relative; 
   width: 279rpx;
   height: 295rpx; 
   /* background-color: red; */
@@ -105,18 +112,19 @@
 .btn4Action,
 .button4cls{
   position: absolute;
-  top:43.1vh;
-  left:351rpx;
+  top:45.73vh;
+  left:375rpx;
   width: 315rpx;
   height: 371rpx; 
   /* background-color: gold; */
 } 
 
+
 .btn5Action,
 .button5cls{
   position: absolute;
-  top:68.74vh;
-  left:60rpx;
+  top:68.14vh;
+  left:56.7rpx;
   width: 334rpx;
   height: 342rpx; 
   /* background-color: rgb(40, 34, 128); */
@@ -125,8 +133,8 @@
 .btn6Action,
 .button6cls{
   position: absolute;
-  top:76.46vh;
-  left:372rpx;
+  top:77.06vh;
+  left:367.71rpx;
   width: 267rpx;
   height: 289rpx; 
   /* background-color: rgb(40, 34, 128); */
@@ -134,48 +142,48 @@
 
 .decoration1{
   position: absolute;
-  top:37.41vh;
-  left:88rpx;
-  width:277rpx;
-  height:297rpx; 
+  top:37.71vh;
+  left:120.42rpx;
+  width:279rpx;
+  height:176rpx; 
 }
 
 .decoration2{
   position: absolute;
-  top:39.81vh;
-  left:355rpx;
-  width:376.65rpx;
-  height:126.05rpx; 
+  top:39.58vh;
+  left:368.09rpx;
+  width:377rpx;
+  height:127rpx; 
 }
 
 .decoration3{
-  position: absolute;
-  top:63.87vh;
-  left:279.11rpx;
-  width:195.14rpx;
-  height:68.04rpx; 
+  position: relative; 
+  left: -45rpx;
+  top: -85rpx;
+  width:206rpx;
+  height:107rpx; 
 } 
 
 .decoration4{
   position: absolute;
-  top:61.77vh;
-  left:422.43rpx;
-  width:258.84rpx;
-  height:167.67rpx; 
+  top:65.22vh;
+  left:590.41rpx;
+  width:110rpx;
+  height:124rpx; 
 }
 
 .decoration5{
   position: absolute;
-  top:86.43vh;
-  left:43rpx;
-  width:273.15rpx;
-  height:115.69rpx; 
+  top:87.26vh;
+  left:53.7rpx;
+  width:274rpx;
+  height:116rpx; 
 }
 
 .decoration6{
   position: absolute;
-  top:89.96vh;
-  left:365rpx;
-  width:154.9rpx;
-  height:117.48rpx; 
+  top:89.06vh;
+  left:343.07rpx;
+  width:155rpx;
+  height:118rpx; 
 }
