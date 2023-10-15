@@ -16,7 +16,7 @@
   <view class="scan-txt">请寻找一个平面</view>
 </view> -->
  
-<view wx:if="{{step != 'initing'}}" class="icons_content" >
+<view wx:if="{{step != 'initing'}}" class="icons_content" catch:tap ="stopClick">
 <image class="icon_bg" src="{{uiIconsPath.bottombord}}"></image>
   <image  class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>   
   <scroll-view scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content"> 
@@ -27,9 +27,7 @@
   </scroll-view>
 </view>
 
-<view wx:if="{{step === 'showPoint'}}" class="guide">请选择一个开阔的平面
-出现绿色坐标后
-点击坐标放置AR模型</view>  
+<text wx:if="{{step === 'showPoint'}}" class="guide">请选择一个开阔的平面\n出现绿色坐标后\n点击坐标放置AR模型</text>  
 <view  hidden="{{(step != 'showHaibao') && (step != 'baochunhaibao') }}" class="haibaomake">  
     <canvas
       disable-scroll 

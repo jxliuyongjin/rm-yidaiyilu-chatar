@@ -59,6 +59,15 @@ var config = {
       } 
   ]
 }
+export function getURL(url)
+{ 
+  return config.baseurl+url
+}
+
+export function getNoPURL(url)
+{ 
+  return config.baibaourl+url
+}
 
 export function getInfo()
 {

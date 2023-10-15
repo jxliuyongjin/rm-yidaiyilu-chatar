@@ -1,4 +1,4 @@
-import {requestFile} from "../../utils/utils" 
+import {getURL,getNoPURL} from "../../utils/configsetd" 
 const app = getApp();
 Page({ 
   data: {
@@ -49,28 +49,24 @@ Page({
     this.animationstate = null;
     this.resource_config = null;
   },
-
-  geturl(url)
-  {   
-    return this.resource_config.baseurl+url
-  },
+  
   setUIPath()
   { 
     const uipath = {
-      bg:this.geturl("ui/shouye/bg.png"),
-      btn1Icon:this.geturl("ui/shouye/btn1.png"),
-      btn2Icon:this.geturl("ui/shouye/btn2.png"),
-      btn3Icon:this.geturl("ui/shouye/btn3.png"), 
-      btn4Icon:this.geturl("ui/shouye/btn4.png"),
-      btn5Icon:this.geturl("ui/shouye/btn5.png"),
-      btn6Icon:this.geturl("ui/shouye/btn6.png"),
-      dec1Icon:this.geturl("ui/shouye/dec1.png"),
-      dec2Icon:this.geturl("ui/shouye/dec2.png"),
-      dec3Icon:this.geturl("ui/shouye/dec3.png"),
-      dec4Icon:this.geturl("ui/shouye/dec4.png"),
-      dec5Icon:this.geturl("ui/shouye/dec5.png"),
-      dec6Icon:this.geturl("ui/shouye/dec6.png"),
-      titleIcon:this.geturl("ui/shouye/title.png"), 
+      bg:getURL("ui/shouye/bg.png"),
+      btn1Icon:getURL("ui/shouye/btn1.png"),
+      btn2Icon:getURL("ui/shouye/btn2.png"),
+      btn3Icon:getURL("ui/shouye/btn3.png"), 
+      btn4Icon:getURL("ui/shouye/btn4.png"),
+      btn5Icon:getURL("ui/shouye/btn5.png"),
+      btn6Icon:getURL("ui/shouye/btn6.png"),
+      dec1Icon:getURL("ui/shouye/dec1.png"),
+      dec2Icon:getURL("ui/shouye/dec2.png"),
+      dec3Icon:getURL("ui/shouye/dec3.png"),
+      dec4Icon:getURL("ui/shouye/dec4.png"),
+      dec5Icon:getURL("ui/shouye/dec5.png"),
+      dec6Icon:getURL("ui/shouye/dec6.png"),
+      titleIcon:getURL("ui/shouye/title.png"), 
     } 
     this.setData({
       uipath
@@ -394,7 +390,7 @@ Page({
     return {
       title: "穿越古今，送你一趟丝路之旅",
       path: "/pages/index/index",
-      imageUrl: this.geturl("share.jpg")
+      imageUrl: getNoPURL("share.jpg")
     };
   },
 
@@ -404,7 +400,7 @@ Page({
   onShareTimeline(){ 
     return {
       title: "穿越古今，送你一趟丝路之旅",
-      imageUrl:this.geturl("share.jpg")
+      imageUrl:getNoPURL("share.jpg")
     }
   },
 

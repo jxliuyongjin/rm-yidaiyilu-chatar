@@ -1,5 +1,6 @@
 import resource_manager from "./resource_manager"
 import { getMeiYan } from "../../signature";
+import {getURL,getNoPURL} from "../../utils/configsetd" 
 import {getSlamV2Support,log,errorHandler} from "../../utils/utils";  
 const app = getApp();
 //  initing:场景正在初始化
@@ -120,23 +121,23 @@ Page({
 
   setUIPath()
   {  
-    var takephotoBtnIcon = this.resource.geturl("ui/content/photoBtn.png");
-    var anotherIcon = this.resource.geturl("ui/drawphoto/another.png");
-    var savebtnIcon = this.resource.geturl("ui/drawphoto/savebtn.png");
-    var changeBtnMark = this.resource.geturl("ui/content/mask.png");
+    var takephotoBtnIcon = getURL("ui/content/photoBtn.png");
+    var anotherIcon = getURL("ui/drawphoto/another.png");
+    var savebtnIcon = getURL("ui/drawphoto/savebtn.png");
+    var changeBtnMark = getURL("ui/content/mask.png");
 
-    var topbord = this.resource.geturl("ui/content/topbord.png");
-    var bottombord = this.resource.geturl("ui/content/bottombord.png");
+    var topbord = getURL("ui/content/topbord.png");
+    var bottombord = getURL("ui/content/bottombord.png");
     
-    var photoBgIcon =this.resource.gethaibaourl("bg.png");
-    var erweimaIcon = this.resource.gethaibaourl("erweima.png");
-    var kuangIcon = this.resource.gethaibaourl("kuang.png"); 
-    var bottombordcanvas = this.resource.gethaibaourl("bottombord.png"); 
-    var textfIcon = this.resource.gethaibaourl("textf.png"); 
+    var photoBgIcon =getNoPURL("bg.png");
+    var erweimaIcon = getNoPURL("erweima.png");
+    var kuangIcon = getNoPURL("kuang.png"); 
+    var bottombordcanvas = getNoPURL("bottombord.png"); 
+    var textfIcon = getNoPURL("textf.png"); 
 
-    var renmingwang = this.resource.gethaibaourl("renmingwang.png"); 
-    var jiuselu = this.resource.gethaibaourl("jiuselu.png"); 
-    var chufa = this.resource.gethaibaourl("chufa.png");  
+    var renmingwang = getNoPURL("renmingwang.png"); 
+    var jiuselu = getNoPURL("jiuselu.png"); 
+    var chufa = getNoPURL("chufa.png");  
     return {
       topbord,
       bottombord,
@@ -261,6 +262,9 @@ Page({
     }) 
   },
 
+  stopClick(){
+
+  },
   ///////////////////////////////////以下关于海报/////////////////////////////////////////////////
   async take_photo(e) {  
     if(this.data.step!= steps[2])
@@ -286,7 +290,7 @@ Page({
        * @param {Number} [quality=0.9] - 照片质量，jpg时有效。默认为0.9
        * @returns {Promise<photoPath>} - 照片文件临时地址
        */
-      const photoPath = await this.slam.takePhoto({quality:0.7});  
+      const photoPath = await this.slam.takePhoto({quality:0.5});  
       getMeiYan(photoPath,this.meiyanResult)
     } catch (e) {
       log("drawhaibao error:"+e)   
@@ -566,34 +570,24 @@ Page({
     wx.hideLoading();
   },
 
-  /**
-   * 用户点击右上角分享
-   */ 
+  /////////////////////////分享////////////////////////////////// 
   onShareAppMessage() {
     return {
       title: "穿越古今，送你一趟丝路之旅",
       path: "/pages/index/index",
-      imageUrl: this.geturl("share.jpg")
+      imageUrl: getNoPURL("share.jpg")
     };
-  }, 
+  },
+
   /**
    * 用户点击右上角盆友圈分享
    */
   onShareTimeline(){ 
     return {
-      title: "穿越古今，送你一趟丝路之旅", 
-      imageUrl:this.resource.geturl("share.jpg")
+      title: "穿越古今，送你一趟丝路之旅",
+      imageUrl:getNoPURL("share.jpg")
     }
   },
-  /**
-   * 用户点击右上角盆友圈分享
-   */
-  // onShareTimeline(){ 
-  //   return {
-  //     title: app.globalData.appName,
-  //     imageUrl:this.geturl("share.jpg")
-  //   }
-  // },
   
   error(detail) {  
     errorHandler(detail);

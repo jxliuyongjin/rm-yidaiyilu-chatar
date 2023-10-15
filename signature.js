@@ -52,7 +52,7 @@ export function getMeiYan(imagePath,backFun)
     formData: {
         pid: "the-peoples-daily",
         beauty:"true",
-        whitening:80,
+        whitening:70,
     },
     success({ statusCode, data }) {
         if (statusCode === 200) {
