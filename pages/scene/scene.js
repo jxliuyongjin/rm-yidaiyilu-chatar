@@ -128,15 +128,15 @@ Page({
     var topbord = this.resource.geturl("ui/content/topbord.png");
     var bottombord = this.resource.geturl("ui/content/bottombord.png");
     
-    var photoBgIcon =this.resource.gethaibaourl("drawphoto/bg.png");
-    var erweimaIcon = this.resource.gethaibaourl("drawphoto/erweima.png");
-    var kuangIcon = this.resource.gethaibaourl("drawphoto/kuang.png"); 
-    var bottombordcanvas = this.resource.gethaibaourl("drawphoto/bottombord.png"); 
-    var textfIcon = this.resource.gethaibaourl("drawphoto/textf.png"); 
+    var photoBgIcon =this.resource.gethaibaourl("bg.png");
+    var erweimaIcon = this.resource.gethaibaourl("erweima.png");
+    var kuangIcon = this.resource.gethaibaourl("kuang.png"); 
+    var bottombordcanvas = this.resource.gethaibaourl("bottombord.png"); 
+    var textfIcon = this.resource.gethaibaourl("textf.png"); 
 
-    var renmingwang = this.resource.gethaibaourl("drawphoto/renmingwang.png"); 
-    var jiuselu = this.resource.gethaibaourl("drawphoto/jiuselu.png"); 
-    var chufa = this.resource.gethaibaourl("drawphoto/chufa.png");  
+    var renmingwang = this.resource.gethaibaourl("renmingwang.png"); 
+    var jiuselu = this.resource.gethaibaourl("jiuselu.png"); 
+    var chufa = this.resource.gethaibaourl("chufa.png");  
     return {
       topbord,
       bottombord,

@@ -92,18 +92,10 @@
   height: 322rpx; 
 }
 .btn3Action,
-.btn3content
-{ 
-  position: absolute;
-  position: absolute;
-  top:47.75vh;
-  left:88.71rpx;
-  width: 279rpx;
-  height: 295rpx; 
-}
- 
 .button3cls{
-  position: relative; 
+  position: absolute; 
+  top:48.5vh;
+  left:86.1rpx;
   width: 279rpx;
   height: 295rpx; 
   /* background-color: red; */

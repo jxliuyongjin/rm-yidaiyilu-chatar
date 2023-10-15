@@ -1,7 +1,7 @@
 var config = {
-  baseurl:"https://yidaiyilu-quanguo.oss-cn-beijing.aliyuncs.com/resource/",
+  baseurl:"https://yidaiyilu-quanguo.oss-cn-beijing.aliyuncs.com/resource1/",
   reticle:"reticle.glb", 
-  baibaourl:"https://yidaiyilu-baijin-buchong.oss-cn-beijing.aliyuncs.com/", 
+  baibaourl:"https://yidaiyilu-baijin-buchong.oss-cn-beijing.aliyuncs.com/drawphoto1/", 
   modelsInfo:[ 
       { 
       model_idnex:0,
@@ -56,16 +56,7 @@ var config = {
       defaultAmbientLight:"3",    
       defaultDirectionalLight:"0",
       size:3
-      },
-      { 
-      model_idnex:6,
-      modelName:"套娃",
-      glburl:"model/taowa.glb", 
-      iconurl:"ui/content/6.png",
-      defaultAmbientLight:"4",    
-      defaultDirectionalLight:"0",
-      size:0.3
-      }
+      } 
   ]
 }
 

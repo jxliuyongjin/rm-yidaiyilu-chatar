@@ -71,7 +71,7 @@ Page({
       dec5Icon:this.geturl("ui/shouye/dec5.png"),
       dec6Icon:this.geturl("ui/shouye/dec6.png"),
       titleIcon:this.geturl("ui/shouye/title.png"), 
-    }
+    } 
     this.setData({
       uipath
     })
