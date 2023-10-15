@@ -100,10 +100,10 @@ Page({
     this.setData({
       imageLoadednum
     }) 
-    if(imageLoadednum<=13)
+    if(imageLoadednum<=11)
     { 
       if(this.hasInitedLoading === true){
-        this.getdeltaDta(100*imageLoadednum/13); 
+        this.getdeltaDta(100*imageLoadednum/11); 
       }
       else{
         this.hasloadfinshed = true; 

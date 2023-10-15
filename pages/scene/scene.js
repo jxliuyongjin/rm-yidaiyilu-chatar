@@ -290,7 +290,7 @@ Page({
        * @param {Number} [quality=0.9] - 照片质量，jpg时有效。默认为0.9
        * @returns {Promise<photoPath>} - 照片文件临时地址
        */
-      const photoPath = await this.slam.takePhoto({quality:0.5});  
+      const photoPath = await this.slam.takePhoto({quality:0.3});  
       getMeiYan(photoPath,this.meiyanResult)
     } catch (e) {
       log("drawhaibao error:"+e)   
@@ -299,7 +299,7 @@ Page({
     }finally{ 
       this.resource.setVisibleReticleMode(true);
     }
-  },
+  },  
 
   meiyanResult(beauty_url,code=0)
   { 
@@ -441,10 +441,10 @@ Page({
       }) 
       canvasContext.drawImage(textmaImage, textLeft, texttop, textWidth, textHeight);
         
-      const rmtextWidth = canvas_width*0.2573;
-      const  rmtextHeight =  rmtextWidth*0.3886;
-      const rmtexttop = texttop +textHeight + canvas_width*0.0147;
-      const rmtextLeft = canvas_width -rmtextWidth-  canvas_width*0.013;
+      const rmtextWidth = canvas_width*0.3027;
+      const  rmtextHeight =  rmtextWidth*0.1542;
+      const rmtexttop = texttop +textHeight + canvas_width*0.047;
+      const rmtextLeft = canvas_width -rmtextWidth-  canvas_width*0.0747;
       //绘制文本
       const rmtextmaImage = canvas.createImage();
       rmtextmaImage.referrerPolicy = "origin";
