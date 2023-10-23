@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "xr-start": "../../components/xr-start/index"
+  },
+  "navigationStyle": "custom",
+  "disableScroll": true
+}

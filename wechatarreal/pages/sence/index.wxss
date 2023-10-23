@@ -1,0 +1,5 @@
+.navitoshow{
+  padding: 20rpx;
+  background-color: green;
+  margin-bottom: 10rpx;
+}

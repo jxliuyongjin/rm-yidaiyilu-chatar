@@ -1,0 +1,13 @@
+<view>
+  <xr-start
+    disable-scroll
+    id="main-frame"
+    width="{{renderWidth}}"
+    height="{{renderHeight}}"
+    reticleUrlP="{{reticleUrl}}"
+    moduleUrlP="{{currentModuleUrl}}" 
+    style="width:{{width}}px;height:{{height}}px;"
+    bind:modelLoaded="onModelLoaded" 
+    bind:ready="onCompReady"
+  />
+</view>

@@ -1,0 +1,23 @@
+{
+  "pages":[
+    "pages/sence/index", 
+    "pages/logs/logs"
+  ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "pages": [ 
+        "pages/2dMarkModel/2dMarkModel" 
+      ]
+    }
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle":"black"
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,45 @@
+ <kivicube-slam
+  class="slam"
+  license="{{license}}"
+  version="{{version}}" 
+  bindready="ready"
+  binderror="slamError"
+  bind:tap="tap"
+  bind:addAnchors="addAnchors"
+/>
+<view wx:if="{{showOnPengyouquan}}" class="showOnPenYouquan" >
+  <text class="showOnPenYouquanText">请点击右下角:\n<text style="color: red;">前往小程序按钮</text></text>
+</view>
+<!-- 
+<view class="scan-box animated fadeIn" wx:if="{{step === 'findPlane'}}">
+  <image class="scan-img" src="https://yidaiyilu-s.oss-cn-shanghai.aliyuncs.com/resource/ui/content/scaning.png" mode="widthFix" lazy-load="false" />
+  <view class="scan-txt">请寻找一个平面</view>
+</view> -->
+ 
+<view wx:if="{{step != 'initing'}}" class="icons_content" catch:tap ="stopClick">
+<image class="icon_bg" src="{{uiIconsPath.bottombord}}"></image>
+  <image  class="photo_btn" src="{{uiIconsPath.takephotoBtnIcon}}"  catch:tap="take_photo"> 拍照</image>   
+  <scroll-view scroll-x="true"  scroll-into-view="{{iconNames[iconScrollPos]}}" class="change_btn_content"> 
+    <view class="change_btns{{item.model_idnex}}" wx:for="{{modelIcons}}" wx:key="model_idnex" id="{{iconNames[item.model_idnex]}}" catch:tap="changebtn_clicked">
+        <image class="change_btn" src="{{item.iconurl}}"> </image> 
+        <image class="change_btn_mask" hidden="{{maskvisible[item.model_idnex]==0}}" src="{{uiIconsPath.changeBtnMark}}"></image>
+    </view>
+  </scroll-view>
+</view>
+
+<text wx:if="{{step === 'showPoint'}}" class="guide">请选择一个开阔的平面\n出现绿色坐标后\n点击坐标放置AR模型</text>  
+<view  hidden="{{(step != 'showHaibao') && (step != 'baochunhaibao') }}" class="haibaomake">  
+    <canvas
+      disable-scroll 
+      class="haibao_canvas" 
+      type="2d"
+      id="showhaibao_canvas" 
+    > </canvas>   
+    
+    <!-- <image  class="haibao_canvas_shoImg" src="{{uiIconsPath.photoBgIcon}}"></image>
+    <image  wx:if="{{haibaoPhotoPath.lenght !== 0}}" class="haibao_canvas_shoImg" src="{{haibaoPhotoPath}}"></image>  -->
+   <view class="haibao_btn_content" wx:if="{{showSaveBtn}}">
+    <image class="haibao_exitbtn" catch:tap="exitBtnClicked" src="{{uiIconsPath.anotherIcon}}">再来一张</image>
+    <image class="haibao_savebtn" catch:tap="onSaveImageClicked" src="{{uiIconsPath.savebtnIcon}}">>保存</image>
+   </view>
+</view>

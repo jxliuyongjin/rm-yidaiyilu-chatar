@@ -1,0 +1,8 @@
+{
+    "usingComponents": {
+      "kivicube-slam": "plugin://kivicube-slam/kivicube-slam"
+    },
+    "enablePullDownRefresh":false,
+    "disableScroll": true
+  }
+  

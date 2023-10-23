@@ -1,0 +1,19 @@
+<xr-scene  ar-system="modes:Plane" bind:ready="handleReady">
+  <xr-assets bind:loaded="handleAssetsLoaded">
+    <xr-asset-load type="gltf" asset-id="anchor" src="{{reticleUrl}}" />
+    <xr-asset-load type="gltf" asset-id="miku" src="{{moduleUrl}}" bind:gltf-loaded="modleLoaded" />
+  </xr-assets>
+
+  <xr-env env-data="xr-frame-team-workspace-day" />
+  <xr-light type="ambient" color="1 1 1" intensity="1" />
+  <xr-light type="directional" rotation="40 70 0" color="1 1 1" intensity="3" cast-shadow />
+
+  <xr-ar-tracker mode="Plane">
+    <xr-gltf model="anchor"></xr-gltf>
+  </xr-ar-tracker>
+  <xr-node node-id="setitem" visible="false">
+    <xr-gltf model="miku" anim-autoplay scale="{{modelScale}}" rotation="{{modelRoate}}"/>
+  </xr-node>
+
+  <xr-camera clear-color="0.4 0.8 0.6 1" background="ar" is-ar-camera />
+</xr-scene>

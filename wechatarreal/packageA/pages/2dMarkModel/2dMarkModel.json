@@ -1,0 +1,6 @@
+{
+  "usingComponents": { 
+    "xr-2dmark": "/components/xr-start/"
+  },
+  "disableScroll": true
+}
