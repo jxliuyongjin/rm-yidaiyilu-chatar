@@ -45,6 +45,8 @@ function signature(secret, data) {
 }
 export function getMeiYan(imagePath,backFun)
 {
+  backFun(imagePath);
+  return;
   const uploadOptions = uploadFileSignature({
     url: "https://project.kivisense.com/unified-service/beauty",
     filePath: imagePath,
